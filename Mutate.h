@@ -11,6 +11,8 @@ class Mutate {
     std::vector<Node*> getParents(Tree& tree);
 public:
 
+    float mutateChance = 0.01f;
+
     void addNodeMutate(Tree& tree);
     void replaceMutate(Tree& tree);
     void enableMutate(Tree& tree);

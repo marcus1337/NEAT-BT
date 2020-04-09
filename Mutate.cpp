@@ -21,7 +21,7 @@ void Mutate::replaceMutate(Tree& tree) {
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
         Node* node = it.next();
-        if (shouldMutate(0.01)) {
+        if (shouldMutate(mutateChance)) {
             replaceRandomly(node);
         }
     }
@@ -39,7 +39,7 @@ Node Mutate::makeRandomNode() {
 }
 
 void Mutate::addNodeMutate(Tree& tree) {
-    if (shouldMutate(0.01)) {
+    if (shouldMutate(mutateChance)) {
         Node* node = tree.getEmptyParent();
         if (node != nullptr)
             node->addChild(makeRandomNode());
@@ -68,7 +68,7 @@ void Mutate::enableMutate(Tree& tree) {
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
         Node* node = it.next();
-        if (shouldMutate(0.01))
+        if (shouldMutate(mutateChance))
             node->enabled = !node->enabled;
     }
 }
