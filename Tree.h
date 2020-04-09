@@ -4,7 +4,6 @@
 #ifndef TREE_H
 #define TREE_H
 
-
 class Tree {
 
     std::queue<Node*> makeNodeQueue();
