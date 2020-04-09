@@ -23,6 +23,7 @@ public:
     void addChild(Node node);
 
     bool isParent();
+    bool isEmptyParent();
 
     static int maxInteriorID, maxDecoratorID, maxActionID, maxConditionID;
     static Node makeRandomInterior();

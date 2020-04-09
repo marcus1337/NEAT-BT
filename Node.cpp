@@ -14,6 +14,9 @@ void Node::addChild(Node node) {
 bool Node::isParent() {
     return type == INTERIOR || type == DECORATOR;
 }
+bool Node::isEmptyParent() {
+    return isParent() && children.empty();
+}
 
 int Node::maxActionID;
 int Node::maxConditionID;
