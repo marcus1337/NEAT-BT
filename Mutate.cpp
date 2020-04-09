@@ -42,18 +42,18 @@ void Mutate::addNodeMutate(Tree& tree) {
     if (shouldMutate(0.01)) {
         Node* node = tree.getEmptyParent();
         if (node != nullptr)
-            node->children.push_back(makeRandomNode());
+            node->addChild(makeRandomNode());
         else
-            getRandomParent(tree)->children.push_back(makeRandomNode());
+            getRandomParent(tree)->addChild(makeRandomNode());
     }
 }
 
-Node* getRandomParent(Tree& tree) {
+Node* Mutate::getRandomParent(Tree& tree) {
     std::vector<Node*> parents = getParents(tree);
     int randomIndex = Utils::randi(0, parents.size());
     return parents[randomIndex];
 }
-std::vector<Node*> getParents(Tree& tree) {
+std::vector<Node*> Mutate::getParents(Tree& tree) {
     std::vector<Node*> res;
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
@@ -64,9 +64,17 @@ std::vector<Node*> getParents(Tree& tree) {
     return res;
 }
 
-void Mutate::mutateTree(Tree& tree) {
+void Mutate::enableMutate(Tree& tree) {
+    auto it = TreeIterator(tree.root);
+    while (it.hasNext()) {
+        Node* node = it.next();
+        if (shouldMutate(0.01))
+            node->enabled = !node->enabled;
+    }
+}
 
+void Mutate::mutateTree(Tree& tree) {
+    enableMutate(tree);
     replaceMutate(tree);
     addNodeMutate(tree);
-
 }

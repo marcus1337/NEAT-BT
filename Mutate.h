@@ -13,5 +13,7 @@ public:
 
     void addNodeMutate(Tree& tree);
     void replaceMutate(Tree& tree);
+    void enableMutate(Tree& tree);
+
     void mutateTree(Tree& tree);
 };
