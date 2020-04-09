@@ -4,8 +4,14 @@
 
 class Mutate {
     bool shouldMutate(float chance);
+    void replaceRandomly(Node* node);
+    Node makeRandomNode();
 
+    Node* getRandomParent(Tree& tree);
+    std::vector<Node*> getParents(Tree& tree);
 public:
 
+    void addNodeMutate(Tree& tree);
+    void replaceMutate(Tree& tree);
     void mutateTree(Tree& tree);
 };
