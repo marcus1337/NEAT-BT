@@ -31,6 +31,15 @@ int Tree::getNumberParentNodes() {
     return result;
 }
 
+Node* Tree::getEmptyParent() {
+    Node* node = getNodeWithEmptyChild();
+    if (node != nullptr)
+        for (auto& n : node->children)
+            if (n.isEmptyParent())
+                return node;
+    return node;
+}
+
 Node* Tree::getNodeWithEmptyChild() {
     Node* result = nullptr;
     std::queue<Node*> nodes = makeNodeQueue();

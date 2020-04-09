@@ -21,6 +21,7 @@ public:
 
     int getNumberParentNodes();
 
+    Node* getEmptyParent();
     Node* getNodeWithEmptyChild();
     bool removeEmptyChildrenFromNode(Node* node);
     void removeAllEmptyChildren();
