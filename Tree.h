@@ -24,6 +24,7 @@ public:
     Node* getNodeWithEmptyChild();
     bool removeEmptyChildrenFromNode(Node* node);
     void removeAllEmptyChildren();
+    bool containsActionNode();
 
     Node root;
     int fitness;

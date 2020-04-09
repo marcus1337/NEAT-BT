@@ -76,3 +76,14 @@ void Tree::removeAllEmptyChildren() {
     while (nodeRemoved)
         nodeRemoved = removeAllEmptyLeaves();
 }
+
+bool Tree::containsActionNode() {
+    std::queue<Node*> nodes = makeNodeQueue();
+    while (!nodes.empty()) {
+        Node* node = popNodeQueue(nodes);
+        if (node->type == ACTION)
+            return true;
+        addParentsToQueue(nodes, node);
+    }
+    return false;
+}
