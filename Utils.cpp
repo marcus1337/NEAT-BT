@@ -7,3 +7,8 @@ int Utils::randi(int LO, int HI) {
     std::uniform_int_distribution<> distr(LO, HI);
     return distr(mRng);
 }
+
+float Utils::randf(float LO, float HI) {
+    std::uniform_real_distribution<> distr(LO, HI);
+    return distr(mRng);
+}

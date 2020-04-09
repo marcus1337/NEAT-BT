@@ -16,8 +16,9 @@ public:
         Node::maxDecoratorID = maxDecoratorID;
         Node::maxActionID = maxActionID;
         Node::maxConditionID = maxConditionID;
-
         trees.resize(numTrees);
+
+
     }
 
 };

@@ -12,13 +12,23 @@ enum NodeType {
 };
 
 class Node {
+
 public:
-    NodeType type;
-    int ID;
-    bool enabled;
     std::vector<Node> children;
 
+    NodeType type;
+    int ID;
+    bool enabled = true;
+
+    void addChild(Node node);
+
+    bool isParent();
+
     static int maxInteriorID, maxDecoratorID, maxActionID, maxConditionID;
+    static Node makeRandomInterior();
+    static Node makeRandomDecorator();
+    static Node makeRandomAction();
+    static Node makeRandomCondition();
 };
 
 #endif

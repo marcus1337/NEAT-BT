@@ -11,7 +11,7 @@ public:
     static std::random_device   mRd;
     static std::mt19937         mRng;
     static int randi(int LO, int HI);
-
+    static float randf(float LO, float HI);
 };
 
 #endif

@@ -7,6 +7,13 @@
 class Tree {
 public:
 
+    Tree() {
+        root = Node::makeRandomInterior();
+        root.addChild(Node::makeRandomAction());
+    }
+
+    int getNumberParentNodes();
+
     Node root;
     int fitness;
 
