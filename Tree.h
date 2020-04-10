@@ -18,7 +18,10 @@ public:
     Tree getValidTree();
 
     int getNumberParentNodes();
+    int getNumberOfNodes();
 
+    Node* getRandomNode();
+    Node* getNodeAtIndex(int index);
     Node* getEmptyParent();
     Node* getNodeWithEmptyChild();
     bool removeEmptyChildrenFromNode(Node* node);

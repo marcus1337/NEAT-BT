@@ -56,3 +56,7 @@ bool Node::operator<(const Node &right) const {
         return ID < right.ID;
     return type < right.type;
 }
+
+bool Node::operator==(Node const& right) const {
+    return type == right.type && ID == right.ID;
+}

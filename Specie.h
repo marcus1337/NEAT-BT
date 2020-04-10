@@ -12,7 +12,7 @@ public:
     int averageFitness = 0;
 
     std::vector<Tree*> trees;
-    Tree* getRandomNeat();
+    Tree* getRandomTree();
 
     void calcAvgFit();
     Specie();

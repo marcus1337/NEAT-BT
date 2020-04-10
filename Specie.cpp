@@ -13,7 +13,7 @@ void Specie::calcAvgFit() {
 Specie::Specie() : ID(-1) {}
 Specie::Specie(int _id) : ID(_id) {}
 
-Tree* Specie::getRandomNeat() {
+Tree* Specie::getRandomTree() {
     if (trees.empty())
         return nullptr;
     int index = Utils::randi(0, trees.size() - 1);

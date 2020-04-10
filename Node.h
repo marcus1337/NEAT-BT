@@ -32,6 +32,7 @@ public:
     static Node makeRandomCondition();
 
     bool operator< (const Node &right) const;
+    bool operator==(Node const&) const;
 };
 
 #endif

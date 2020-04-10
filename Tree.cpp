@@ -1,5 +1,6 @@
 #include "Tree.h"
 #include "TreeIterator.h"
+#include "Utils.h"
 
 Tree::Tree() {
     root = Node::makeRandomInterior();
@@ -120,4 +121,32 @@ std::vector<Node> Tree::getNodes() {
         result.push_back(nodInfo);
     }
     return result;
+}
+
+int Tree::getNumberOfNodes() {
+    int counter = 0;
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        it.next();
+        counter++;
+    }
+    return counter;
+}
+
+Node* Tree::getNodeAtIndex(int index) {
+    int counter = 0;
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* tmp = it.next();
+        counter++;
+        if (counter == index)
+            return tmp;
+    }
+    return nullptr;
+}
+
+Node* Tree::getRandomNode() {
+    int numNodes = getNumberOfNodes();
+    int randIndex = Utils::randi(0, numNodes);
+    return getNodeAtIndex(randIndex);
 }

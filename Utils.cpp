@@ -12,3 +12,8 @@ float Utils::randf(float LO, float HI) {
     std::uniform_real_distribution<> distr(LO, HI);
     return distr(mRng);
 }
+
+bool Utils::randb() {
+    std::uniform_int_distribution<> distr(0, 1);
+    return distr(mRng);
+}
