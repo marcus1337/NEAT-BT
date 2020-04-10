@@ -1,5 +1,16 @@
 #include "Tree.h"
 
+Tree::Tree() {
+    root = Node::makeRandomInterior();
+    root.addChild(Node::makeRandomAction());
+}
+
+Tree Tree::getValidTree() {
+    Tree tree = *this;
+    tree.removeAllEmptyChildren();
+    return tree;
+}
+
 void Tree::addParentsToQueue(std::queue<Node*>& nodes, Node* node) {
     for (auto& n : node->children) {
         if (n.isParent())

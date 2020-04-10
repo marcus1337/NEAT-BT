@@ -74,7 +74,7 @@ void Mutate::enableMutate(Tree& tree) {
 }
 
 void Mutate::mutateTree(Tree& tree) {
-    enableMutate(tree);
+    //enableMutate(tree);
     replaceMutate(tree);
     addNodeMutate(tree);
 }

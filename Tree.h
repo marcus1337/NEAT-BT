@@ -13,10 +13,8 @@ class Tree {
 
 public:
 
-    Tree() {
-        root = Node::makeRandomInterior();
-        root.addChild(Node::makeRandomAction());
-    }
+    Tree();
+    Tree getValidTree();
 
     int getNumberParentNodes();
 
