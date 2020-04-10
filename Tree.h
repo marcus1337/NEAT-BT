@@ -1,5 +1,6 @@
 #include "Node.h"
 #include <queue>
+#include <vector>
 
 #ifndef TREE_H
 #define TREE_H
@@ -26,6 +27,8 @@ public:
 
     Node root;
     int fitness;
+
+    std::vector<Node> getNodes();
 
 };
 

@@ -30,6 +30,8 @@ public:
     static Node makeRandomDecorator();
     static Node makeRandomAction();
     static Node makeRandomCondition();
+
+    bool operator< (const Node &right) const;
 };
 
 #endif

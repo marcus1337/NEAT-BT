@@ -50,3 +50,9 @@ Node Node::makeRandomCondition() {
     node.ID = Utils::randi(0, Node::maxConditionID);
     return node;
 }
+
+bool Node::operator<(const Node &right) const {
+    if (type == right.type)
+        return ID < right.ID;
+    return type < right.type;
+}

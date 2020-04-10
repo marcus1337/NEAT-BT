@@ -1,4 +1,5 @@
 #include "Tree.h"
+#include "TreeIterator.h"
 
 Tree::Tree() {
     root = Node::makeRandomInterior();
@@ -106,4 +107,17 @@ bool Tree::containsActionNode() {
         addParentsToQueue(nodes, node);
     }
     return false;
+}
+
+std::vector<Node> Tree::getNodes() {
+    std::vector<Node> result;
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* node = it.next();
+        Node nodInfo;
+        nodInfo.type = node->type;
+        nodInfo.ID = node->ID;
+        result.push_back(nodInfo);
+    }
+    return result;
 }

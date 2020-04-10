@@ -2,6 +2,7 @@
 
 #include <algorithm>
 #include "Utils.h"
+#include <set>
 
 void Speciator::sortSpecies(std::vector<Specie>& species) {
     for (Specie& spec : species)
@@ -80,14 +81,26 @@ void Speciator::adjustDynamicSpecieDelta() {
 }
 
 float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
-    float res = 0;
-    
-    return res;
+    std::vector<Node> nodes1 = n1.getNodes();
+    std::vector<Node> nodes2 = n2.getNodes();
+    int maxSize = std::max(nodes1.size(), nodes2.size());
+    int countSame = 0;
+    for (const auto& n : nodes1) {
+        std::vector<Node>::iterator it = std::find(nodes2.begin(), nodes2.end(), n);
+        size_t index = std::distance(nodes2.begin(), it);
+        if (index != nodes2.size()) {
+            countSame++;
+            nodes2.erase(nodes2.begin() + index);
+        }
+    }
+    return (float) countSame / maxSize;
 }
 float Speciator::treeSizeDiff(Tree& n1, Tree& n2) {
-    float res = 0;
-
-    return res;
+    std::vector<Node> nodes1 = n1.getNodes();
+    std::vector<Node> nodes2 = n2.getNodes();
+    int maxSize = std::max(nodes1.size(), nodes2.size());
+    int minSize = std::min(nodes1.size(), nodes2.size());
+    return (float)(maxSize - minSize)/maxSize;
 }
 
 std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
