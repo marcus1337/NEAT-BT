@@ -1,6 +1,7 @@
 #include "IOHandler.h"
 #include <filesystem>
 #include <iostream>
+#include "GenerationInfo.h"
 
 namespace fs = std::filesystem;
 
@@ -136,4 +137,20 @@ Tree IOHandler::loadTree(std::ifstream& stream) {
 Tree IOHandler::loadTree(int treeIndex, int generation, std::string folderName) {
     std::ifstream stream = getFileInStream(treeIndex, generation, folderName);
     return loadTree(stream);
+}
+
+std::ofstream IOHandler::getGenerationInfoOutStream(std::string folderName, int generation) {
+    std::string folderNameAndGeneration = getFolderName(generation, folderName);
+    makeFolder(folderNameAndGeneration);
+    return std::ofstream(getPath(std::string(folderNameAndGeneration + "//" + generationInfoFileName + ".txt")));
+}
+
+void IOHandler::saveGeneration(std::vector<Tree>& trees, int generation, std::string folderName) {
+    std::ofstream infoStream = getGenerationInfoOutStream(folderName, generation);
+    GenerationInfo generationInfo;
+    generationInfo.generation = generation;
+    generationInfo.saveData(infoStream, trees);
+
+    for (int i = 0; i < trees.size(); i++)
+        saveTree(trees[i], i + 1, generation);
 }

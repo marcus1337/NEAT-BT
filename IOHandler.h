@@ -10,6 +10,8 @@
 
 class IOHandler {
 private:
+    std::string generationInfoFileName = "Generation_Info";
+
     void makeFolder(std::string folderName);
     std::vector<Node*> extractInteriorNodes(Tree& tree);
     std::string getPath(std::string folderName);
@@ -18,6 +20,8 @@ private:
     std::ofstream getFileOutStream(int treeIndex, int generation, std::string folderName);
     std::ifstream getFileInStream(int treeIndex, int generation, std::string folderName);
     std::string getParentNodeString(Node* node);
+
+    std::ofstream getGenerationInfoOutStream(std::string folderName, int generation);
 
     void saveTree(Tree& tree, std::ofstream& stream);
     std::vector<Node> loadTreeNodes(std::ifstream& stream);
