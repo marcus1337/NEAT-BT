@@ -17,8 +17,7 @@ private:
     std::ofstream getFileStream(int treeIndex, int generation, std::string folderName);
     std::string getParentNodeString(Node* node);
 
-    std::string parentStartTag = "<P>";
-    std::string parentEndTag = "</P>";
+    void saveTree(Tree& tree, std::ofstream& stream);
 
 public:
     std::vector<Tree> loadGeneration();

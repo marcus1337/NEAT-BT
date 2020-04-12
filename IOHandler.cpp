@@ -31,20 +31,23 @@ std::ofstream IOHandler::getFileStream(int treeIndex, int generation, std::strin
 
 std::string IOHandler::getParentNodeString(Node* node) {
     std::string res;
-    res += parentStartTag + std::string(" " + std::to_string(node->type) + " " + std::to_string(node->ID)) + '\n';
+    res += std::string(std::to_string(node->children.size()) + " " + std::to_string(node->type) + " " + std::to_string(node->ID) + '\n');
     for (auto& n : node->children)
         res += std::string(std::to_string(n.type) + " " + std::to_string(n.ID)) + '\n';
-    res += parentEndTag + '\n';
     return res;
+}
+
+void IOHandler::saveTree(Tree& tree, std::ofstream& stream) {
+    std::vector<Node*> interiorNodes = extractInteriorNodes(tree);
+    stream << tree.fitness << '\n';
+    stream << interiorNodes.size() << '\n';
+    for (auto& node : interiorNodes)
+        stream << getParentNodeString(node) << '\n';
 }
 
 void IOHandler::saveTree(Tree& tree, int treeIndex, int generation, std::string folderName) {
     std::ofstream stream = getFileStream(treeIndex, generation, folderName);
-
-    std::vector<Node*> interiorNodes = extractInteriorNodes(tree);
-    for (auto& node : interiorNodes) {
-        stream << getParentNodeString(node) << '\n';
-    }
+    saveTree(tree, stream);
 }
 
 std::vector<Node*> IOHandler::extractInteriorNodes(Tree& tree) {

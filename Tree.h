@@ -30,7 +30,7 @@ public:
     bool containsActionNode();
 
     Node root;
-    int fitness;
+    int fitness = 0;
 
     std::vector<Node> getNodes();
 
