@@ -23,10 +23,16 @@ std::string IOHandler::getFilenameWithPath(std::string folderNameAndGeneration, 
     return getPath(std::string(folderNameAndGeneration + "//TREE_" + std::to_string(treeIndex)+ ".txt"));
 }
 
-std::ofstream IOHandler::getFileStream(int treeIndex, int generation, std::string folderName) {
+std::ofstream IOHandler::getFileOutStream(int treeIndex, int generation, std::string folderName) {
     std::string folderNameAndGeneration = getFolderName(generation, folderName);
     makeFolder(folderNameAndGeneration);
     return std::ofstream(getFilenameWithPath(folderNameAndGeneration, treeIndex));
+}
+
+std::ifstream IOHandler::getFileInStream(int treeIndex, int generation, std::string folderName) {
+    std::string folderNameAndGeneration = getFolderName(generation, folderName);
+    makeFolder(folderNameAndGeneration);
+    return std::ifstream(getFilenameWithPath(folderNameAndGeneration, treeIndex));
 }
 
 std::string IOHandler::getParentNodeString(Node* node) {
@@ -46,7 +52,7 @@ void IOHandler::saveTree(Tree& tree, std::ofstream& stream) {
 }
 
 void IOHandler::saveTree(Tree& tree, int treeIndex, int generation, std::string folderName) {
-    std::ofstream stream = getFileStream(treeIndex, generation, folderName);
+    std::ofstream stream = getFileOutStream(treeIndex, generation, folderName);
     saveTree(tree, stream);
 }
 
@@ -63,4 +69,45 @@ std::vector<Node*> IOHandler::extractInteriorNodes(Tree& tree) {
         interiors.push_back(tmp);
     }
     return interiors;
+}
+
+Node IOHandler::loadNode(std::ifstream& stream) {
+    Node res;
+    int type;
+    stream >> type >> res.ID;
+    res.type = static_cast<NodeType>(type);
+    return res;
+}
+
+Node IOHandler::loadInteriorNode(std::ifstream& stream) {
+    int numChildren;
+    stream >> numChildren;
+    Node parent = loadNode(stream);
+    for (int j = 0; j < numChildren; j++)
+        parent.children.push_back(loadNode(stream));
+    return parent;
+}
+
+std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
+    std::vector<Node> res;
+    int numParents;
+    stream >> numParents;
+    for (int i = 0; i < numParents; i++) {
+        Node node = loadInteriorNode(stream);
+        res.push_back(node);
+    }
+    return res;
+}
+
+void IOHandler::loadTree(Tree& tree, std::ifstream& stream) {
+    stream >> tree.fitness;
+    std::vector<Node> interiors = loadTreeNodes(stream);
+    
+}
+
+Tree IOHandler::loadTree(int treeIndex, int generation, std::string folderName) {
+    std::ifstream stream = getFileInStream(treeIndex, generation, folderName);
+    Tree result;
+    loadTree(result, stream);
+    return result;
 }

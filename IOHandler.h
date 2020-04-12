@@ -14,16 +14,21 @@ private:
     std::string getPath(std::string folderName);
     std::string getFolderName(int generation, std::string folderName);
     std::string getFilenameWithPath(std::string folderNameAndGeneration, int treeIndex);
-    std::ofstream getFileStream(int treeIndex, int generation, std::string folderName);
+    std::ofstream getFileOutStream(int treeIndex, int generation, std::string folderName);
+    std::ifstream getFileInStream(int treeIndex, int generation, std::string folderName);
     std::string getParentNodeString(Node* node);
 
     void saveTree(Tree& tree, std::ofstream& stream);
+    std::vector<Node> loadTreeNodes(std::ifstream& stream);
+    Node loadInteriorNode(std::ifstream& stream);
+    Node loadNode(std::ifstream& stream);
+    void loadTree(Tree& tree, std::ifstream& stream);
 
 public:
     std::vector<Tree> loadGeneration();
-    //Tree loadTree();
+    Tree loadTree(int treeIndex, int generation, std::string folderName = "TREES");
     void saveTree(Tree& tree, int treeIndex, int generation, std::string folderName = "TREES");
-    //void saveGeneration(std::vector<Tree>& trees, int generation, std::string folderName = "TREES");
+    void saveGeneration(std::vector<Tree>& trees, int generation, std::string folderName = "TREES");
 
 };
 
