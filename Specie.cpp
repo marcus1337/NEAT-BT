@@ -20,6 +20,15 @@ Tree* Specie::getRandomTree() {
     return trees[index];
 }
 
+float Specie::getSpecieStrength(int numSpecies, int totalAverageFitness) const {
+    if ((averageFitness > 0 && totalAverageFitness > 0) ||
+        (averageFitness < 0 && totalAverageFitness < 0))
+        return ((float)averageFitness / totalAverageFitness)*numSpecies;
+    if (averageFitness >= totalAverageFitness)
+        return 1.f;
+    return 0.f;
+}
+
 bool Specie::operator < (const Specie &right) const
 {
     return ID < right.ID;

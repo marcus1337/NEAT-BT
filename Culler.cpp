@@ -14,10 +14,7 @@ void Culler::cullSpecies(std::vector<Specie>& species) {
 }
 
 bool Culler::isWeak(const Specie& specie, int numSpecies, int totalAverageFitness) {
-    if ((specie.averageFitness > 0 && totalAverageFitness > 0) ||
-        (specie.averageFitness < 0 && totalAverageFitness < 0))
-        return ((float)specie.averageFitness / totalAverageFitness)*numSpecies < 0.8f;
-    return specie.averageFitness < totalAverageFitness;
+    return specie.getSpecieStrength(numSpecies, totalAverageFitness) < 0.8f;
 }
 
 void Culler::removeWeakSpecies(std::vector<Specie>& species) {

@@ -13,25 +13,27 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
     std::vector<Specie> species = speciator.getSpecies(trees);
     culler.cullSpecies(species);
 
-    breedFitnessBased(numChildrenLeft / 2, trees);
+    breedFitnessBased(numChildrenLeft / 2, trees, species);
     numChildrenLeft -= numChildrenLeft / 2;
-    breedElitismOfSpecies(numChildrenLeft, trees);
+    breedElitismOfSpecies(numChildrenLeft, trees, species);
 
     return result;
 }
 
+int Evolver::calcNumBreeds(const Specie& specie, int numSpecies, int totalAverageFitness) {
+    return specie.getSpecieStrength(numSpecies, totalAverageFitness)*(specie.trees.size()/2);
+}
+
 void Evolver::breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
-    totalAverageFitness = getTotalAverageFitness();
+    int totalAverageFitness = getTotalAverageFitness(species);
     int minNumBreeds = 0;
     while (numKids > 0) {
         int produced = 0;
         for (Specie& spec : species) {
-            int numBreeds = std::max(calcNumBreeds(spec), minNumBreeds);
+            int numBreeds = std::max(calcNumBreeds(spec, species.size(), totalAverageFitness), minNumBreeds);
             produced += numBreeds;
             for (int i = 0; i < numBreeds && numKids > 0; i++) {
-                int childIndex = getChildIndex(numKids);
-                futures.push_back(std::async(std::launch::async | std::launch::deferred,
-                    std::bind(&Speciator::breedChild, *this, spec, childIndex)));
+                breedChild(spec, newTrees);
                 numKids--;
             }
         }
@@ -41,7 +43,8 @@ void Evolver::breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::v
 }
 
 void Evolver::breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
-
+    for (int i = 0; i < numKids; i++)
+        breedElite(species, newTrees);
 }
 
 void Evolver::breedChild(Specie& specie, std::vector<Tree>& newTrees) {

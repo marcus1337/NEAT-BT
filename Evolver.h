@@ -18,8 +18,8 @@ public:
 
     void crossOver(Tree& child, Tree* n1, Tree* n2);
 
-    int totalAverageFitness = 1;
     int getTotalAverageFitness(std::vector<Specie>& species);
+    int calcNumBreeds(const Specie& o, int numSpecies, int totalAverageFitness);
 };
 
 #endif
