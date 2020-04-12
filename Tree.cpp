@@ -161,3 +161,18 @@ int Tree::getNumberOfNodesOfType(NodeType nodeType) {
     }
     return counter;
 }
+
+bool Tree::equals(Tree& other) {
+    std::vector<Node> nodes1 = getNodes();
+    std::vector<Node> nodes2 = other.getNodes();
+
+    if (nodes1.size() != nodes2.size())
+        return false;
+
+    for (int i = 0; i < nodes1.size(); i++) {
+        if (nodes1[i] != nodes2[i])
+            return false;
+    }
+
+    return true;
+}

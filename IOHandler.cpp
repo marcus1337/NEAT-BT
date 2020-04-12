@@ -102,12 +102,29 @@ std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
 void IOHandler::loadTree(Tree& tree, std::ifstream& stream) {
     stream >> tree.fitness;
     std::vector<Node> interiors = loadTreeNodes(stream);
-    
+    tree.root = interiors[0];
+
+    std::stack<Node*> nodeStack;
+    std::stack<int> childIndexes;
+    nodeStack.push(&tree.root);
+    int interiorIndex = 0;
+    while (!nodeStack.empty()) {
+        Node* node = nodeStack.top();
+        nodeStack.pop();
+        for (auto& n : node->children) {
+            if (n.isParent())
+                nodeStack.push(&n);
+        }
+        if (interiorIndex > 0) {
+            *node = interiors[interiorIndex];
+        }
+        interiorIndex++;
+    }    
 }
 
 Tree IOHandler::loadTree(int treeIndex, int generation, std::string folderName) {
     std::ifstream stream = getFileInStream(treeIndex, generation, folderName);
-    Tree result;
+    Tree result; 
     loadTree(result, stream);
     return result;
 }

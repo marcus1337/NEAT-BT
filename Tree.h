@@ -33,7 +33,7 @@ public:
     int fitness = 0;
 
     std::vector<Node> getNodes();
-
+    bool equals(Tree& other);
 };
 
 #endif
