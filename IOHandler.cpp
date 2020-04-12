@@ -154,3 +154,24 @@ void IOHandler::saveGeneration(std::vector<Tree>& trees, int generation, std::st
     for (int i = 0; i < trees.size(); i++)
         saveTree(trees[i], i + 1, generation);
 }
+
+std::ifstream IOHandler::getGenerationInfoInStream(std::string folderName, int generation) {
+    std::string folderNameAndGeneration = getFolderName(generation, folderName);
+    makeFolder(folderNameAndGeneration);
+    return std::ifstream(getPath(std::string(folderNameAndGeneration + "//" + generationInfoFileName + ".txt")));
+}
+
+std::vector<Tree> IOHandler::loadGeneration(int generation, std::string folderName) {
+    std::vector<Tree> result;
+    GenerationInfo generationInfo;
+    generationInfo.generation = generation;
+    std::ifstream infoStream = getGenerationInfoInStream(folderName, generation);
+    generationInfo.loadData(infoStream);
+
+    for (int i = 0; i < generationInfo.numTrees; i++) {
+        Tree tree = loadTree(i + 1, generation, folderName);
+        result.push_back(tree);
+    }
+
+    return result;
+}

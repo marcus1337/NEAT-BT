@@ -22,6 +22,7 @@ private:
     std::string getParentNodeString(Node* node);
 
     std::ofstream getGenerationInfoOutStream(std::string folderName, int generation);
+    std::ifstream getGenerationInfoInStream(std::string folderName, int generation);
 
     void saveTree(Tree& tree, std::ofstream& stream);
     std::vector<Node> loadTreeNodes(std::ifstream& stream);
