@@ -1,7 +1,6 @@
 #include "IOHandler.h"
 #include <filesystem>
 #include <iostream>
-#include <stack>
 
 namespace fs = std::filesystem;
 
@@ -20,7 +19,7 @@ std::string IOHandler::getFolderName(int generation, std::string folderName) {
 }
 
 std::string IOHandler::getFilenameWithPath(std::string folderNameAndGeneration, int treeIndex) {
-    return getPath(std::string(folderNameAndGeneration + "//TREE_" + std::to_string(treeIndex)+ ".txt"));
+    return getPath(std::string(folderNameAndGeneration + "//TREE_" + std::to_string(treeIndex) + ".txt"));
 }
 
 std::ofstream IOHandler::getFileOutStream(int treeIndex, int generation, std::string folderName) {
@@ -99,32 +98,42 @@ std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
     return res;
 }
 
-void IOHandler::loadTree(Tree& tree, std::ifstream& stream) {
+void IOHandler::addParentsToStack(Node* node, std::stack<Node*>& nodeStack) {
+    for (auto& n : node->children) {
+        if (n.isParent())
+            nodeStack.push(&n);
+    }
+}
+
+void IOHandler::addNodeToTree(int interiorIndex, std::vector<Node>& interiors, std::stack<Node*>& nodeStack) {
+    Node* node = nodeStack.top();
+    nodeStack.pop();
+    addParentsToStack(node, nodeStack);
+    if (interiorIndex > 0)
+        *node = interiors[interiorIndex];
+}
+
+void IOHandler::addNodesToTree(std::vector<Node>& interiors, Tree& tree) {
+    std::stack<Node*> nodeStack;
+    nodeStack.push(&tree.root);
+    int interiorIndex = 0;
+
+    while (!nodeStack.empty()) {
+        addNodeToTree(interiorIndex, interiors, nodeStack);
+        interiorIndex++;
+    }
+}
+
+Tree IOHandler::loadTree(std::ifstream& stream) {
+    Tree tree;
     stream >> tree.fitness;
     std::vector<Node> interiors = loadTreeNodes(stream);
     tree.root = interiors[0];
-
-    std::stack<Node*> nodeStack;
-    std::stack<int> childIndexes;
-    nodeStack.push(&tree.root);
-    int interiorIndex = 0;
-    while (!nodeStack.empty()) {
-        Node* node = nodeStack.top();
-        nodeStack.pop();
-        for (auto& n : node->children) {
-            if (n.isParent())
-                nodeStack.push(&n);
-        }
-        if (interiorIndex > 0) {
-            *node = interiors[interiorIndex];
-        }
-        interiorIndex++;
-    }    
+    addNodesToTree(interiors, tree);
+    return tree;
 }
 
 Tree IOHandler::loadTree(int treeIndex, int generation, std::string folderName) {
     std::ifstream stream = getFileInStream(treeIndex, generation, folderName);
-    Tree result; 
-    loadTree(result, stream);
-    return result;
+    return loadTree(stream);
 }

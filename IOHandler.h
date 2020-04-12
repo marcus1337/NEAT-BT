@@ -2,6 +2,7 @@
 #include <vector>
 #include <string>
 #include <fstream>
+#include <stack>
 
 #ifndef IOHANDLER_H
 #define IOHANDLER_H
@@ -22,10 +23,13 @@ private:
     std::vector<Node> loadTreeNodes(std::ifstream& stream);
     Node loadInteriorNode(std::ifstream& stream);
     Node loadNode(std::ifstream& stream);
-    void loadTree(Tree& tree, std::ifstream& stream);
+    Tree loadTree(std::ifstream& stream);
+    void addNodesToTree(std::vector<Node>& interiors, Tree& tree);
+    void addNodeToTree(int interiorIndex, std::vector<Node>& interiors, std::stack<Node*>& nodeStack);
+    void addParentsToStack(Node* node, std::stack<Node*>& nodeStack);
 
 public:
-    std::vector<Tree> loadGeneration();
+    std::vector<Tree> loadGeneration(int generation, std::string folderName = "TREES");
     Tree loadTree(int treeIndex, int generation, std::string folderName = "TREES");
     void saveTree(Tree& tree, int treeIndex, int generation, std::string folderName = "TREES");
     void saveGeneration(std::vector<Tree>& trees, int generation, std::string folderName = "TREES");
