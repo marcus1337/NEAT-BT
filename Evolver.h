@@ -11,12 +11,15 @@ class Evolver {
 public:
     int numChildrenLeft = 0;
     std::vector<Tree> makeNewGeneration(std::vector<Tree>& trees);
-    void breedFitnessBased(int numKids, std::vector<Tree>& newTrees);
-    void breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees);
+    void breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species);
+    void breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species);
     void breedChild(Specie& specie, std::vector<Tree>& newTrees);
     void breedElite(std::vector<Specie>& species, std::vector<Tree>& newTrees);
 
     void crossOver(Tree& child, Tree* n1, Tree* n2);
+
+    int totalAverageFitness = 1;
+    int getTotalAverageFitness(std::vector<Specie>& species);
 };
 
 #endif

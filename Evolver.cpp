@@ -20,11 +20,27 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
     return result;
 }
 
-void Evolver::breedFitnessBased(int numKids, std::vector<Tree>& newTrees) {
-
+void Evolver::breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
+    totalAverageFitness = getTotalAverageFitness();
+    int minNumBreeds = 0;
+    while (numKids > 0) {
+        int produced = 0;
+        for (Specie& spec : species) {
+            int numBreeds = std::max(calcNumBreeds(spec), minNumBreeds);
+            produced += numBreeds;
+            for (int i = 0; i < numBreeds && numKids > 0; i++) {
+                int childIndex = getChildIndex(numKids);
+                futures.push_back(std::async(std::launch::async | std::launch::deferred,
+                    std::bind(&Speciator::breedChild, *this, spec, childIndex)));
+                numKids--;
+            }
+        }
+        if (!produced)
+            minNumBreeds++;
+    }
 }
 
-void Evolver::breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees) {
+void Evolver::breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
 
 }
 
@@ -49,4 +65,12 @@ void Evolver::crossOver(Tree& child, Tree* n1, Tree* n2) {
     Node* node1 = child.getRandomNode();
     Node* node2 = n2->getRandomNode();
     *node1 = *node2;
+}
+
+
+int Evolver::getTotalAverageFitness(std::vector<Specie>& species) {
+    int total = 0;
+    for (const auto& s : species)
+        total += s.averageFitness;
+    return total;
 }

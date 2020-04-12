@@ -147,6 +147,6 @@ Node* Tree::getNodeAtIndex(int index) {
 
 Node* Tree::getRandomNode() {
     int numNodes = getNumberOfNodes();
-    int randIndex = Utils::randi(0, numNodes);
+    int randIndex = Utils::randi(1, numNodes);
     return getNodeAtIndex(randIndex);
 }
