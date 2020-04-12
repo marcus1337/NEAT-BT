@@ -150,3 +150,14 @@ Node* Tree::getRandomNode() {
     int randIndex = Utils::randi(1, numNodes);
     return getNodeAtIndex(randIndex);
 }
+
+int Tree::getNumberOfNodesOfType(NodeType nodeType) {
+    int counter = 0;
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* tmp = it.next();
+        if (tmp->type == nodeType)
+            counter++;
+    }
+    return counter;
+}

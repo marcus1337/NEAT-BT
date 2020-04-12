@@ -18,6 +18,7 @@ public:
     Tree getValidTree();
 
     int getNumberParentNodes();
+    int getNumberOfNodesOfType(NodeType nodeType);
     int getNumberOfNodes();
 
     Node* getRandomNode();
