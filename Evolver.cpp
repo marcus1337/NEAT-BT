@@ -24,21 +24,27 @@ int Evolver::calcNumBreeds(const Specie& specie, int numSpecies, int totalAverag
     return specie.getSpecieStrength(numSpecies, totalAverageFitness)*(specie.trees.size()/2);
 }
 
+int Evolver::calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness) {
+    int maxFound = 0;
+    for (const auto& spec : species) {
+        maxFound = std::max(calcNumBreeds(spec, species.size(), totalAverageFitness), maxFound);
+    }
+    if (maxFound <= 0)
+        return 1;
+    return 0;
+}
+
 void Evolver::breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
     int totalAverageFitness = getTotalAverageFitness(species);
-    int minNumBreeds = 0;
+    int minNumBreeds = calcMinNumBreeds(species,totalAverageFitness);
     while (numKids > 0) {
-        int produced = 0;
         for (Specie& spec : species) {
             int numBreeds = std::max(calcNumBreeds(spec, species.size(), totalAverageFitness), minNumBreeds);
-            produced += numBreeds;
             for (int i = 0; i < numBreeds && numKids > 0; i++) {
                 breedChild(spec, newTrees);
                 numKids--;
             }
         }
-        if (!produced)
-            minNumBreeds++;
     }
 }
 

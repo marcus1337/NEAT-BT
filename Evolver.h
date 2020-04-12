@@ -20,6 +20,7 @@ public:
 
     int getTotalAverageFitness(std::vector<Specie>& species);
     int calcNumBreeds(const Specie& o, int numSpecies, int totalAverageFitness);
+    int calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness);
 };
 
 #endif
