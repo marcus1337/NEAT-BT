@@ -1,6 +1,4 @@
-//#include "lib/Catch2/include/catch.hpp"
-
-#include <iostream>
+/*#include <iostream>
 
 #include "Node.h"
 #include "Coordinator.h"
@@ -19,4 +17,4 @@ int main() {
     iohandler.saveGeneration(coordinator.trees, 5);
 
     return 0;
-}
+}*/
