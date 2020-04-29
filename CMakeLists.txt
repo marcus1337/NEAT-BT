@@ -5,7 +5,7 @@ set (CMAKE_CXX_STANDARD 17)
 
 include_directories(".")
 
-add_subdirectory(lib/Catch2)
+add_subdirectory(lib/Catch2/)
 add_executable(${PROJECT_NAME}
     "Main.cpp"
     "Breeder.cpp"
