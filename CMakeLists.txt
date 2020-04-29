@@ -1,7 +1,7 @@
-cmake_minimum_required(VERSION 3.1)
+cmake_minimum_required(VERSION 3.9)
 
-project(pingsim)
-set (CMAKE_CXX_STANDARD 14)
+project(NEAT-BT)
+set (CMAKE_CXX_STANDARD 17)
 
 include_directories(".")
 
@@ -34,11 +34,5 @@ add_executable(${PROJECT_NAME}
 	"Utils.cpp"
     "Utils.h"
 )
-
-if (WIN32)
-    target_link_libraries(${PROJECT_NAME} ws2_32)
-else()
-    target_link_libraries(${PROJECT_NAME} pthread)
-endif()
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
