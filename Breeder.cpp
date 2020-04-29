@@ -1,5 +1,6 @@
 #include "Breeder.h"
 #include "Utils.h"
+#include <algorithm>
 
 std::vector<Tree> Breeder::makeNewGeneration(std::vector<Specie>& species, int totalNumTrees) {
     std::vector<Tree> trees;
