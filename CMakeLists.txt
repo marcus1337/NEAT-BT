@@ -5,11 +5,34 @@ set (CMAKE_CXX_STANDARD 17)
 
 include_directories(".")
 
-file(GLOB helloworld_SRC
-    "*.h"
-    "*.cpp"
+add_executable(${PROJECT_NAME}
+    "Main.cpp"
+    "Breeder.cpp"
+    "Breeder.h"
+	"Coordinator.cpp"
+    "Coordinator.h"
+	"Culler.cpp"
+    "Culler.h"
+	"Evolver.cpp"
+    "Evolver.h"
+	"GenerationInfo.cpp"
+    "GenerationInfo.h"
+	"IOHandler.cpp"
+    "IOHandler.h"
+	"Mutate.cpp"
+    "Mutate.h"
+	"Node.cpp"
+    "Node.h"
+	"Speciator.cpp"
+    "Speciator.h"
+	"Specie.cpp"
+    "Specie.h"
+	"Tree.cpp"
+    "Tree.h"
+	"TreeIterator.cpp"
+    "TreeIterator.h"
+	"Utils.cpp"
+    "Utils.h"
 )
 
-add_executable(helloworld ${helloworld_SRC})
-
-install(TARGETS ${helloworld_SRC} DESTINATION bin)
+install(TARGETS ${PROJECT_NAME} DESTINATION bin)
