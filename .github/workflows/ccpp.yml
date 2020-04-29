@@ -25,12 +25,12 @@ jobs:
         - {
             name: "Windows Latest MinGW", artifact: "Windows-MinGW.tar.xz",
             os: windows-latest,
-            cc: "gcc", cxx: "g++"
+            cc: "gcc-8", cxx: "g++-8"
           }
         - {
             name: "Ubuntu Latest GCC", artifact: "Linux.tar.xz",
             os: ubuntu-latest,
-            cc: "gcc", cxx: "g++"
+            cc: "gcc-8", cxx: "g++-8"
           }
         - {
             name: "macOS Latest Clang", artifact: "macOS.tar.xz",
