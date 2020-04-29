@@ -10,9 +10,6 @@ env:
 
 
 jobs:
-  before_script:
-    - sudo apt-get update -qq
-    - sudo apt-get install libboost-thread-dev libboost-system-dev libboost-test-dev
   build:
     name: ${{ matrix.config.name }}
     runs-on: ${{ matrix.config.os }}
