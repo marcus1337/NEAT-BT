@@ -1,3 +1,5 @@
+#include "lib/Catch2/include/catch.hpp"
+
 #include <iostream>
 
 #include "Node.h"
