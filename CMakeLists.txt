@@ -7,32 +7,6 @@ include_directories(".")
 
 add_executable(${PROJECT_NAME}
     "Main.cpp"
-    "Breeder.cpp"
-    "Breeder.h"
-	"Coordinator.cpp"
-    "Coordinator.h"
-	"Culler.cpp"
-    "Culler.h"
-	"Evolver.cpp"
-    "Evolver.h"
-	"GenerationInfo.cpp"
-    "GenerationInfo.h"
-	"IOHandler.cpp"
-    "IOHandler.h"
-	"Mutate.cpp"
-    "Mutate.h"
-	"Node.cpp"
-    "Node.h"
-	"Speciator.cpp"
-    "Speciator.h"
-	"Specie.cpp"
-    "Specie.h"
-	"Tree.cpp"
-    "Tree.h"
-	"TreeIterator.cpp"
-    "TreeIterator.h"
-	"Utils.cpp"
-    "Utils.h"
 )
 
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
