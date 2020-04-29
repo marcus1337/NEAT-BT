@@ -4,6 +4,7 @@ project(NEAT-BT)
 set (CMAKE_CXX_STANDARD 17)
 
 include_directories(".")
+add_library(myLib "")
 
 add_executable(${PROJECT_NAME}
     "Main.cpp"
