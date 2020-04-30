@@ -2,6 +2,9 @@
 #include "Utils.h"
 #include "Tree.h"
 
+#ifndef MUTATE_H
+#define MUTATE_H
+
 class Mutate {
     bool shouldMutate(float chance);
     void replaceRandomly(Node* node);
@@ -20,3 +23,5 @@ public:
 
     void mutateTree(Tree& tree);
 };
+
+#endif
