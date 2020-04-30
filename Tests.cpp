@@ -34,7 +34,7 @@ BOOST_AUTO_TEST_CASE(init_test)
     }
 }
 
-BOOST_AUTO_TEST_CASE(mutateTree_test)
+BOOST_AUTO_TEST_CASE(mutateNode_test)
 {
     Mutate mutater;
     mutater.mutateChance = 1;
@@ -43,6 +43,24 @@ BOOST_AUTO_TEST_CASE(mutateTree_test)
         mutater.addNodeMutate(tree);
         Tree tmpCopy = tree.getValidTree();
         BOOST_REQUIRE(tree.equals(tmpCopy));
+    }
+}
+
+BOOST_AUTO_TEST_CASE(mutateReplace_test)
+{
+    TestUtils::setMaxNodeIDs(50);
+    Mutate mutater;
+    mutater.mutateChance = 1.0f;
+    Tree tree = TestUtils::getRandomizedTree(300);
+    rep(i, 0, 3) {
+        Tree tmpCopy = tree;
+        mutater.replaceMutate(tree);
+        auto nodes1 = tree.getNodes();
+        auto nodes2 = tmpCopy.getNodes();
+        BOOST_REQUIRE(nodes1.size() == nodes2.size());
+        rep(j, 0, nodes1.size()) {
+            BOOST_REQUIRE(nodes1[j].type == nodes2[j].type);
+        }
     }
 }
 

@@ -8,6 +8,9 @@
 class TestUtils {
 public:
 
-    Tree getValidTree(Tree& prevTree);
+    static Tree getValidTree(Tree& prevTree);
+    static Tree getRandomizedTree(int numNodes);
+
+    static void setMaxNodeIDs(int maxNum);
 
 };
