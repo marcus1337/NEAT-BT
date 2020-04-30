@@ -1,15 +1,12 @@
 
 #include "Evolver.h"
-#include "Speciator.h"
-#include "Culler.h"
+
 #include "Utils.h"
-#include "Breeder.h"
 
 
 std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
-    Speciator speciator;
-    Culler culler;
-    Breeder breeder;
+    culler.populationSize = trees.size();
+
     std::vector<Specie> species = speciator.getSpecies(trees);
     culler.cullSpecies(species);
     std::vector<Tree> newTrees = breeder.makeNewGeneration(species, trees.size());

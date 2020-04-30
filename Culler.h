@@ -8,14 +8,16 @@
 class Culler {
 public:
     int numSpeciesLimit = 200;
+    int populationSize = 1;
+
     int getTotalAverageFitness(std::vector<Specie>& species);
 
     void removeStaleSpecies(std::vector<Specie>& species);
     void cullSpecies(std::vector<Specie>& species);
     bool isWeak(const Specie& o, int numSpecies, int totalAverageFitness);
-    void removeWeakSpecies(std::vector<Specie>& species);
-    void removeWeaksInSpecies(std::vector<Specie>& species);
-    void cullAllButOneFromSpecies(std::vector<Specie>& species);
+    //void removeWeakSpecies(std::vector<Specie>& species);
+    //void removeWeaksInSpecies(std::vector<Specie>& species);
+    //void cullAllButOneFromSpecies(std::vector<Specie>& species);
 };
 
 #endif

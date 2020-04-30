@@ -3,21 +3,22 @@
 #include <algorithm>
 
 void Culler::removeStaleSpecies(std::vector<Specie>& species) {
-    if (species.size() >= numSpeciesLimit)
-        species.erase(species.begin() + numSpeciesLimit, species.end());
+    int maxSpecies = std::max(populationSize / 2, 1);
+    if (species.size() > maxSpecies)
+        species.erase(species.begin() + maxSpecies, species.end());
 }
 
 void Culler::cullSpecies(std::vector<Specie>& species) {
     removeStaleSpecies(species);
-    removeWeaksInSpecies(species);
-    removeWeakSpecies(species);
+    //removeWeaksInSpecies(species);
+    //removeWeakSpecies(species);
 }
 
 bool Culler::isWeak(const Specie& specie, int numSpecies, int totalAverageFitness) {
     return specie.getSpecieStrength(numSpecies, totalAverageFitness) < 0.8f;
 }
 
-void Culler::removeWeakSpecies(std::vector<Specie>& species) {
+/*void Culler::removeWeakSpecies(std::vector<Specie>& species) {
     int numSpecies = species.size();
     int totalAverageFitness = getTotalAverageFitness(species);
     species.erase(std::remove_if(species.begin(), species.end(),
@@ -35,13 +36,13 @@ void Culler::removeWeaksInSpecies(std::vector<Specie>& species) {
     }
     species.erase(std::remove_if(species.begin(), species.end(),
         [](const Specie& o) { return o.trees.size() == 0; }), species.end());
-}
+}*/
 
-void Culler::cullAllButOneFromSpecies(std::vector<Specie>& species) {
+/*void Culler::cullAllButOneFromSpecies(std::vector<Specie>& species) {
     for (Specie& spec : species) {
         spec.trees = std::vector<Tree*>({ spec.trees[0] });
     }
-}
+}*/
 
 int Culler::getTotalAverageFitness(std::vector<Specie>& species) {
     int total = 0;
