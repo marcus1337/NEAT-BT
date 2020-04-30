@@ -1,31 +1,50 @@
-#define BOOST_TEST_MODULE MyTest
+#define BOOST_TEST_MODULE TestBugs
 #include "boost/test/unit_test.hpp"
 
 #include "Node.h"
-#include "Coordinator.h"
 #include "IOHandler.h"
+#include "Tree.h"
+#include "Coordinator.h"
+#include "Mutate.h"
 
 using namespace std;
+namespace utf = boost::unit_test;
 
-int add(int i, int j) { return i + j; }
+#define rep(i, a, b) for(int i = a; i < (b); ++i)
+#define all(x) begin(x), end(x)
+#define sz(x) (int)(x).size()
 
-BOOST_AUTO_TEST_CASE(my_test)
+
+BOOST_AUTO_TEST_CASE(saveLoad_test)
 {
-    // seven ways to detect and report the same error:
-    BOOST_CHECK(add(2, 2) == 4);        // #1 continues on error
+    //BOOST_CHECK(add(2, 2) == 4);
+}
 
-    BOOST_REQUIRE(add(2, 2) == 4);      // #2 throws on error
+BOOST_AUTO_TEST_CASE(init_test)
+{
+    Coordinator coordinator;
+    int n = 100;
+    coordinator.init(n, 10, 10, 10, 10);
+    BOOST_REQUIRE(sz(coordinator.trees) == n);
+    rep(i, 0, n) {
+        BOOST_REQUIRE(coordinator.trees[i].getNumberOfNodes() == 2);
+        BOOST_REQUIRE(coordinator.trees[i].getValidTree().equals(coordinator.trees[i]));
+    }
+}
 
-    if (add(2, 2) != 4)
-        BOOST_ERROR("Ouch...");            // #3 continues on error
+BOOST_AUTO_TEST_CASE(mutateTree_test)
+{
+    Mutate mutater;
+    mutater.mutateChance = 1;
+    Tree tree;
+    rep(i, 0, 300) {
+        mutater.addNodeMutate(tree);
+        Tree tmpCopy = tree.getValidTree();
+        BOOST_REQUIRE(tree.equals(tmpCopy));
+    }
+}
 
-    if (add(2, 2) != 4)
-        BOOST_FAIL("Ouch...");             // #4 throws on error
+BOOST_AUTO_TEST_CASE(tree_test)
+{
 
-    if (add(2, 2) != 4) throw "Ouch..."; // #5 throws on error
-
-    BOOST_CHECK_MESSAGE(add(2, 2) == 4,  // #6 continues on error
-        "add(..) result: " << add(2, 2));
-
-    BOOST_CHECK_EQUAL(add(2, 2), 4);	  // #7 continues on error
 }

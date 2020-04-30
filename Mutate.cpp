@@ -30,35 +30,46 @@ void Mutate::replaceMutate(Tree& tree) {
 Node Mutate::makeRandomNode() {
     float randFloat = Utils::randf(0.f, 1.f);
     if (randFloat > 0.97f)
-        return Node::makeRandomInterior();
+        return Node::makeRandomDecorator();
     if (randFloat > 0.85f)
         return Node::makeRandomCondition();
-    if (randFloat > 0.6f)
+    if (randFloat > 0.65f)
         return Node::makeRandomInterior();
-    return Node::makeRandomCondition();
+    return Node::makeRandomAction();
 }
 
 void Mutate::addNodeMutate(Tree& tree) {
     if (shouldMutate(mutateChance)) {
-        Node* node = tree.getEmptyParent();
-        if (node != nullptr)
-            node->addChild(makeRandomNode());
-        else
-            getRandomParent(tree)->addChild(makeRandomNode());
+        Node newNode = makeRandomNode();
+        Node* interior = getRandomInterior(tree);
+        interior->addChild(newNode);
+        while (newNode.isParent()) {
+            interior = getEmptyParentChild(interior);
+            newNode = makeRandomNode();
+            interior->addChild(newNode);
+        }
     }
 }
 
-Node* Mutate::getRandomParent(Tree& tree) {
-    std::vector<Node*> parents = getParents(tree);
-    int randomIndex = Utils::randi(0, parents.size());
+Node* Mutate::getEmptyParentChild(Node* node) {
+    for (int i = 0; i < node->children.size(); i++)
+        if (node->children[i].isEmptyParent())
+            return &node->children[i];
+    return nullptr;
+}
+
+Node* Mutate::getRandomInterior(Tree& tree) {
+    std::vector<Node*> parents = getInteriors(tree);
+    int randomIndex = Utils::randi(0, parents.size()-1);
     return parents[randomIndex];
 }
-std::vector<Node*> Mutate::getParents(Tree& tree) {
+
+std::vector<Node*> Mutate::getInteriors(Tree& tree) {
     std::vector<Node*> res;
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
         Node* node = it.next();
-        if (node->isParent())
+        if (node->isParent() && node->type != DECORATOR)
             res.push_back(node);
     }
     return res;

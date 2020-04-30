@@ -7,8 +7,9 @@ class Mutate {
     void replaceRandomly(Node* node);
     Node makeRandomNode();
 
-    Node* getRandomParent(Tree& tree);
-    std::vector<Node*> getParents(Tree& tree);
+    Node* getRandomInterior(Tree& tree);
+    Node* getEmptyParentChild(Node* node);
+    std::vector<Node*> getInteriors(Tree& tree);
 public:
 
     float mutateChance = 0.01f;
