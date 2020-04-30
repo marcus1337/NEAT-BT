@@ -19,7 +19,13 @@ namespace utf = boost::unit_test;
 
 BOOST_AUTO_TEST_CASE(saveLoad_test)
 {
-    //BOOST_CHECK(add(2, 2) == 4);
+    TestUtils::setMaxNodeIDs(5000);
+    IOHandler iohandler;
+    std::string folderName = "TESTIO";
+    Tree tree = TestUtils::getRandomizedTree(100);
+    iohandler.saveTree(tree, 0, 0, folderName);
+    Tree otherTree = iohandler.loadTree(0, 0, folderName);
+    BOOST_REQUIRE(tree.equals(otherTree));
 }
 
 BOOST_AUTO_TEST_CASE(init_test)

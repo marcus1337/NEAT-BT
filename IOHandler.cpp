@@ -71,47 +71,20 @@ std::vector<Node*> IOHandler::extractInteriorNodes(Tree& tree) {
     return interiors;
 }
 
-Node IOHandler::loadNode(std::ifstream& stream) {
-    Node res;
-    int type;
-    stream >> type >> res.ID;
-    res.type = static_cast<NodeType>(type);
-    return res;
-}
-
-Node IOHandler::loadInteriorNode(std::ifstream& stream) {
-    int numChildren;
-    stream >> numChildren;
-    Node parent = loadNode(stream);
-    for (int j = 0; j < numChildren; j++)
-        parent.children.push_back(loadNode(stream));
-    return parent;
-}
-
-std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
-    std::vector<Node> res;
-    int numParents;
-    stream >> numParents;
-    for (int i = 0; i < numParents; i++) {
-        Node node = loadInteriorNode(stream);
-        res.push_back(node);
-    }
-    return res;
-}
-
 void IOHandler::addParentsToStack(Node* node, std::stack<Node*>& nodeStack) {
     for (auto& n : node->children) {
-        if (n.isParent())
+        if (n.isParent()) {
             nodeStack.push(&n);
+        }
     }
 }
 
 void IOHandler::addNodeToTree(int interiorIndex, std::vector<Node>& interiors, std::stack<Node*>& nodeStack) {
     Node* node = nodeStack.top();
     nodeStack.pop();
-    addParentsToStack(node, nodeStack);
     if (interiorIndex > 0)
         *node = interiors[interiorIndex];
+    addParentsToStack(node, nodeStack);
 }
 
 void IOHandler::addNodesToTree(std::vector<Node>& interiors, Tree& tree) {
@@ -132,6 +105,34 @@ Tree IOHandler::loadTree(std::ifstream& stream) {
     tree.root = interiors[0];
     addNodesToTree(interiors, tree);
     return tree;
+}
+
+std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
+    std::vector<Node> res;
+    int numParents;
+    stream >> numParents;
+    for (int i = 0; i < numParents; i++) {
+        Node node = loadInteriorNode(stream);
+        res.push_back(node);
+    }
+    return res;
+}
+
+Node IOHandler::loadInteriorNode(std::ifstream& stream) {
+    int numChildren;
+    stream >> numChildren;
+    Node parent = loadNode(stream);
+    for (int j = 0; j < numChildren; j++)
+        parent.children.push_back(loadNode(stream));
+    return parent;
+}
+
+Node IOHandler::loadNode(std::ifstream& stream) {
+    Node res;
+    int type;
+    stream >> type >> res.ID;
+    res.type = static_cast<NodeType>(type);
+    return res;
 }
 
 Tree IOHandler::loadTree(int treeIndex, int generation, std::string folderName) {
