@@ -32,8 +32,11 @@ public:
     Node root;
     int fitness = 0;
 
-    std::vector<Node> getNodes();
+    std::vector<Node> getNodesCopy();
     bool equals(Tree& other);
+
+    void deleteLeaf(int position);
+    void deleteCondition(int position);
 };
 
 #endif

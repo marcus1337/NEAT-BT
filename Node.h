@@ -18,7 +18,6 @@ public:
 
     NodeType type;
     int ID;
-    bool enabled = true;
 
     void addChild(Node node);
 

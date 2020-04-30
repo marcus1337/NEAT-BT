@@ -110,7 +110,7 @@ bool Tree::containsActionNode() {
     return false;
 }
 
-std::vector<Node> Tree::getNodes() {
+std::vector<Node> Tree::getNodesCopy() {
     std::vector<Node> result;
     auto it = TreeIterator(root);
     while (it.hasNext()) {
@@ -163,8 +163,8 @@ int Tree::getNumberOfNodesOfType(NodeType nodeType) {
 }
 
 bool Tree::equals(Tree& other) {
-    std::vector<Node> nodes1 = getNodes();
-    std::vector<Node> nodes2 = other.getNodes();
+    std::vector<Node> nodes1 = getNodesCopy();
+    std::vector<Node> nodes2 = other.getNodesCopy();
 
     if (nodes1.size() != nodes2.size())
         return false;
@@ -175,4 +175,37 @@ bool Tree::equals(Tree& other) {
     }
 
     return true;
+}
+
+void Tree::deleteLeaf(int position) {
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* tmp = it.next();
+        if (tmp->isParent()) {
+            for (int i = 0; i < tmp->children.size(); i++) {
+                if (!tmp->children[i].isParent())
+                    position--;
+                if (position < 0) {
+                    tmp->children.erase(tmp->children.begin() + i);
+                    return;
+                }
+            }
+        }
+    }
+}
+void Tree::deleteCondition(int position) {
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* tmp = it.next();
+        if (tmp->isParent()) {
+            for (int i = 0; i < tmp->children.size(); i++) {
+                if (tmp->children[i].type == CONDITION)
+                    position--;
+                if (position < 0) {
+                    tmp->children.erase(tmp->children.begin() + i);
+                    return;
+                }
+            }
+        }
+    }
 }

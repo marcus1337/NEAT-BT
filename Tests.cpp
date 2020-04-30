@@ -21,7 +21,7 @@ BOOST_AUTO_TEST_CASE(saveLoadSingle_test)
 {
     TestUtils::setMaxNodeIDs(5000);
     IOHandler iohandler;
-    std::string folderName = "TESTIO";
+    std::string folderName = "TESTIO1";
     Tree tree = TestUtils::getRandomizedTree(100);
     iohandler.saveTree(tree, 0, 0, folderName);
     Tree otherTree = iohandler.loadTree(0, 0, folderName);
@@ -32,7 +32,7 @@ BOOST_AUTO_TEST_CASE(saveLoadGeneration_test)
 {
     TestUtils::setMaxNodeIDs(5000);
     IOHandler iohandler;
-    std::string folderName = "TESTIOO";
+    std::string folderName = "TESTIO2";
     std::vector<Tree> trees;
     rep(i, 0, 50)
         trees.push_back(TestUtils::getRandomizedTree(100));
@@ -78,8 +78,8 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
     rep(i, 0, 3) {
         Tree tmpCopy = tree;
         mutater.replaceMutate(tree);
-        auto nodes1 = tree.getNodes();
-        auto nodes2 = tmpCopy.getNodes();
+        auto nodes1 = tree.getNodesCopy();
+        auto nodes2 = tmpCopy.getNodesCopy();
         BOOST_REQUIRE(nodes1.size() == nodes2.size());
         rep(j, 0, nodes1.size()) {
             BOOST_REQUIRE(nodes1[j].type == nodes2[j].type);

@@ -81,8 +81,8 @@ void Speciator::adjustDynamicSpecieDelta() {
 }
 
 float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
-    std::vector<Node> nodes1 = n1.getNodes();
-    std::vector<Node> nodes2 = n2.getNodes();
+    std::vector<Node> nodes1 = n1.getNodesCopy();
+    std::vector<Node> nodes2 = n2.getNodesCopy();
     int maxSize = std::max(nodes1.size(), nodes2.size());
     int countSame = 0;
     for (const auto& n : nodes1) {
@@ -96,8 +96,8 @@ float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
     return (float) countSame / maxSize;
 }
 float Speciator::treeSizeDiff(Tree& n1, Tree& n2) {
-    std::vector<Node> nodes1 = n1.getNodes();
-    std::vector<Node> nodes2 = n2.getNodes();
+    std::vector<Node> nodes1 = n1.getNodesCopy();
+    std::vector<Node> nodes2 = n2.getNodesCopy();
     int maxSize = std::max(nodes1.size(), nodes2.size());
     int minSize = std::min(nodes1.size(), nodes2.size());
     return (float)(maxSize - minSize)/maxSize;

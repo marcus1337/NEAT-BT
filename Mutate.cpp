@@ -75,12 +75,21 @@ std::vector<Node*> Mutate::getInteriors(Tree& tree) {
     return res;
 }
 
-void Mutate::enableMutate(Tree& tree) {
-    auto it = TreeIterator(tree.root);
-    while (it.hasNext()) {
-        Node* node = it.next();
-        if (shouldMutate(mutateChance))
-            node->enabled = !node->enabled;
+void Mutate::deleteNodeMutate(Tree& tree) {
+    if (shouldMutate(mutateChance/2.f)) {
+        int numActions = tree.getNumberOfNodesOfType(ACTION);
+        int numConditions = tree.getNumberOfNodesOfType(CONDITION);
+        if (numActions == 1) {
+            if (numConditions == 0)
+                return;
+            int pickedNumber = Utils::randi(0, numConditions - 1);
+            tree.deleteCondition(pickedNumber);
+        }
+        else {
+            int pickedNumber = Utils::randi(0, numConditions + numActions - 1);
+            tree.deleteLeaf(pickedNumber);
+        }
+        tree = tree.getValidTree();
     }
 }
 
