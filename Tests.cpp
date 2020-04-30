@@ -57,16 +57,35 @@ BOOST_AUTO_TEST_CASE(init_test)
     }
 }
 
+BOOST_AUTO_TEST_CASE(mutateDeleteNode_test)
+{
+    Mutate mutater;
+    mutater.mutateChance = 9999;
+    Tree tree = TestUtils::getRandomizedTree(300);
+
+    rep(i, 0, 300) {
+        mutater.deleteNodeMutate(tree);
+        Tree tmpCopy = tree.getValidTree();
+        BOOST_REQUIRE(tree.equals(tmpCopy));
+    }
+
+    int numLeaves = tree.getNumberOfNodesOfType(ACTION) + tree.getNumberOfNodesOfType(CONDITION);
+    BOOST_REQUIRE(numLeaves == 1);
+}
+
 BOOST_AUTO_TEST_CASE(mutateNode_test)
 {
     Mutate mutater;
-    mutater.mutateChance = 1;
+    mutater.mutateChance = 9999;
     Tree tree;
     rep(i, 0, 300) {
         mutater.addNodeMutate(tree);
         Tree tmpCopy = tree.getValidTree();
         BOOST_REQUIRE(tree.equals(tmpCopy));
     }
+
+    int numLeaves = tree.getNumberOfNodesOfType(ACTION) + tree.getNumberOfNodesOfType(CONDITION);
+    BOOST_REQUIRE(numLeaves == 301);
 }
 
 BOOST_AUTO_TEST_CASE(mutateReplace_test)
