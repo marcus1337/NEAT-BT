@@ -10,7 +10,7 @@ void Mutate::replaceRandomly(Node* node) {
     if (node->type == INTERIOR)
         node->ID = Node::makeRandomInterior().ID;
     if (node->type == DECORATOR)
-        node->ID = Node::makeRandomInterior().ID;
+        node->ID = Node::makeRandomDecorator().ID;
     if (node->type == ACTION)
         node->ID = Node::makeRandomAction().ID;
     if (node->type == CONDITION)
