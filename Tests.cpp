@@ -17,7 +17,7 @@ namespace utf = boost::unit_test;
 #define sz(x) (int)(x).size()
 
 
-BOOST_AUTO_TEST_CASE(saveLoad_test)
+BOOST_AUTO_TEST_CASE(saveLoadSingle_test)
 {
     TestUtils::setMaxNodeIDs(5000);
     IOHandler iohandler;
@@ -26,6 +26,23 @@ BOOST_AUTO_TEST_CASE(saveLoad_test)
     iohandler.saveTree(tree, 0, 0, folderName);
     Tree otherTree = iohandler.loadTree(0, 0, folderName);
     BOOST_REQUIRE(tree.equals(otherTree));
+}
+
+BOOST_AUTO_TEST_CASE(saveLoadGeneration_test)
+{
+    TestUtils::setMaxNodeIDs(5000);
+    IOHandler iohandler;
+    std::string folderName = "TESTIOO";
+    std::vector<Tree> trees;
+    rep(i, 0, 50)
+        trees.push_back(TestUtils::getRandomizedTree(100));
+
+    iohandler.saveGeneration(trees,0, folderName);
+    std::vector<Tree> loadedTrees = iohandler.loadGeneration(0, folderName);
+
+    BOOST_REQUIRE(trees.size() == loadedTrees.size());
+    rep(i, 0, sz(trees))
+        BOOST_REQUIRE(trees[i].equals(loadedTrees[i]));
 }
 
 BOOST_AUTO_TEST_CASE(init_test)
