@@ -9,9 +9,6 @@ class Breeder {
     int numChildrenLeft = 0;
     void crossOver(Tree& child, Tree* n1, Tree* n2);
 
-    void removeTreesWithoutActionNodes(std::vector<Tree>& newTrees);
-    void removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, std::vector<Tree*> singleTrees);
-
 public:
     int populationSize = 1;
 

@@ -20,21 +20,7 @@ std::vector<Tree> Breeder::makeNewGeneration(std::vector<Tree*> singleTrees, std
         singleCounter++;
     }
 
-    removeInvalidAndAddRemaining(trees, singleTrees);
     return trees;
-}
-
-void Breeder::removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, std::vector<Tree*> singleTrees) {
-    removeTreesWithoutActionNodes(newTrees);
-
-    for(int i = 0 ; i < (populationSize - (int)newTrees.size()); i++)
-        newTrees.push_back(*singleTrees[0]);
-}
-
-void Breeder::removeTreesWithoutActionNodes(std::vector<Tree>& newTrees) {
-    newTrees.erase(std::remove_if(
-        newTrees.begin(), newTrees.end(),
-        [](Tree& x) {return x.getNumberOfNodesOfType(ACTION) == 0; }), newTrees.end());
 }
 
 void Breeder::breedCrossover(std::vector<Tree>& newTrees, Tree* t1, Tree* t2) {
@@ -50,4 +36,6 @@ void Breeder::crossOver(Tree& child, Tree* n1, Tree* n2) {
     Node* node1 = child.getRandomNode();
     Node* node2 = n2->getRandomNode();
     *node1 = *node2;
+    if (child.getNumberOfNodesOfType(ACTION) == 0)
+        child = *n1;
 }
