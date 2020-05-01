@@ -17,3 +17,8 @@ bool Utils::randb() {
     std::uniform_int_distribution<> distr(0, 1);
     return distr(mRng);
 }
+
+int Utils::randIndex(std::vector<int> probabilties) {
+    std::discrete_distribution<int> distribution(std::begin(probabilties), std::end(probabilties));
+    return distribution(mRng);
+}

@@ -22,7 +22,7 @@ BOOST_AUTO_TEST_CASE(saveLoadSingle_test)
     TestUtils::setMaxNodeIDs(5000);
     IOHandler iohandler;
     std::string folderName = "TESTIO1";
-    Tree tree = TestUtils::getRandomizedTree(100);
+    Tree tree = TestUtils::getRandomizedTree(50);
     iohandler.saveTree(tree, 0, 0, folderName);
     Tree otherTree = iohandler.loadTree(0, 0, folderName);
     BOOST_REQUIRE(tree.equals(otherTree));
@@ -35,7 +35,7 @@ BOOST_AUTO_TEST_CASE(saveLoadGeneration_test)
     std::string folderName = "TESTIO2";
     std::vector<Tree> trees;
     rep(i, 0, 50)
-        trees.push_back(TestUtils::getRandomizedTree(100));
+        trees.push_back(TestUtils::getRandomizedTree(50));
 
     iohandler.saveGeneration(trees,0, folderName);
     std::vector<Tree> loadedTrees = iohandler.loadGeneration(0, folderName);
@@ -48,7 +48,7 @@ BOOST_AUTO_TEST_CASE(saveLoadGeneration_test)
 BOOST_AUTO_TEST_CASE(init_test)
 {
     Coordinator coordinator;
-    int n = 100;
+    int n = 50;
     coordinator.init(n, 10, 10, 10, 10);
     BOOST_REQUIRE(sz(coordinator.trees) == n);
     rep(i, 0, n) {
@@ -61,9 +61,9 @@ BOOST_AUTO_TEST_CASE(mutateDeleteNode_test)
 {
     Mutate mutater;
     mutater.mutateChance = 9999;
-    Tree tree = TestUtils::getRandomizedTree(300);
+    Tree tree = TestUtils::getRandomizedTree(50);
 
-    rep(i, 0, 300) {
+    rep(i, 0, 50) {
         mutater.deleteNodeMutate(tree);
         Tree tmpCopy = tree.getValidTree();
         BOOST_REQUIRE(tree.equals(tmpCopy));
@@ -78,14 +78,14 @@ BOOST_AUTO_TEST_CASE(mutateNode_test)
     Mutate mutater;
     mutater.mutateChance = 9999;
     Tree tree;
-    rep(i, 0, 300) {
+    rep(i, 0, 50) {
         mutater.addNodeMutate(tree);
         Tree tmpCopy = tree.getValidTree();
         BOOST_REQUIRE(tree.equals(tmpCopy));
     }
 
     int numLeaves = tree.getNumberOfNodesOfType(ACTION) + tree.getNumberOfNodesOfType(CONDITION);
-    BOOST_REQUIRE(numLeaves == 301);
+    BOOST_REQUIRE(numLeaves == 51);
 }
 
 BOOST_AUTO_TEST_CASE(mutateReplace_test)
@@ -93,7 +93,7 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
     TestUtils::setMaxNodeIDs(50);
     Mutate mutater;
     mutater.mutateChance = 1.0f;
-    Tree tree = TestUtils::getRandomizedTree(300);
+    Tree tree = TestUtils::getRandomizedTree(50);
     rep(i, 0, 3) {
         Tree tmpCopy = tree;
         mutater.replaceMutate(tree);

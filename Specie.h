@@ -11,12 +11,17 @@ public:
     int topFitness = 0;
     int averageFitness = 0;
 
+    std::vector<int> discreteProbabilityDistribution;
+    void setDiscreteProbabilityDistribution();
+
     std::vector<Tree*> trees;
     Tree* getRandomTree();
 
     void calcAvgFit();
     Specie();
     Specie(int _id);
+
+    Specie getEmptyCopy();
 
     float getSpecieStrength(int numSpecies, int totalAverageFitness) const;
 

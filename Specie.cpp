@@ -29,8 +29,33 @@ float Specie::getSpecieStrength(int numSpecies, int totalAverageFitness) const {
     return 0.f;
 }
 
+void Specie::setDiscreteProbabilityDistribution() {
+    std::vector<float> probabilityDistribution(trees.size());
+    int totalFitness = 0;
+    for (int i = 0; i < trees.size(); i++)
+        totalFitness += trees[i]->fitness;
+    if (totalFitness <= 0)
+    {
+        discreteProbabilityDistribution = { 1 };
+        return;
+    }
+    for (int i = 0; i < trees.size(); i++)
+        probabilityDistribution[i] = ((float)trees[i]->fitness / totalFitness)*1000.f;
+
+    discreteProbabilityDistribution = std::vector<int>(probabilityDistribution.begin(), probabilityDistribution.end());
+}
+
 bool Specie::operator < (const Specie &right) const
 {
     return ID < right.ID;
 }
 bool Specie::operator==(const Specie& rhs) const { return this->ID == rhs.ID; }
+
+
+Specie Specie::getEmptyCopy() {
+    Specie result;
+    result.ID = ID;
+    result.averageFitness = averageFitness;
+    result.topFitness = topFitness;
+    return result;
+}

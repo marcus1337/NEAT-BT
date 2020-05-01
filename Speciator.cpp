@@ -31,9 +31,7 @@ void Speciator::fitnessSharing(std::vector<Tree>& trees) {
 void Speciator::adjustFitnessShared(std::vector<Tree>& trees, int index) {
     int divisor = 1;
     for (int i = 0; i < trees.size(); i++) {
-        if (i == index)
-            continue;
-        if (sameSpecie(trees[i], trees[index]))
+        if (i != index && sameSpecie(trees[i], trees[index]))
             divisor++;
     }
     trees[index].fitness /= divisor;

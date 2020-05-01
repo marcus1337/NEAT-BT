@@ -14,6 +14,8 @@ public:
     static float randf(float LO, float HI);
     static bool randb();
 
+    static int randIndex(std::vector<int> probabilties);
+
     template<typename T>
     static void swapPointers(T** p1, T** p2)
     {

@@ -8,9 +8,9 @@
 class Breeder {
     int numChildrenLeft = 0;
     void crossOver(Tree& child, Tree* n1, Tree* n2);
-    int getTotalAverageFitness(std::vector<Specie>& species);
-    int calcNumBreeds(const Specie& o, int numSpecies, int totalAverageFitness);
-    int calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness);
+    int getTotalAverageFitness(std::vector<Specie>& species); //to be removed
+    int calcNumBreeds(const Specie& o, int numSpecies, int totalAverageFitness); //to be removed
+    int calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness); //to be removed
     void removeTreesWithoutActionNodes(std::vector<Tree>& newTrees);
     void removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, 
         std::vector<Specie>& species, int targetGenerationSize);
@@ -25,4 +25,4 @@ public:
 
 };
 
-#endif // !BREEDER_H
+#endif
