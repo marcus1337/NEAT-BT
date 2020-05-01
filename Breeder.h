@@ -8,20 +8,17 @@
 class Breeder {
     int numChildrenLeft = 0;
     void crossOver(Tree& child, Tree* n1, Tree* n2);
-    int getTotalAverageFitness(std::vector<Specie>& species); //to be removed
-    int calcNumBreeds(const Specie& o, int numSpecies, int totalAverageFitness); //to be removed
-    int calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness); //to be removed
+
     void removeTreesWithoutActionNodes(std::vector<Tree>& newTrees);
-    void removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, 
-        std::vector<Specie>& species, int targetGenerationSize);
+    void removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, std::vector<Tree*> singleTrees);
 
 public:
-    std::vector<Tree> makeNewGeneration(std::vector<Specie>& species, int totalNumTrees);
+    int populationSize = 1;
 
-    void breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species);
-    void breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species);
-    void breedChild(Specie& specie, std::vector<Tree>& newTrees);
-    void breedElite(std::vector<Specie>& species, std::vector<Tree>& newTrees);
+    std::vector<Tree> makeNewGeneration(std::vector<Tree*> singleTrees, std::vector<std::pair<Tree*, Tree*>> pairedTrees);
+
+
+    void breedCrossover(std::vector<Tree>& newTrees, Tree* t1, Tree* t2);
 
 };
 

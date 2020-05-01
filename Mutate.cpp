@@ -94,7 +94,7 @@ void Mutate::deleteNodeMutate(Tree& tree) {
 }
 
 void Mutate::mutateTree(Tree& tree) {
-    //enableMutate(tree);
+    deleteNodeMutate(tree);
     replaceMutate(tree);
     addNodeMutate(tree);
 }

@@ -2,22 +2,32 @@
 #include "Utils.h"
 #include <algorithm>
 
-std::vector<Tree> Breeder::makeNewGeneration(std::vector<Specie>& species, int totalNumTrees) {
+std::vector<Tree> Breeder::makeNewGeneration(std::vector<Tree*> singleTrees, std::vector<std::pair<Tree*, Tree*>> pairedTrees) {
     std::vector<Tree> trees;
-    numChildrenLeft = totalNumTrees;
+    numChildrenLeft = populationSize;
+    int pairCounter = 0;
+    int singleCounter = 0;
 
-    breedFitnessBased(numChildrenLeft / 2, trees, species);
-    numChildrenLeft -= numChildrenLeft / 2;
-    breedElitismOfSpecies(numChildrenLeft, trees, species);
+    while (numChildrenLeft > populationSize / 2) {
+        breedCrossover(trees, pairedTrees[pairCounter].first, pairedTrees[pairCounter].second);
+        numChildrenLeft--;
+        pairCounter++;
+    }
 
-    removeInvalidAndAddRemaining(trees, species, totalNumTrees);
+    while (numChildrenLeft > 0) {
+        trees.push_back(*singleTrees[singleCounter]);
+        numChildrenLeft--;
+        singleCounter++;
+    }
+
+    removeInvalidAndAddRemaining(trees, singleTrees);
     return trees;
 }
 
-void Breeder::removeInvalidAndAddRemaining(std::vector<Tree>& newTrees,
-    std::vector<Specie>& species, int targetGenerationSize) {
+void Breeder::removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, std::vector<Tree*> singleTrees) {
     removeTreesWithoutActionNodes(newTrees);
-    breedElitismOfSpecies(targetGenerationSize - newTrees.size(), newTrees, species);
+    for(int i = 0 ; i < populationSize - newTrees.size(); i++)
+        newTrees.push_back(*singleTrees[0]);
 }
 
 void Breeder::removeTreesWithoutActionNodes(std::vector<Tree>& newTrees) {
@@ -26,51 +36,10 @@ void Breeder::removeTreesWithoutActionNodes(std::vector<Tree>& newTrees) {
         [](Tree& x) {return x.getNumberOfNodesOfType(ACTION) == 0; }), newTrees.end());
 }
 
-int Breeder::calcNumBreeds(const Specie& specie, int numSpecies, int totalAverageFitness) {
-    return specie.getSpecieStrength(numSpecies, totalAverageFitness)*(specie.trees.size() / 2);
-}
-
-int Breeder::calcMinNumBreeds(std::vector<Specie>& species, int totalAverageFitness) {
-    int maxFound = 0;
-    for (const auto& spec : species) {
-        maxFound = std::max(calcNumBreeds(spec, species.size(), totalAverageFitness), maxFound);
-    }
-    if (maxFound <= 0)
-        return 1;
-    return 0;
-}
-
-void Breeder::breedFitnessBased(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
-    int totalAverageFitness = getTotalAverageFitness(species);
-    int minNumBreeds = calcMinNumBreeds(species, totalAverageFitness);
-    while (numKids > 0) {
-        for (Specie& spec : species) {
-            int numBreeds = std::max(calcNumBreeds(spec, species.size(), totalAverageFitness), minNumBreeds);
-            for (int i = 0; i < numBreeds && numKids > 0; i++) {
-                breedChild(spec, newTrees);
-                numKids--;
-            }
-        }
-    }
-}
-
-void Breeder::breedElitismOfSpecies(int numKids, std::vector<Tree>& newTrees, std::vector<Specie>& species) {
-    for (int i = 0; i < numKids; i++)
-        breedElite(species, newTrees);
-}
-
-void Breeder::breedChild(Specie& specie, std::vector<Tree>& newTrees) {
-    Tree* g1 = specie.getRandomTree();
-    Tree* g2 = specie.getRandomTree();
+void Breeder::breedCrossover(std::vector<Tree>& newTrees, Tree* t1, Tree* t2) {
     Tree child;
-    crossOver(child, g1, g2);
+    crossOver(child, t1, t2);
     newTrees.push_back(child);
-}
-
-void Breeder::breedElite(std::vector<Specie>& species, std::vector<Tree>& newTrees) {
-    int index = Utils::randi(0, species.size() - 1);
-    Specie& specie = species[index];
-    newTrees.push_back(*specie.trees[0]);
 }
 
 void Breeder::crossOver(Tree& child, Tree* n1, Tree* n2) {
@@ -80,12 +49,4 @@ void Breeder::crossOver(Tree& child, Tree* n1, Tree* n2) {
     Node* node1 = child.getRandomNode();
     Node* node2 = n2->getRandomNode();
     *node1 = *node2;
-}
-
-
-int Breeder::getTotalAverageFitness(std::vector<Specie>& species) {
-    int total = 0;
-    for (const auto& s : species)
-        total += s.averageFitness;
-    return total;
 }
