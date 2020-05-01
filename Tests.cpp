@@ -9,6 +9,10 @@
 #include "Coordinator.h"
 #include "Mutate.h"
 
+#include "Selector.h"
+#include "Breeder.h"
+#include "Evolver.h"
+
 using namespace std;
 namespace utf = boost::unit_test;
 
@@ -106,7 +110,17 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
     }
 }
 
-BOOST_AUTO_TEST_CASE(tree_test)
+BOOST_AUTO_TEST_CASE(newGeneration_test)
 {
+    Coordinator coordinator;
+    int n = 10;
+    coordinator.init(n, 10, 10, 10, 10);
 
+    for (int i = 0; i < n; i++)
+        coordinator.trees[i] = TestUtils::getRandomizedTree(50);
+
+    Evolver evolver;
+    auto newStuff = evolver.makeNewGeneration(coordinator.trees);
+    
+    BOOST_REQUIRE(newStuff.size() == coordinator.trees.size());
 }

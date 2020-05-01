@@ -26,7 +26,8 @@ std::vector<Tree> Breeder::makeNewGeneration(std::vector<Tree*> singleTrees, std
 
 void Breeder::removeInvalidAndAddRemaining(std::vector<Tree>& newTrees, std::vector<Tree*> singleTrees) {
     removeTreesWithoutActionNodes(newTrees);
-    for(int i = 0 ; i < populationSize - newTrees.size(); i++)
+
+    for(int i = 0 ; i < (populationSize - (int)newTrees.size()); i++)
         newTrees.push_back(*singleTrees[0]);
 }
 
