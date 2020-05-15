@@ -11,8 +11,8 @@ public:
     std::vector<Tree> trees;
 
 
-    void init(int numTrees, int maxInteriorID, int maxDecoratorID, int maxActionID, int maxConditionID) {
-        Node::maxInteriorID = maxInteriorID;
+    void init(int numTrees, int maxOtherInteriorID, int maxDecoratorID, int maxActionID, int maxConditionID) {
+        Node::maxOtherInteriorID = maxOtherInteriorID;
         Node::maxDecoratorID = maxDecoratorID;
         Node::maxActionID = maxActionID;
         Node::maxConditionID = maxConditionID;

@@ -21,12 +21,20 @@ bool Node::isEmptyParent() {
 int Node::maxActionID;
 int Node::maxConditionID;
 int Node::maxDecoratorID;
-int Node::maxInteriorID;
+int Node::maxOtherInteriorID;
+int Node::maxUnorderedInteriorID;
 
 Node Node::makeRandomOtherInterior() {
     Node node;
     node.type = OTHER_INTERIOR;
-    node.ID = Utils::randi(0, Node::maxInteriorID);
+    node.ID = Utils::randi(0, Node::maxOtherInteriorID);
+    return node;
+}
+
+Node Node::makeRandomUnorderedInterior() {
+    Node node;
+    node.type = UNORDERED_INTERIOR;
+    node.ID = Utils::randi(0, Node::maxUnorderedInteriorID);
     return node;
 }
 

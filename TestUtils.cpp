@@ -16,7 +16,7 @@ Tree TestUtils::getRandomizedTree(int numNodes) {
 }
 
 void TestUtils::setMaxNodeIDs(int maxNum) {
-    Node::maxInteriorID = maxNum;
+    Node::maxOtherInteriorID = maxNum;
     Node::maxDecoratorID = maxNum;
     Node::maxActionID = maxNum;
     Node::maxConditionID = maxNum;

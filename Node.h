@@ -25,8 +25,9 @@ public:
     bool isParent();
     bool isEmptyParent();
 
-    static int maxInteriorID, maxDecoratorID, maxActionID, maxConditionID;
+    static int maxOtherInteriorID, maxUnorderedInteriorID, maxDecoratorID, maxActionID, maxConditionID;
     static Node makeRandomOtherInterior();
+    static Node makeRandomUnorderedInterior();
     static Node makeRandomDecorator();
     static Node makeRandomAction();
     static Node makeRandomCondition();

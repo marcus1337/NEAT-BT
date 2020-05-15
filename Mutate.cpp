@@ -9,6 +9,8 @@ bool Mutate::shouldMutate(float chance) {
 void Mutate::replaceRandomly(Node* node) {
     if (node->type == OTHER_INTERIOR)
         node->ID = Node::makeRandomOtherInterior().ID;
+    if (node->type == UNORDERED_INTERIOR)
+        node->ID = Node::makeRandomUnorderedInterior().ID;
     if (node->type == DECORATOR)
         node->ID = Node::makeRandomDecorator().ID;
     if (node->type == ACTION)
