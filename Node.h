@@ -5,10 +5,11 @@
 #define NODE_H
 
 enum NodeType {
-    INTERIOR = 0,
-    DECORATOR = 1,
-    ACTION = 2,
-    CONDITION = 3
+    OTHER_INTERIOR = 0,
+    UNORDERED_INTERIOR = 1,
+    DECORATOR = 2,
+    ACTION = 3,
+    CONDITION = 4
 };
 
 class Node {
@@ -25,7 +26,7 @@ public:
     bool isEmptyParent();
 
     static int maxInteriorID, maxDecoratorID, maxActionID, maxConditionID;
-    static Node makeRandomInterior();
+    static Node makeRandomOtherInterior();
     static Node makeRandomDecorator();
     static Node makeRandomAction();
     static Node makeRandomCondition();

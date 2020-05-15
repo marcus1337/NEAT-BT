@@ -12,7 +12,7 @@ void Node::addChild(Node node) {
 }
 
 bool Node::isParent() {
-    return type == INTERIOR || type == DECORATOR;
+    return type == OTHER_INTERIOR || type == UNORDERED_INTERIOR || type == DECORATOR;
 }
 bool Node::isEmptyParent() {
     return isParent() && children.empty();
@@ -23,9 +23,9 @@ int Node::maxConditionID;
 int Node::maxDecoratorID;
 int Node::maxInteriorID;
 
-Node Node::makeRandomInterior() {
+Node Node::makeRandomOtherInterior() {
     Node node;
-    node.type = INTERIOR;
+    node.type = OTHER_INTERIOR;
     node.ID = Utils::randi(0, Node::maxInteriorID);
     return node;
 }

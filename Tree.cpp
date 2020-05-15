@@ -3,7 +3,7 @@
 #include "Utils.h"
 
 Tree::Tree() {
-    root = Node::makeRandomInterior();
+    root = Node::makeRandomOtherInterior();
     root.addChild(Node::makeRandomAction());
 }
 
