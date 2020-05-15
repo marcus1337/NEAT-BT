@@ -53,7 +53,7 @@ BOOST_AUTO_TEST_CASE(init_test)
 {
     Coordinator coordinator;
     int n = 50;
-    coordinator.init(n, 10, 10, 10, 10);
+    coordinator.init(n, 10, 10, 10, 10, 10);
     BOOST_REQUIRE(sz(coordinator.trees) == n);
     rep(i, 0, n) {
         BOOST_REQUIRE(coordinator.trees[i].getNumberOfNodes() == 2);
@@ -114,7 +114,7 @@ BOOST_AUTO_TEST_CASE(newGeneration_test)
 {
     Coordinator coordinator;
     int n = 10;
-    coordinator.init(n, 10, 10, 10, 10);
+    coordinator.init(n, 10, 10, 10, 10, 10);
 
     for (int i = 0; i < n; i++)
         coordinator.trees[i] = TestUtils::getRandomizedTree(50);

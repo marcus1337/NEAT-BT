@@ -43,12 +43,18 @@ std::string IOHandler::getParentNodeString(Node* node) {
     return res;
 }
 
-void IOHandler::saveTree(Tree& tree, std::ofstream& stream) {
+std::string IOHandler::getTreeString(Tree& tree) {
+    std::string result;
     std::vector<Node*> interiorNodes = extractInteriorNodes(tree);
-    stream << tree.fitness << '\n';
-    stream << interiorNodes.size() << '\n';
+    result += std::to_string(interiorNodes.size()) + '\n';
     for (auto& node : interiorNodes)
-        stream << getParentNodeString(node) << '\n';
+        result += getParentNodeString(node) + '\n';
+    return result;
+}
+
+void IOHandler::saveTree(Tree& tree, std::ofstream& stream) {
+    stream << tree.fitness << '\n';
+    stream << getTreeString(tree);
 }
 
 void IOHandler::saveTree(Tree& tree, int treeIndex, int generation, std::string folderName) {

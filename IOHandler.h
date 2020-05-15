@@ -34,6 +34,7 @@ private:
     void addParentsToStack(Node* node, std::stack<Node*>& nodeStack);
 
 public:
+    std::string getTreeString(Tree& tree);
     std::vector<Tree> loadGeneration(int generation, std::string folderName = "TREES");
     Tree loadTree(int treeIndex, int generation, std::string folderName = "TREES");
     void saveTree(Tree& tree, int treeIndex, int generation, std::string folderName = "TREES");
