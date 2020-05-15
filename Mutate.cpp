@@ -3,7 +3,7 @@
 #include "TreeIterator.h"
 
 bool Mutate::shouldMutate(float chance) {
-    return Utils::randf(0.f,1.f) < chance;
+    return Utils::randf(0.f, 1.f) < chance;
 }
 
 void Mutate::replaceRandomly(Node* node) {
@@ -20,12 +20,20 @@ void Mutate::replaceRandomly(Node* node) {
 }
 
 void Mutate::replaceMutate(Tree& tree) {
+    if (!shouldMutate(mutateChance))
+        return;
+
+    int numNodes = tree.getNumberOfNodes()-1;
+    int randNodeIndex = Utils::randi(0, numNodes);
+
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
         Node* node = it.next();
-        if (shouldMutate(mutateChance)) {
+        if (randNodeIndex == 0) {
             replaceRandomly(node);
+            break;
         }
+        randNodeIndex--;
     }
 }
 
@@ -62,7 +70,7 @@ Node* Mutate::getEmptyParentChild(Node* node) {
 
 Node* Mutate::getRandomInterior(Tree& tree) {
     std::vector<Node*> parents = getInteriors(tree);
-    int randomIndex = Utils::randi(0, parents.size()-1);
+    int randomIndex = Utils::randi(0, parents.size() - 1);
     return parents[randomIndex];
 }
 
@@ -78,7 +86,7 @@ std::vector<Node*> Mutate::getInteriors(Tree& tree) {
 }
 
 void Mutate::deleteNodeMutate(Tree& tree) {
-    if (shouldMutate(mutateChance/2.f)) {
+    if (shouldMutate(mutateChance / 2.f)) {
         int numActions = tree.getNumberOfNodesOfType(ACTION);
         int numConditions = tree.getNumberOfNodesOfType(CONDITION);
         if (numActions == 1) {
