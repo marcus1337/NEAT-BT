@@ -1,4 +1,5 @@
 #define BOOST_TEST_MODULE TestBugs
+
 #include "boost/test/unit_test.hpp"
 
 #include "Tests.h"

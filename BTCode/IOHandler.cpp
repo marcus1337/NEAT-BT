@@ -7,12 +7,14 @@ namespace fs = std::filesystem;
 
 std::string IOHandler::getPath(std::string fileName) {
     std::string filePath = std::filesystem::current_path().string();
-    filePath += "\\" + fileName;
+    filePath += "\\" + allSavesParentFileName + "\\" + fileName;
     return filePath;
 }
 
 void IOHandler::makeFolder(std::string folderName) {
-    fs::create_directory(getPath(folderName));
+    std::string filePath = getPath(folderName);
+    fs::create_directories(filePath);
+    fs::create_directory(filePath);
 }
 
 std::string IOHandler::getFolderName(int generation, std::string folderName) {

@@ -33,6 +33,7 @@ char* Coordinator::getTreeString(int index) {
 
 void Coordinator::evolve() {
     trees = evolver.makeNewGeneration(trees);
+    generation++;
 }
 void Coordinator::setFitness(int index, int fitness) {
     trees[index].fitness = fitness;

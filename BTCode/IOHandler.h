@@ -11,6 +11,7 @@
 class IOHandler {
 private:
     std::string generationInfoFileName = "Generation_Info";
+    const std::string allSavesParentFileName = "BT_EVO";
 
     void makeFolder(std::string folderName);
     std::vector<Node*> extractInteriorNodes(Tree& tree);
