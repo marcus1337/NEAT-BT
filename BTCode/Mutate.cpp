@@ -39,12 +39,14 @@ void Mutate::replaceMutate(Tree& tree) {
 
 Node Mutate::makeRandomNode() {
     float randFloat = Utils::randf(0.f, 1.f);
-    if (randFloat > 0.97f)
+    if (randFloat > 0.98f)
         return Node::makeRandomDecorator();
     if (randFloat > 0.85f)
         return Node::makeRandomCondition();
     if (randFloat > 0.65f)
         return Node::makeRandomOtherInterior();
+    if (randFloat > 0.60f)
+        return Node::makeRandomUnorderedInterior();
     return Node::makeRandomAction();
 }
 
