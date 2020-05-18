@@ -4,19 +4,19 @@
 
 std::vector<Tree> Breeder::makeNewGeneration(std::vector<Tree*> singleTrees, std::vector<std::pair<Tree*, Tree*>> pairedTrees) {
     std::vector<Tree> trees;
-    numChildrenLeft = populationSize;
+    numMadeTrees = 0;
     int pairCounter = 0;
     int singleCounter = 0;
 
-    while (numChildrenLeft > populationSize / 2) {
+    while (numMadeTrees < populationSize / 5) {
         breedCrossover(trees, pairedTrees[pairCounter].first, pairedTrees[pairCounter].second);
-        numChildrenLeft--;
+        numMadeTrees++;
         pairCounter++;
     }
 
-    while (numChildrenLeft > 0) {
+    while (numMadeTrees < populationSize) {
         trees.push_back(*singleTrees[singleCounter]);
-        numChildrenLeft--;
+        numMadeTrees++;
         singleCounter++;
     }
 
