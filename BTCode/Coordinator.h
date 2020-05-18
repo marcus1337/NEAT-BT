@@ -23,6 +23,7 @@ namespace BTE {
         char* getTreeString(int index);
         void evolve();
         void setFitness(int index, int fitness);
+        void setTargetSpecies(int numTargetSpecies);
 
     };
 }

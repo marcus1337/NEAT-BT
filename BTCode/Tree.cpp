@@ -133,6 +133,16 @@ int Tree::getNumberOfNodes() {
     return counter;
 }
 
+int Tree::getNumBranches() {
+    int counter = 0;
+    auto it = TreeIterator(root);
+    while (it.hasNext()) {
+        Node* tmp = it.next();
+        counter += std::max(tmp->getNumInteriorChildren()-1,0);
+    }
+    return counter;
+}
+
 Node* Tree::getNodeAtIndex(int index) {
     int counter = 0;
     auto it = TreeIterator(root);

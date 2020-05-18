@@ -38,3 +38,7 @@ void Coordinator::evolve() {
 void Coordinator::setFitness(int index, int fitness) {
     trees[index].fitness = fitness;
 }
+
+void Coordinator::setTargetSpecies(int numTargetSpecies) {
+    evolver.speciator.targetNumSpecies = std::max(numTargetSpecies,1);
+}

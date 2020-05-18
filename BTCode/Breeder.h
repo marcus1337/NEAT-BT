@@ -8,6 +8,8 @@
 class Breeder {
     int numChildrenLeft = 0;
     void crossOver(Tree& child, Tree* n1, Tree* n2);
+    bool isCrossOverOk(Tree* n1, Tree* n2);
+    bool cloneChildAndCheckCrossOver(Tree& child, Tree* n1, Tree* n2);
 
 public:
     int populationSize = 1;

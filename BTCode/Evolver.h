@@ -11,11 +11,11 @@
 #define EVOLVER_H
 
 class Evolver {
+public:
     Mutate mutater;
     Speciator speciator;
     Selector culler;
     Breeder breeder;
-public:
     std::vector<Tree> makeNewGeneration(std::vector<Tree>& trees);
 
 };

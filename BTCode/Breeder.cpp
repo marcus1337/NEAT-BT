@@ -29,13 +29,27 @@ void Breeder::breedCrossover(std::vector<Tree>& newTrees, Tree* t1, Tree* t2) {
     newTrees.push_back(child);
 }
 
-void Breeder::crossOver(Tree& child, Tree* n1, Tree* n2) {
+bool Breeder::cloneChildAndCheckCrossOver(Tree& child, Tree* n1, Tree* n2) {
     if (n1->fitness < n2->fitness)
         Utils::swapPointers<Tree>(&n1, &n2);
     child = *n1;
+    if (!isCrossOverOk(n1, n2))
+        return false;
+    return true;
+}
+
+void Breeder::crossOver(Tree& child, Tree* n1, Tree* n2) {
+    if (!cloneChildAndCheckCrossOver(child, n1, n2))
+        return;
+
     Node* node1 = child.getRandomNonRootNode();
     Node* node2 = n2->getRandomNode();
     *node1 = *node2;
-    if (child.getNumberOfNodesOfType(ACTION) == 0)
-        child = *n1;
+    child = *n1;
+}
+
+bool Breeder::isCrossOverOk(Tree* n1, Tree* n2) {
+    int numBranches1 = n1->getNumBranches();
+    int numBranches2 = n2->getNumBranches();
+    return numBranches1 >= 5 && numBranches2 >= 5;
 }

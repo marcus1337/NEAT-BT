@@ -21,6 +21,7 @@ public:
     int ID;
 
     void addChild(Node node);
+    int getNumInteriorChildren();
 
     bool isParent();
     bool isEmptyParent();

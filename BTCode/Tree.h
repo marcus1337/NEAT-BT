@@ -20,6 +20,7 @@ public:
     int getNumberParentNodes();
     int getNumberOfNodesOfType(NodeType nodeType);
     int getNumberOfNodes();
+    int getNumBranches();
 
     Node* getRandomNonRootNode();
     Node* getRandomNode();
