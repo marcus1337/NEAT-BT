@@ -14,6 +14,8 @@ class Tree {
 
 public:
 
+    std::vector<int> observedBehaviors;
+
     Tree();
     Tree getValidTree();
 
