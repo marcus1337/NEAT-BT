@@ -31,21 +31,35 @@ void Surprise::addSurpriseFitness(std::vector<Tree>& trees) {
         return;
 
     std::vector<float> distances(trees.size());
+    std::vector<float> normalizedDistances(trees.size());
     float maxDistance = std::numeric_limits<float>::min();
     for (int i = 0; i < trees.size(); i++) {
         distances[i] = mean.distance(trees[i].observedBehaviors);
         maxDistance = std::fmaxf(distances[i], maxDistance);
     }
 
-    if (maxDistance == 0.f)
-        return;
-
-    float sumDistances = std::accumulate(distances.begin(), distances.end(), 0);
 
     float totalPot = 0;
     for (auto& tree : trees) {
         totalPot += tree.fitness*effect;
         tree.fitness -= tree.fitness*effect;
     }
+
+    if (maxDistance == 0.f || totalPot < 1.f)
+        return;
+
+    float sumNormalizedDistances = 0;
+    for (int i = 0; i < trees.size(); i++) {
+        normalizedDistances[i] = distances[i] / maxDistance;
+        sumNormalizedDistances += normalizedDistances[i];
+    }
+
+    float maxScore = totalPot / sumNormalizedDistances;
+
+
+    for (int i = 0; i < trees.size(); i++) {
+        trees[i].fitness += (int)(maxScore*normalizedDistances[i]);
+    }
+    
     
 }
