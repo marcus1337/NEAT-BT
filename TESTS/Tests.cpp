@@ -109,7 +109,7 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
         auto nodes1 = tree.getNodesCopy();
         auto nodes2 = tmpCopy.getNodesCopy();
         BOOST_REQUIRE(nodes1.size() == nodes2.size());
-        rep(j, 0, nodes1.size()) {
+        rep(j, 0, (int) nodes1.size()) {
             BOOST_REQUIRE(nodes1[j].type == nodes2[j].type);
         }
     }
@@ -118,10 +118,10 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
 BOOST_AUTO_TEST_CASE(newGeneration_test)
 {
     Coordinator coordinator;
-    int n = 10;
-    coordinator.init(n, 10, 10, 10, 10, 10);
+    size_t n = 10;
+    coordinator.init((int)n, 10, 10, 10, 10, 10);
 
-    for (int i = 0; i < n; i++)
+    for (size_t i = 0; i < n; i++)
         coordinator.trees[i] = TestUtils::getRandomizedTree(50);
 
     Evolver evolver;
@@ -133,11 +133,11 @@ BOOST_AUTO_TEST_CASE(newGeneration_test)
 BOOST_AUTO_TEST_CASE(rootAlwaysParent_test)
 {
     Coordinator coordinator;
-    int n = 50;
-    coordinator.init(n, 0, 0, 0, 0, 0);
+    size_t n = 50;
+    coordinator.init((int) n, 0, 0, 0, 0, 0);
     Evolver evolver;
     auto newStuff = evolver.makeNewGeneration(coordinator.trees);
-    for(int i = 0 ; i < n ; i++)
+    for(size_t i = 0 ; i < n ; i++)
         BOOST_REQUIRE(newStuff[i].root.isParent());
 }
 
@@ -147,23 +147,23 @@ BOOST_AUTO_TEST_CASE(behaviorData_test)
 
     behavior.set({ 0.f,1.f,50.f,1.5f });
     std::vector<float> correct = behavior.get();
-    for (int i = 0; i < correct.size(); i++) {
+    for (size_t i = 0; i < correct.size(); i++) {
         correct[i] = correct[i] / 2;
     }
     behavior -= (behavior/2);
 
-    for (int i = 0; i < correct.size(); i++) {
+    for (size_t i = 0; i < correct.size(); i++) {
         BOOST_REQUIRE(correct[i] == behavior.get()[i]);
     }
 
     behavior.set({ 0.f,1.f,50.f,1.5f });
     correct = behavior.get();
-    for (int i = 0; i < correct.size(); i++) {
+    for (size_t i = 0; i < correct.size(); i++) {
         correct[i] = correct[i] * 2;
     }
     behavior += behavior;
 
-    for (int i = 0; i < correct.size(); i++) {
+    for (size_t i = 0; i < correct.size(); i++) {
         BOOST_REQUIRE(correct[i] == behavior.get()[i]);
     }
 }

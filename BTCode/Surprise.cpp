@@ -39,14 +39,14 @@ void Surprise::addSurpriseFitness(std::vector<Tree>& trees) {
 
 std::vector<float> Surprise::getDistances(std::vector<Tree>& trees) {
     std::vector<float> distances(trees.size());
-    for (int i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++)
         distances[i] = mean.distance(trees[i].observedBehaviors);
     return distances;
 }
 
 float Surprise::getMaxDistance(std::vector<float>& distances) {
     float maxDistance = std::numeric_limits<float>::min();
-    for (int i = 0; i < distances.size(); i++)
+    for (size_t i = 0; i < distances.size(); i++)
         maxDistance = std::fmaxf(distances[i], maxDistance);
     return maxDistance;
 }
@@ -56,13 +56,13 @@ void Surprise::distributeSurpriseFitness(std::vector<Tree>& trees, float totalPo
 
     std::vector<float> normalizedDistances = getNormalizedDistances(distances, maxDistance);
     float maxScore = getMaxScore(totalPot, normalizedDistances);
-    for (int i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++)
         trees[i].fitness += (int)(maxScore*normalizedDistances[i]);
 }
 
 std::vector<float> Surprise::getNormalizedDistances(std::vector<float>& distances, float maxDistance) {
     std::vector<float> normalizedDistances = distances;
-    for (int i = 0; i < distances.size(); i++)
+    for (size_t i = 0; i < distances.size(); i++)
         normalizedDistances[i] /= maxDistance;
     return normalizedDistances;
 }
@@ -76,7 +76,7 @@ float Surprise::getTotalPot(std::vector<Tree>& trees) {
     float totalPot = 0;
     for (auto& tree : trees) {
         totalPot += tree.fitness*effect;
-        tree.fitness -= tree.fitness*effect;
+        tree.fitness -= (int) tree.fitness*effect;
     }
     return totalPot;
 }

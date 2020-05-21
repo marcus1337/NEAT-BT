@@ -92,28 +92,28 @@ public:
 
 template <class T>
 std::vector<T> Behavior<T>::subVectors(std::vector<T> a, std::vector<T> b) const {
-    for (int i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < a.size(); i++)
         a[i] -= b[i];
     return a;
 }
 
 template <class T>
 std::vector<T> Behavior<T>::addVectors(std::vector<T> a, std::vector<T> b) const {
-    for (int i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < a.size(); i++)
         a[i] += b[i];
     return a;
 }
 
 template <class T>
 std::vector<T> Behavior<T>::divVectors(std::vector<T> a, const int divisor) const {
-    for (int i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < a.size(); i++)
         a[i] /= divisor;
     return a;
 }
 
 template <class T>
 std::vector<T> Behavior<T>::multVectors(std::vector<T> a, std::vector<T> b) const {
-    for (int i = 0; i < a.size(); i++)
+    for (size_t i = 0; i < a.size(); i++)
         a[i] *= b[i];
     return a;
 }
