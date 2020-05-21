@@ -32,6 +32,16 @@ public:
     void set(std::vector<T> vec);
     bool empty();
 
+    Behavior<T> &operator+=(const std::vector<T> &rhs) {
+        behaviors = addVectors(behaviors, rhs);
+        return *this;
+    }
+
+    Behavior<T> &operator+=(const std::vector<int> &rhs) {
+        *this += std::vector<T>(rhs.begin(), rhs.end());
+        return *this;
+    }
+
     Behavior<T> &operator+=(const Behavior<T> &rhs) {
         behaviors = addVectors(behaviors, rhs.behaviors);
         return *this;
