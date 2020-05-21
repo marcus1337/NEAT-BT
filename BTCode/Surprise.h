@@ -13,6 +13,11 @@ class Surprise {
     void updateMean(std::vector<Tree>& trees);
     Behavior<float> getMean(std::vector<Tree>& trees);
     Behavior<float> mean;
+    float getTotalPot(std::vector<Tree>& trees);
+    void distributeSurpriseFitness(std::vector<Tree>& trees, float totalPot, float maxDistance,
+        std::vector<float>& distances);
+    std::vector<float> getDistances(std::vector<Tree>& trees);
+    float getMaxDistance(std::vector<float>& distances);
 
 public:
 
