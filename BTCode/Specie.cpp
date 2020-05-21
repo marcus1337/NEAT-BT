@@ -7,7 +7,7 @@ void Specie::calcAvgFit() {
     for (const auto& n : trees) {
         total += n->fitness;
     }
-    averageFitness = total / trees.size();
+    averageFitness = total / (int) trees.size();
 }
 
 Specie::Specie() : ID(-1) {}
@@ -16,7 +16,7 @@ Specie::Specie(int _id) : ID(_id) {}
 Tree* Specie::getRandomTree() {
     if (trees.empty())
         return nullptr;
-    int index = Utils::randi(0, trees.size() - 1);
+    int index = Utils::randi(0, (int) trees.size() - 1);
     return trees[index];
 }
 
@@ -41,8 +41,8 @@ void Specie::setDiscreteProbabilityDistribution() {
     }
     for (size_t i = 0; i < trees.size(); i++)
         probabilityDistribution[i] = ((float)trees[i]->fitness / totalFitness)*1000.f;
-
-    discreteProbabilityDistribution = std::vector<int>(probabilityDistribution.begin(), probabilityDistribution.end());
+    discreteProbabilityDistribution.clear();
+    std::transform(probabilityDistribution.begin(), probabilityDistribution.end(), std::back_inserter(discreteProbabilityDistribution), [](float x) { return static_cast<int>(x); });
 }
 
 bool Specie::operator < (const Specie &right) const

@@ -2,8 +2,8 @@
 #include <limits>
 
 void Surprise::initMean(std::vector<Tree>& trees) {
-    numElements = trees[0].observedBehaviors.size();
-    numTrees = trees.size();
+    numElements = (int) trees[0].observedBehaviors.size();
+    numTrees = (int) trees.size();
     mean = getMean(trees);
     numGenerations = 1;
 }
@@ -76,7 +76,7 @@ float Surprise::getTotalPot(std::vector<Tree>& trees) {
     float totalPot = 0;
     for (auto& tree : trees) {
         totalPot += tree.fitness*effect;
-        tree.fitness -= (int) tree.fitness*effect;
+        tree.fitness -= (int) ((float)tree.fitness*effect);
     }
     return totalPot;
 }

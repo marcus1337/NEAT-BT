@@ -22,7 +22,7 @@ void GenerationInfo::saveData(std::ofstream& stream, std::vector<Tree>& trees) {
 }
 
 void GenerationInfo::storeData(std::vector<Tree>& trees) {
-    numTrees = trees.size();
+    numTrees = (int) trees.size();
     for (size_t i = 0; i < trees.size(); i++) {
         averageFitness += trees[i].fitness;
         fitnesses.push_back(trees[i].fitness);

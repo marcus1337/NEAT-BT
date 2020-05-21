@@ -36,7 +36,9 @@ public:
     }
 
     Behavior<T> &operator+=(const std::vector<int> &rhs) {
-        *this += std::vector<T>(rhs.begin(), rhs.end());
+        std::vector<T> tmp;
+        std::transform(rhs.begin(), rhs.end(), std::back_inserter(tmp), [](int x) { return static_cast<T>(x); });
+        *this += tmp;
         return *this;
     }
 
@@ -67,7 +69,9 @@ public:
     }
 
     Behavior<T> &operator-=(const std::vector<int> &rhs) {
-        *this -= std::vector<T>(rhs.begin(), rhs.end());
+        std::vector<T> tmp;
+        std::transform(rhs.begin(), rhs.end(), std::back_inserter(tmp), [](int x) { return static_cast<T>(x); });
+        *this -= tmp;
         return *this;
     }
 

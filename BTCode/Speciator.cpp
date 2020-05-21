@@ -25,7 +25,7 @@ void Speciator::sortSpecie(Specie& spec) {
 
 void Speciator::fitnessSharing(std::vector<Tree>& trees) {
     for (size_t i = 0; i < trees.size(); i++)
-        adjustFitnessShared(trees, i);
+        adjustFitnessShared(trees, (int) i);
 }
 
 void Speciator::adjustFitnessShared(std::vector<Tree>& trees, int index) {
@@ -53,7 +53,7 @@ void Speciator::addToSpecies(Tree& tree, std::vector<Specie>& species) {
 }
 bool Speciator::addToExistingSpecie(Tree& tree, std::vector<Specie>& species) {
     for (int i = 0; i < numSpecies; i++) {
-        int numNeatsInSpecie = species[i].trees.size();
+        int numNeatsInSpecie = (int) species[i].trees.size();
         Tree& tmpNeat = *species[i].trees[Utils::randi(0, numNeatsInSpecie - 1)];
         if (sameSpecie(tree, tmpNeat)) {
             species[i].trees.push_back(&tree);
@@ -81,7 +81,7 @@ void Speciator::adjustDynamicSpecieDelta() {
 float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
     std::vector<Node> nodes1 = n1.getNodesCopy();
     std::vector<Node> nodes2 = n2.getNodesCopy();
-    int maxSize = std::max(nodes1.size(), nodes2.size());
+    int maxSize = (int) std::max(nodes1.size(), nodes2.size());
     int countSame = 0;
     for (const auto& n : nodes1) {
         std::vector<Node>::iterator it = std::find(nodes2.begin(), nodes2.end(), n);
@@ -96,8 +96,8 @@ float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
 float Speciator::treeSizeDiff(Tree& n1, Tree& n2) {
     std::vector<Node> nodes1 = n1.getNodesCopy();
     std::vector<Node> nodes2 = n2.getNodesCopy();
-    int maxSize = std::max(nodes1.size(), nodes2.size());
-    int minSize = std::min(nodes1.size(), nodes2.size());
+    int maxSize = (int) std::max(nodes1.size(), nodes2.size());
+    int minSize = (int) std::min(nodes1.size(), nodes2.size());
     return (float)(maxSize - minSize)/maxSize;
 }
 

@@ -72,7 +72,7 @@ Node* Mutate::getEmptyParentChild(Node* node) {
 
 Node* Mutate::getRandomInterior(Tree& tree) {
     std::vector<Node*> parents = getInteriors(tree);
-    int randomIndex = Utils::randi(0, parents.size() - 1);
+    int randomIndex = Utils::randi(0, (int) (parents.size() - 1));
     return parents[randomIndex];
 }
 

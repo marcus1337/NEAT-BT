@@ -4,7 +4,7 @@
 
 void Node::addChild(Node node) {
     assert(isParent());
-    int randomPosition = Utils::randi(0, children.size());
+    int randomPosition = Utils::randi(0, (int) children.size());
     if (randomPosition == children.size())
         children.push_back(node);
     else

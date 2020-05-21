@@ -5,8 +5,8 @@
 
 
 std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
-    culler.populationSize = trees.size();
-    breeder.populationSize = trees.size();
+    culler.populationSize = (int) trees.size();
+    breeder.populationSize = (int) trees.size();
 
     std::vector<Specie> species = speciator.getSpecies(trees);
     culler.cullSpecies(species);

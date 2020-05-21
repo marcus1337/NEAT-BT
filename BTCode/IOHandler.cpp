@@ -161,7 +161,7 @@ void IOHandler::saveGeneration(std::vector<Tree>& trees, int generation, std::st
     generationInfo.saveData(infoStream, trees);
 
     for (size_t i = 0; i < trees.size(); i++)
-        saveTree(trees[i], i + 1, generation, folderName);
+        saveTree(trees[i], (int) (i + 1), generation, folderName);
 }
 
 std::ifstream IOHandler::getGenerationInfoInStream(std::string folderName, int generation) {
