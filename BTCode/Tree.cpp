@@ -71,7 +71,7 @@ Node* Tree::getNodeWithEmptyChild() {
 
 bool Tree::removeEmptyChildrenFromNode(Node* node) {
     bool removedSomething = false;
-    for (int i = 0; i < node->children.size(); i++) {
+    for (size_t i = 0; i < node->children.size(); i++) {
         if (node->children[i].isEmptyParent()) {
             node->children.erase(node->children.begin() + i);
             i--;
@@ -185,7 +185,7 @@ bool Tree::equals(Tree& other) {
     if (nodes1.size() != nodes2.size())
         return false;
 
-    for (int i = 0; i < nodes1.size(); i++) {
+    for (size_t i = 0; i < nodes1.size(); i++) {
         if (nodes1[i] != nodes2[i])
             return false;
     }
@@ -198,7 +198,7 @@ void Tree::deleteLeaf(int position) {
     while (it.hasNext()) {
         Node* tmp = it.next();
         if (tmp->isParent()) {
-            for (int i = 0; i < tmp->children.size(); i++) {
+            for (size_t i = 0; i < tmp->children.size(); i++) {
                 if (!tmp->children[i].isParent())
                     position--;
                 if (position < 0) {
@@ -214,7 +214,7 @@ void Tree::deleteCondition(int position) {
     while (it.hasNext()) {
         Node* tmp = it.next();
         if (tmp->isParent()) {
-            for (int i = 0; i < tmp->children.size(); i++) {
+            for (size_t i = 0; i < tmp->children.size(); i++) {
                 if (tmp->children[i].type == CONDITION)
                     position--;
                 if (position < 0) {

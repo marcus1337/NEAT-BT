@@ -23,7 +23,7 @@ void GenerationInfo::saveData(std::ofstream& stream, std::vector<Tree>& trees) {
 
 void GenerationInfo::storeData(std::vector<Tree>& trees) {
     numTrees = trees.size();
-    for (int i = 0; i < trees.size(); i++) {
+    for (size_t i = 0; i < trees.size(); i++) {
         averageFitness += trees[i].fitness;
         fitnesses.push_back(trees[i].fitness);
         maxFitness = std::max(maxFitness, trees[i].fitness);
@@ -38,7 +38,7 @@ void GenerationInfo::loadData(std::ifstream& stream) {
     stream >> averageFitness;
     stream >> generation;
     stream >> numTrees;
-    for (int i = 0; i < numTrees; i++) {
+    for (size_t i = 0; i < (size_t) numTrees; i++) {
         int fitness;
         stream >> fitness;
         fitnesses.push_back(fitness);

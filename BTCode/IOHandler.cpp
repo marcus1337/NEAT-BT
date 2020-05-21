@@ -117,9 +117,9 @@ Tree IOHandler::loadTree(std::ifstream& stream) {
 
 std::vector<Node> IOHandler::loadTreeNodes(std::ifstream& stream) {
     std::vector<Node> res;
-    int numParents;
+    size_t numParents;
     stream >> numParents;
-    for (int i = 0; i < numParents; i++) {
+    for (size_t i = 0; i < numParents; i++) {
         Node node = loadInteriorNode(stream);
         res.push_back(node);
     }
@@ -160,7 +160,7 @@ void IOHandler::saveGeneration(std::vector<Tree>& trees, int generation, std::st
     generationInfo.generation = generation;
     generationInfo.saveData(infoStream, trees);
 
-    for (int i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++)
         saveTree(trees[i], i + 1, generation, folderName);
 }
 

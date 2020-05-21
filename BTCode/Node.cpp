@@ -15,7 +15,7 @@ int Node::getNumInteriorChildren() {
     if (!isParent())
         return 0;
     int counter = 0;
-    for (int i = 0; i < children.size(); i++) {
+    for (size_t i = 0; i < children.size(); i++) {
         if (children[i].isParent())
             counter++;
     }

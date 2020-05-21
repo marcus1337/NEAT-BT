@@ -68,7 +68,7 @@ std::vector<float> Surprise::getNormalizedDistances(std::vector<float>& distance
 }
 
 float Surprise::getMaxScore(float totalPot, std::vector<float>& normalizedDistances) {
-    float sumNormalizedDistances = std::accumulate(normalizedDistances.begin(), normalizedDistances.end(), 0);
+    float sumNormalizedDistances = std::accumulate(normalizedDistances.begin(), normalizedDistances.end(), 0.f);
     return totalPot / sumNormalizedDistances;
 }
 

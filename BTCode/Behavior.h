@@ -120,7 +120,7 @@ std::vector<T> Behavior<T>::multVectors(std::vector<T> a, std::vector<T> b) cons
 
 template <class T>
 T Behavior<T>::sum() {
-    return std::accumulate(behaviors.begin(), behaviors.end(), 0);
+    return std::accumulate(behaviors.begin(), behaviors.end(), T(0));
 }
 
 template <class T>

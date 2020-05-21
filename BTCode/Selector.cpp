@@ -4,7 +4,7 @@
 #include "Utils.h"
 
 void Selector::removeStaleSpecies(std::vector<Specie>& species) {
-    int maxSpecies = std::max(populationSize / 2, 1);
+    size_t maxSpecies = (size_t) std::max(populationSize / 2, 1);
     if (species.size() > maxSpecies)
         species.erase(species.begin() + maxSpecies, species.end());
 }
@@ -59,7 +59,7 @@ std::vector<float> Selector::getSpecieProbabilities(std::vector<Specie>& oldSpec
     if (totalAverageFitness <= 0)
         return std::vector<float>(oldSpecies.size(), 1.f);
     else {
-        for (int i = 0; i < oldSpecies.size(); i++) {
+        for (size_t i = 0; i < oldSpecies.size(); i++) {
             float speciesProbability = std::max<float>((float)oldSpecies[i].averageFitness / totalAverageFitness, 0);
             specieProbabilities.push_back(speciesProbability);
         }

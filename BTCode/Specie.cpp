@@ -32,14 +32,14 @@ float Specie::getSpecieStrength(int numSpecies, int totalAverageFitness) const {
 void Specie::setDiscreteProbabilityDistribution() {
     std::vector<float> probabilityDistribution(trees.size());
     int totalFitness = 0;
-    for (int i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++)
         totalFitness += trees[i]->fitness;
     if (totalFitness <= 0)
     {
         discreteProbabilityDistribution = { 1 };
         return;
     }
-    for (int i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++)
         probabilityDistribution[i] = ((float)trees[i]->fitness / totalFitness)*1000.f;
 
     discreteProbabilityDistribution = std::vector<int>(probabilityDistribution.begin(), probabilityDistribution.end());

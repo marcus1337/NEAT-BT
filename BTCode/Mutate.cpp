@@ -64,7 +64,7 @@ void Mutate::addNodeMutate(Tree& tree) {
 }
 
 Node* Mutate::getEmptyParentChild(Node* node) {
-    for (int i = 0; i < node->children.size(); i++)
+    for (size_t i = 0; i < node->children.size(); i++)
         if (node->children[i].isEmptyParent())
             return &node->children[i];
     return nullptr;
