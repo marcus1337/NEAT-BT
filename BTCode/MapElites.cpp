@@ -12,3 +12,7 @@ bool MapElites::isEliteBetter(int a, int b, int c, Tree& newTree) {
 void MapElites::storeTree(int a, int b, int c, Tree& newTree) {
     eliteTrees[a][b][c] = newTree;
 }
+
+Tree MapElites::getTree(int a, int b, int c) {
+    return eliteTrees[a][b][c];
+}

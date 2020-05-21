@@ -13,7 +13,7 @@ public:
     bool isOccupied(int a, int b, int c);
     bool isEliteBetter(int a, int b, int c, Tree& newTree);
     void storeTree(int a, int b, int c, Tree& newTree);
-
+    Tree getTree(int a, int b, int c);
 };
 
 #endif // !MAPELITES_H
