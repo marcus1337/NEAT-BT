@@ -17,7 +17,9 @@ class Surprise {
     void distributeSurpriseFitness(std::vector<Tree>& trees, float totalPot, float maxDistance,
         std::vector<float>& distances);
     std::vector<float> getDistances(std::vector<Tree>& trees);
+    std::vector<float> getNormalizedDistances(std::vector<float>& distances, float maxDistance);
     float getMaxDistance(std::vector<float>& distances);
+    float getMaxScore(float totalPot, std::vector<float>& normalizedDistances);
 
 public:
 

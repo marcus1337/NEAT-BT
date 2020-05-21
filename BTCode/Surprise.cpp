@@ -27,16 +27,14 @@ void Surprise::updateMean(std::vector<Tree>& trees) {
 
 void Surprise::addSurpriseFitness(std::vector<Tree>& trees) {
     updateMean(trees);
-
     std::vector<float> distances = getDistances(trees);
     float maxDistance = getMaxDistance(distances);
     float totalPot = getTotalPot(trees);
 
-    if (maxDistance == 0.f || totalPot < 1.f || numGenerations < 5)
+    if (maxDistance <= 0.f || totalPot < 1.f || numGenerations < 5)
         return;
 
     distributeSurpriseFitness(trees, totalPot, maxDistance, distances);
-    
 }
 
 std::vector<float> Surprise::getDistances(std::vector<Tree>& trees) {
@@ -55,15 +53,23 @@ float Surprise::getMaxDistance(std::vector<float>& distances) {
 
 void Surprise::distributeSurpriseFitness(std::vector<Tree>& trees, float totalPot, float maxDistance,
     std::vector<float>& distances) {
-    std::vector<float> normalizedDistances(trees.size());
-    float sumNormalizedDistances = 0;
-    for (int i = 0; i < trees.size(); i++) {
-        normalizedDistances[i] = distances[i] / maxDistance;
-        sumNormalizedDistances += normalizedDistances[i];
-    }
-    float maxScore = totalPot / sumNormalizedDistances;
+
+    std::vector<float> normalizedDistances = getNormalizedDistances(distances, maxDistance);
+    float maxScore = getMaxScore(totalPot, normalizedDistances);
     for (int i = 0; i < trees.size(); i++)
         trees[i].fitness += (int)(maxScore*normalizedDistances[i]);
+}
+
+std::vector<float> Surprise::getNormalizedDistances(std::vector<float>& distances, float maxDistance) {
+    std::vector<float> normalizedDistances = distances;
+    for (int i = 0; i < distances.size(); i++)
+        normalizedDistances[i] /= maxDistance;
+    return normalizedDistances;
+}
+
+float Surprise::getMaxScore(float totalPot, std::vector<float>& normalizedDistances) {
+    float sumNormalizedDistances = std::accumulate(normalizedDistances.begin(), normalizedDistances.end(), 0);
+    return totalPot / sumNormalizedDistances;
 }
 
 float Surprise::getTotalPot(std::vector<Tree>& trees) {
