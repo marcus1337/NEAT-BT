@@ -145,25 +145,25 @@ BOOST_AUTO_TEST_CASE(behaviorData_test)
 {
     Behavior<float> behavior;
 
-    behavior.behaviors = { 0.f,1.f,50.f,1.5f };
-    std::vector<float> correct = behavior.behaviors;
+    behavior.set({ 0.f,1.f,50.f,1.5f });
+    std::vector<float> correct = behavior.get();
     for (int i = 0; i < correct.size(); i++) {
         correct[i] = correct[i] / 2;
     }
     behavior -= (behavior/2);
 
     for (int i = 0; i < correct.size(); i++) {
-        BOOST_REQUIRE(correct[i] == behavior.behaviors[i]);
+        BOOST_REQUIRE(correct[i] == behavior.get()[i]);
     }
 
-    behavior.behaviors = { 0.f,1.f,50.f,1.5f };
-    correct = behavior.behaviors;
+    behavior.set({ 0.f,1.f,50.f,1.5f });
+    correct = behavior.get();
     for (int i = 0; i < correct.size(); i++) {
         correct[i] = correct[i] * 2;
     }
     behavior += behavior;
 
     for (int i = 0; i < correct.size(); i++) {
-        BOOST_REQUIRE(correct[i] == behavior.behaviors[i]);
+        BOOST_REQUIRE(correct[i] == behavior.get()[i]);
     }
 }

@@ -24,10 +24,13 @@ private:
             a[i] /= divisor;
         return a;
     }
+    std::vector<T> behaviors;
 
 public:
 
-    std::vector<T> behaviors;
+    std::vector<T> get();
+    void set(std::vector<T> vec);
+    bool empty();
 
     Behavior<T> &operator+=(const Behavior<T> &rhs) {
         behaviors = addVectors(behaviors, rhs.behaviors);
@@ -57,5 +60,20 @@ public:
         return tmp;
     }
 };
+
+template <class T>
+std::vector<T> Behavior<T>::get() {
+    return behaviors;
+}
+
+template <class T>
+void Behavior<T>::set(std::vector<T> vec) {
+    behaviors = vec;
+}
+
+template <class T>
+bool Behavior<T>::empty() {
+    return behaviors.empty();
+}
 
 #endif
