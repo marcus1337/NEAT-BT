@@ -7,19 +7,19 @@ template <class T>
 class Behavior {
 private:
 
-    std::vector<T> subVectors(std::vector<T> a, std::vector<T> b) {
+    std::vector<T> subVectors(std::vector<T> a, std::vector<T> b) const {
         for (int i = 0; i < a.size(); i++)
             a[i] -= b[i];
         return a;
     }
 
-    std::vector<T> addVectors(std::vector<T> a, std::vector<T> b) {
+    std::vector<T> addVectors(std::vector<T> a, std::vector<T> b) const {
         for (int i = 0; i < a.size(); i++)
             a[i] += b[i];
         return a;
     }
 
-    std::vector<T> divVectors(std::vector<T> a, const int divisor) {
+    std::vector<T> divVectors(std::vector<T> a, const int divisor) const {
         for (int i = 0; i < a.size(); i++)
             a[i] /= divisor;
         return a;
@@ -64,11 +64,17 @@ public:
         return tmp;
     }
 
-    Behavior<T> operator/(const int &rhs) {
+    Behavior<T> &operator/=(const int &rhs) {
+        behaviors = divVectors(behaviors, rhs);
+        return *this;
+    }
+
+    Behavior<T> operator/(const int &rhs) const {
         Behavior<T> tmp = *this;
         tmp.behaviors = divVectors(tmp.behaviors, rhs);
         return tmp;
     }
+
 };
 
 template <class T>

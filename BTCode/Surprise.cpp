@@ -9,25 +9,18 @@ void Surprise::initMean(std::vector<Tree>& trees) {
 
 Behavior<float> Surprise::getMean(std::vector<Tree>& trees) {
     Behavior<float> result;
-    /*for (const auto& tree : trees) {
-        for (int i = 0; i < numElements; i++) {
-            result[i] += tree.observedBehaviors[i];
-        }
-    }
-    for (int i = 0; i < numElements; i++)
-        result[i] *= 1.0 / numTrees;*/
+    for (const auto& tree : trees)
+        result += tree.observedBehaviors;
+    result /= numTrees;
     return result;
 }
 
 void Surprise::updateMean(std::vector<Tree>& trees) {
-    if (mean.empty()) {
+    if (mean.empty())
         initMean(trees);
-        return;
-    }
-
 
     Behavior<float> latestMean = getMean(trees);
-    //mean = mean + (latestMean - mean) / numGenerations;
+    mean += (latestMean - mean) / numGenerations;
     numGenerations++;
 }
 
