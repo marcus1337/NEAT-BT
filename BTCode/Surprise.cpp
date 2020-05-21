@@ -1,4 +1,5 @@
 #include "Surprise.h"
+#include <limits>
 
 void Surprise::initMean(std::vector<Tree>& trees) {
     numElements = trees[0].observedBehaviors.size();
@@ -25,5 +26,26 @@ void Surprise::updateMean(std::vector<Tree>& trees) {
 }
 
 void Surprise::addSurpriseFitness(std::vector<Tree>& trees) {
+    updateMean(trees);
+    if (numGenerations < 5)
+        return;
 
+    std::vector<float> distances(trees.size());
+    float maxDistance = std::numeric_limits<float>::min();
+    for (int i = 0; i < trees.size(); i++) {
+        distances[i] = mean.distance(trees[i].observedBehaviors);
+        maxDistance = std::fmaxf(distances[i], maxDistance);
+    }
+
+    if (maxDistance == 0.f)
+        return;
+
+    float sumDistances = std::accumulate(distances.begin(), distances.end(), 0);
+
+    float totalPot = 0;
+    for (auto& tree : trees) {
+        totalPot += tree.fitness*effect;
+        tree.fitness -= tree.fitness*effect;
+    }
+    
 }

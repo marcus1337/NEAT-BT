@@ -16,6 +16,7 @@ class Surprise {
 
 public:
 
+    float effect = 0.5f;
     void addSurpriseFitness(std::vector<Tree>& trees);
 };
 
