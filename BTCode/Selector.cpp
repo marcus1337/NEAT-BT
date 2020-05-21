@@ -17,7 +17,9 @@ std::vector<int> Selector::getDiscreteSpecieProbabilities(std::vector<Specie>& s
     std::vector<float> specieProbabilities = getSpecieProbabilities(species);
     std::transform(specieProbabilities.begin(), specieProbabilities.end(), specieProbabilities.begin(),
         std::bind(std::multiplies<>(), std::placeholders::_1, 1000));
-    return std::vector<int>(specieProbabilities.begin(), specieProbabilities.end());
+    std::vector<int> roundedProbabilities;
+    std::transform(specieProbabilities.begin(), specieProbabilities.end(), std::back_inserter(roundedProbabilities), [](float x) { return static_cast<int>(x); });
+    return roundedProbabilities;
 }
 
 std::vector<Tree*> Selector::selectSingleIDs(std::vector<Specie>& species) {
