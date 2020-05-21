@@ -15,6 +15,8 @@
 #include "../BTCode/Breeder.h"
 #include "../BTCode/Evolver.h"
 
+#include "../BTCode/Behavior.h"
+
 using namespace std;
 using namespace BTE;
 namespace utf = boost::unit_test;
@@ -137,4 +139,31 @@ BOOST_AUTO_TEST_CASE(rootAlwaysParent_test)
     auto newStuff = evolver.makeNewGeneration(coordinator.trees);
     for(int i = 0 ; i < n ; i++)
         BOOST_REQUIRE(newStuff[i].root.isParent());
+}
+
+BOOST_AUTO_TEST_CASE(behaviorData_test)
+{
+    Behavior<float> behavior;
+
+    behavior.behaviors = { 0.f,1.f,50.f,1.5f };
+    std::vector<float> correct = behavior.behaviors;
+    for (int i = 0; i < correct.size(); i++) {
+        correct[i] = correct[i] / 2;
+    }
+    behavior -= (behavior/2);
+
+    for (int i = 0; i < correct.size(); i++) {
+        BOOST_REQUIRE(correct[i] == behavior.behaviors[i]);
+    }
+
+    behavior.behaviors = { 0.f,1.f,50.f,1.5f };
+    correct = behavior.behaviors;
+    for (int i = 0; i < correct.size(); i++) {
+        correct[i] = correct[i] * 2;
+    }
+    behavior += behavior;
+
+    for (int i = 0; i < correct.size(); i++) {
+        BOOST_REQUIRE(correct[i] == behavior.behaviors[i]);
+    }
 }
