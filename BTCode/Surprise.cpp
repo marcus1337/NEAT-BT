@@ -18,7 +18,7 @@ Behavior<float> Surprise::getMean(std::vector<Tree>& trees) {
 }
 
 void Surprise::updateMean(std::vector<Tree>& trees) {
-    if (mean.empty() || numGenerations > 10)
+    if (mean.empty())
         initMean(trees);
 
     Behavior<float> latestMean = getMean(trees);
