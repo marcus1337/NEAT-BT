@@ -8,7 +8,7 @@
 void Speciator::sortSpecies(std::vector<Specie>& species) {
 
     for (Specie& spec : species) {
-        spec.topFitness = std::numeric_limits<float>::min();
+        spec.topFitness = std::numeric_limits<int>::min();
         for (const auto& tree : spec.trees)
             spec.topFitness = std::max(spec.topFitness, tree->fitness);
     }
