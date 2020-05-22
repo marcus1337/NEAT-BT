@@ -23,7 +23,7 @@ namespace BTE {
         char* getTreeString(int index);
         void evolve();
         void setFitness(int index, int fitness);
-        void setBehvaior(int index, std::vector<int> behaviors);
+        void setBehavior(int index, std::vector<int> behaviors);
         void setTargetSpecies(int numTargetSpecies);
 
     };

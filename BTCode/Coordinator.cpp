@@ -43,6 +43,6 @@ void Coordinator::setTargetSpecies(int numTargetSpecies) {
     evolver.speciator.targetNumSpecies = std::max(numTargetSpecies,1);
 }
 
-void Coordinator::setBehvaior(int index, std::vector<int> behaviors) {
+void Coordinator::setBehavior(int index, std::vector<int> behaviors) {
     trees[index].observedBehaviors = behaviors;
 }
