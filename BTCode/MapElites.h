@@ -14,6 +14,9 @@ public:
     bool isEliteBetter(int a, int b, int c, Tree& newTree);
     void storeTree(int a, int b, int c, Tree& newTree);
     Tree getTree(int a, int b, int c);
+
+    void mapOrStoreElite(Tree& oldTree);
+    void mapOrStoreElites(std::vector<Tree>& trees);
 };
 
 #endif // !MAPELITES_H
