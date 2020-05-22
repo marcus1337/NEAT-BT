@@ -29,6 +29,8 @@ namespace BTE {
 
         void randomizePopulation(int minNodes, int maxNodes);
 
+        void mapElites();
+
     };
 }
 

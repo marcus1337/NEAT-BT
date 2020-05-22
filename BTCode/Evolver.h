@@ -8,6 +8,8 @@
 #include "Breeder.h"
 #include "Surprise.h"
 
+#include "MapElites.h"
+
 #ifndef EVOLVER_H
 #define EVOLVER_H
 
@@ -20,6 +22,7 @@ public:
     std::vector<Tree> makeNewGeneration(std::vector<Tree>& trees);
 
     Surprise surprise;
+    MapElites mapElites;
 };
 
 #endif

@@ -59,3 +59,7 @@ void Coordinator::randomizePopulation(int minNodes, int maxNodes) {
         trees[i] = Tree::makeRandomTree(randNumNodes);
     }
 }
+
+void Coordinator::mapElites() {
+    evolver.mapElites.mapOrStoreElites(trees);
+}
