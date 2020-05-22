@@ -9,10 +9,12 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
     breeder.populationSize = (int) trees.size();
 
     std::vector<Specie> species = speciator.getSpecies(trees);
-    culler.cullSpecies(species);
+    surprise.addSurpriseFitness(trees);
 
+    culler.cullSpecies(species);
     auto singleTrees = culler.selectSingleIDs(species);
     auto pairedTrees = culler.selectPairedIDs(species);
+
     std::vector<Tree> newTrees = breeder.makeNewGeneration(singleTrees, pairedTrees);
 
     for (auto& tree : newTrees)

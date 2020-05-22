@@ -19,6 +19,7 @@ public:
     Breeder breeder;
     std::vector<Tree> makeNewGeneration(std::vector<Tree>& trees);
 
+    Surprise surprise;
 };
 
 #endif
