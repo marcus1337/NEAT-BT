@@ -6,6 +6,7 @@
 #include "Speciator.h"
 #include "Selector.h"
 #include "Breeder.h"
+#include "Surprise.h"
 
 #ifndef EVOLVER_H
 #define EVOLVER_H
