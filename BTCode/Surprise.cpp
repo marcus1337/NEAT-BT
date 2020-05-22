@@ -10,6 +10,7 @@ void Surprise::initMean(std::vector<Tree>& trees) {
 
 Behavior<float> Surprise::getMean(std::vector<Tree>& trees) {
     Behavior<float> result;
+    result.set({ 0,0,0 });
     for (const auto& tree : trees)
         result += tree.observedBehaviors;
     result /= numTrees;
@@ -26,13 +27,14 @@ void Surprise::updateMean(std::vector<Tree>& trees) {
 }
 
 bool Surprise::shouldSurprise(float maxDistance, float totalPot) {
-    if (maxDistance <= 0.5f || totalPot < 1.f || numGenerations < 2 || effect <= 0)
+    if (maxDistance <= 0.5f || totalPot < 1.f || effect <= 0.0001f)
         return false;
     return true;
 }
 
 void Surprise::addSurpriseFitness(std::vector<Tree>& trees) {
     updateMean(trees);
+
     std::vector<float> distances = getDistances(trees);
     float maxDistance = getMaxDistance(distances);
     float totalPot = getTotalPot(trees);
@@ -68,8 +70,9 @@ void Surprise::distributeSurpriseFitness(std::vector<Tree>& trees, float totalPo
 
     std::vector<float> normalizedDistances = getNormalizedDistances(distances, maxDistance);
     float maxScore = getMaxScore(totalPot, normalizedDistances);
-    for (size_t i = 0; i < trees.size(); i++)
+    for (size_t i = 0; i < trees.size(); i++) {
         trees[i].fitness += (int)(maxScore*normalizedDistances[i]);
+    }
 }
 
 std::vector<float> Surprise::getNormalizedDistances(std::vector<float>& distances, float maxDistance) {

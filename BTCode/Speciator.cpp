@@ -3,11 +3,16 @@
 #include <algorithm>
 #include "Utils.h"
 #include <set>
+#include <limits>
 
 void Speciator::sortSpecies(std::vector<Specie>& species) {
-    for (Specie& spec : species)
+
+    for (Specie& spec : species) {
+        spec.topFitness = std::numeric_limits<float>::min();
         for (const auto& tree : spec.trees)
             spec.topFitness = std::max(spec.topFitness, tree->fitness);
+    }
+
     std::sort(species.begin(), species.end(), [](const Specie& lhs, const Specie& rhs)
     { return lhs.topFitness > rhs.topFitness; });
     for (Specie& spec : species) {

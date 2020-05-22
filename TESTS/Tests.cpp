@@ -167,3 +167,20 @@ BOOST_AUTO_TEST_CASE(behaviorData_test)
         BOOST_REQUIRE(correct[i] == behavior.get()[i]);
     }
 }
+
+BOOST_AUTO_TEST_CASE(surprise_test)
+{
+    Coordinator coordinator;
+    size_t n = 50;
+    coordinator.init((int)n, 50, 50, 50, 50, 50);
+    for (int i = 0; i < n; i++) {
+        coordinator.trees[i].fitness = 100;
+        coordinator.trees[i].observedBehaviors = { 0,0,0 };
+    }
+    coordinator.setSurpriseEffect(1.0f);
+    coordinator.trees[0].observedBehaviors = { 100,100,100 };
+    coordinator.evolver.surprise.addSurpriseFitness(coordinator.trees);
+    
+    cout << "TEST: " << coordinator.trees[0].fitness << "\n\n";
+    cout << "TEST: " << coordinator.trees[1].fitness << "\n\n";
+}

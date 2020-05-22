@@ -5,6 +5,7 @@
 Tree::Tree() {
     root = Node::makeRandomOtherInterior();
     root.addChild(Node::makeRandomAction());
+    observedBehaviors = { 0,0,0 };
 }
 
 Tree Tree::getValidTree() {
