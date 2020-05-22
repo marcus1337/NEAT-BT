@@ -27,6 +27,8 @@ namespace BTE {
         void setTargetSpecies(int numTargetSpecies);
         void setSurpriseEffect(float effect);
 
+        void randomizePopulation(int minNodes, int maxNodes);
+
     };
 }
 

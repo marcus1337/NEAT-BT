@@ -52,3 +52,10 @@ void Coordinator::setSurpriseEffect(float effect) {
     effect = std::clamp(effect, 0.f, 1.f);
     evolver.surprise.effect = effect;
 }
+
+void Coordinator::randomizePopulation(int minNodes, int maxNodes) {
+    for (size_t i = 0; i < trees.size(); i++) {
+        int randNumNodes = Utils::randi(minNodes, maxNodes);
+        trees[i] = Tree::makeRandomTree(randNumNodes);
+    }
+}

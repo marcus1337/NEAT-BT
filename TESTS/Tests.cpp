@@ -173,7 +173,7 @@ BOOST_AUTO_TEST_CASE(surprise_test)
     Coordinator coordinator;
     size_t n = 50;
     coordinator.init((int)n, 50, 50, 50, 50, 50);
-    for (int i = 0; i < n; i++) {
+    for (size_t i = 0; i < n; i++) {
         coordinator.trees[i].fitness = 100;
         coordinator.trees[i].observedBehaviors = { 0,0,0 };
     }
