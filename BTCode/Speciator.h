@@ -6,7 +6,6 @@
 #define SPECIATOR_H
 
 class Speciator {
-    void sortSpecies(std::vector<Specie>& species);
     void sortSpecie(Specie& spec);
     void fitnessSharing(std::vector<Tree>& trees);
     void adjustFitnessShared(std::vector<Tree>& trees, int index);
@@ -31,6 +30,8 @@ public:
     void addToSpecies(Tree& tree, std::vector<Specie>& species);
     bool addToExistingSpecie(Tree& tree, std::vector<Specie>& species);
     void addNewSpecie(Tree& tree, std::vector<Specie>& species);
+
+    void sortSpecies(std::vector<Specie>& species);
 };
 
 #endif

@@ -25,6 +25,7 @@ namespace BTE {
         void setFitness(int index, int fitness);
         void setBehavior(int index, std::vector<int> behaviors);
         void setTargetSpecies(int numTargetSpecies);
+        void setSurpriseEffect(float effect);
 
     };
 }

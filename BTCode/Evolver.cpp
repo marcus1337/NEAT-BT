@@ -10,6 +10,7 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
 
     std::vector<Specie> species = speciator.getSpecies(trees);
     surprise.addSurpriseFitness(trees);
+    speciator.sortSpecies(species);
 
     culler.cullSpecies(species);
     auto singleTrees = culler.selectSingleIDs(species);

@@ -1,5 +1,6 @@
 #include "Coordinator.h"
 #include "IOHandler.h"
+#include <algorithm>
 
 using namespace BTE;
 
@@ -45,4 +46,9 @@ void Coordinator::setTargetSpecies(int numTargetSpecies) {
 
 void Coordinator::setBehavior(int index, std::vector<int> behaviors) {
     trees[index].observedBehaviors = behaviors;
+}
+
+void Coordinator::setSurpriseEffect(float effect) {
+    effect = std::clamp(effect, 0.f, 1.f);
+    evolver.surprise.effect = effect;
 }

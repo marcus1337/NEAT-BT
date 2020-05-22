@@ -20,7 +20,9 @@ class Surprise {
     std::vector<float> getNormalizedDistances(std::vector<float>& distances, float maxDistance);
     float getMaxDistance(std::vector<float>& distances);
     float getMaxScore(float totalPot, std::vector<float>& normalizedDistances);
+    void removeFitness(std::vector<Tree>& trees);
 
+    bool shouldSurprise(float maxDistance, float totalPot);
 public:
 
     float effect = 0.5f;
