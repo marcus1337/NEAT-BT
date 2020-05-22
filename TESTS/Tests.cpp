@@ -181,6 +181,13 @@ BOOST_AUTO_TEST_CASE(surprise_test)
     coordinator.trees[0].observedBehaviors = { 100,100,100 };
     coordinator.evolver.surprise.addSurpriseFitness(coordinator.trees);
     
-    cout << "TEST: " << coordinator.trees[0].fitness << "\n\n";
-    cout << "TEST: " << coordinator.trees[1].fitness << "\n\n";
+    BOOST_REQUIRE(coordinator.trees[0].fitness > coordinator.trees[1].fitness*2);
+}
+
+BOOST_AUTO_TEST_CASE(randomTree_test)
+{
+    for (int i = 2; i < 10; i++) {
+        Tree tree = Tree::makeRandomTree(i);
+        BOOST_REQUIRE(tree.getNumberOfNodes() == i && tree.getValidTree().getNumberOfNodes() == i);
+    }
 }

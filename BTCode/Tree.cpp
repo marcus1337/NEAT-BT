@@ -2,6 +2,8 @@
 #include "TreeIterator.h"
 #include "Utils.h"
 
+#include "Mutate.h"
+
 Tree::Tree() {
     root = Node::makeRandomOtherInterior();
     root.addChild(Node::makeRandomAction());
@@ -12,6 +14,19 @@ Tree Tree::getValidTree() {
     Tree tree = *this;
     tree.removeAllEmptyChildren();
     return tree;
+}
+
+Tree Tree::makeRandomTree(int nodes) {
+    Tree result;
+    Mutate mutater;
+    nodes = std::max(nodes, 2);
+    while (result.getNumberOfNodes() != nodes) {
+        while (result.getNumberOfNodes() > nodes)
+            mutater.deleteNodeMutate(result);
+        while (result.getNumberOfNodes() < nodes)
+            mutater.addNodeMutate(result);
+    }
+    return result;
 }
 
 void Tree::addParentsToQueue(std::queue<Node*>& nodes, Node* node) {

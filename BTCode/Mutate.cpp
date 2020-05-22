@@ -20,10 +20,7 @@ void Mutate::replaceRandomly(Node* node) {
 }
 
 void Mutate::replaceMutate(Tree& tree) {
-    if (!shouldMutate(mutateChance))
-        return;
-
-    int numNodes = tree.getNumberOfNodes()-1;
+    int numNodes = tree.getNumberOfNodes() - 1;
     int randNodeIndex = Utils::randi(0, numNodes);
 
     auto it = TreeIterator(tree.root);
@@ -51,15 +48,13 @@ Node Mutate::makeRandomNode() {
 }
 
 void Mutate::addNodeMutate(Tree& tree) {
-    if (shouldMutate(mutateChance)) {
-        Node newNode = makeRandomNode();
-        Node* interior = getRandomInterior(tree);
+    Node newNode = makeRandomNode();
+    Node* interior = getRandomInterior(tree);
+    interior->addChild(newNode);
+    while (newNode.isParent()) {
+        interior = getEmptyParentChild(interior);
+        newNode = makeRandomNode();
         interior->addChild(newNode);
-        while (newNode.isParent()) {
-            interior = getEmptyParentChild(interior);
-            newNode = makeRandomNode();
-            interior->addChild(newNode);
-        }
     }
 }
 
@@ -72,7 +67,7 @@ Node* Mutate::getEmptyParentChild(Node* node) {
 
 Node* Mutate::getRandomInterior(Tree& tree) {
     std::vector<Node*> parents = getInteriors(tree);
-    int randomIndex = Utils::randi(0, (int) (parents.size() - 1));
+    int randomIndex = Utils::randi(0, (int)(parents.size() - 1));
     return parents[randomIndex];
 }
 
@@ -88,25 +83,28 @@ std::vector<Node*> Mutate::getInteriors(Tree& tree) {
 }
 
 void Mutate::deleteNodeMutate(Tree& tree) {
-    if (shouldMutate(mutateChance / 2.f)) {
-        int numActions = tree.getNumberOfNodesOfType(ACTION);
-        int numConditions = tree.getNumberOfNodesOfType(CONDITION);
-        if (numActions == 1) {
-            if (numConditions == 0)
-                return;
-            int pickedNumber = Utils::randi(0, numConditions - 1);
-            tree.deleteCondition(pickedNumber);
-        }
-        else {
-            int pickedNumber = Utils::randi(0, numConditions + numActions - 1);
-            tree.deleteLeaf(pickedNumber);
-        }
-        tree = tree.getValidTree();
+    int numActions = tree.getNumberOfNodesOfType(ACTION);
+    int numConditions = tree.getNumberOfNodesOfType(CONDITION);
+    if (numActions == 1) {
+        if (numConditions == 0)
+            return;
+        int pickedNumber = Utils::randi(0, numConditions - 1);
+        tree.deleteCondition(pickedNumber);
     }
+    else {
+        int pickedNumber = Utils::randi(0, numConditions + numActions - 1);
+        tree.deleteLeaf(pickedNumber);
+    }
+    tree = tree.getValidTree();
 }
 
 void Mutate::mutateTree(Tree& tree) {
-    deleteNodeMutate(tree);
-    replaceMutate(tree);
-    addNodeMutate(tree);
+    if (shouldMutate(mutateChance / 2.f))
+        deleteNodeMutate(tree);
+
+    if (shouldMutate(mutateChance))
+        replaceMutate(tree);
+
+    if (shouldMutate(mutateChance))
+        addNodeMutate(tree);
 }

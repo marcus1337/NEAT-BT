@@ -17,6 +17,7 @@ public:
     std::vector<int> observedBehaviors;
 
     Tree();
+    static Tree makeRandomTree(int nodes);
     Tree getValidTree();
 
     int getNumberParentNodes();
