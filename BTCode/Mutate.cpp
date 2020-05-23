@@ -86,6 +86,8 @@ bool Mutate::hasMultipleActions(Tree& tree) {
     return tree.getNumberOfNodesOfType(ACTION) > 1;
 }
 
+#include <iostream>
+
 void Mutate::deleteNodeMutate(Tree& tree) {
 
     std::vector<std::tuple<Node*, int>> deletables = getDeletableNodes(tree);
@@ -116,8 +118,6 @@ std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
         InfoNode infoNode = it.nextInfo();
-        if (infoNode.parentNode == nullptr)
-            continue;
         Node* node = infoNode.node;
         if (node->isParent()) {
             for (size_t i = 0; i < node->children.size(); i++) {
@@ -127,6 +127,9 @@ std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
                     deletables.push_back(std::make_tuple(node, i));
             }
         }
+
+        if (infoNode.parentNode == nullptr)
+            continue;
         if (node->isParent() && node->children.size() == 1 && node->children[0].isParent())
             deletables.push_back(std::make_tuple(infoNode.parentNode, 0));
     }

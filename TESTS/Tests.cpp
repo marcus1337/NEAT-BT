@@ -70,7 +70,7 @@ BOOST_AUTO_TEST_CASE(mutateDeleteNode_test)
 {
     Mutate mutater;
     mutater.mutateChance = 9999;
-    Tree tree = TestUtils::getRandomizedTree(50);
+    Tree tree = Tree::makeRandomTree(50);
 
     rep(i, 0, 50) {
         mutater.deleteNodeMutate(tree);
