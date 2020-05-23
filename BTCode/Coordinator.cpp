@@ -61,5 +61,5 @@ void Coordinator::randomizePopulation(int minNodes, int maxNodes) {
 }
 
 void Coordinator::mapElites() {
-   // evolver.mapElites.mapOrStoreElites(trees);
+    evolver.mapElites.mapOrStoreElites(trees);
 }
