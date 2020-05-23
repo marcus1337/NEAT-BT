@@ -25,6 +25,7 @@ public:
 
     void mapOrStoreElite(Tree& oldTree);
     void mapOrStoreElites(std::vector<Tree>& trees);
+    bool isNewTreeBetter(std::tuple<int, int, int> key, Tree& newTree);
 };
 
 #endif // !MAPELITES_H

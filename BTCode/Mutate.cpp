@@ -94,7 +94,7 @@ void Mutate::deleteNodeMutate(Tree& tree) {
     if (deletables.empty())
         return;
 
-    size_t randomIndex = Utils::randi(0, deletables.size() - 1);
+    int randomIndex = Utils::randi(0, deletables.size() - 1);
     Node* parentNode = std::get<0>(deletables[randomIndex]);
     int childIndex = std::get<1>(deletables[randomIndex]);
 
@@ -122,9 +122,9 @@ std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
         if (node->isParent()) {
             for (size_t i = 0; i < node->children.size(); i++) {
                 if (canDeleteAction && node->children[i].type == ACTION)
-                    deletables.push_back(std::make_tuple(std::cref(node), i));
+                    deletables.push_back(std::make_tuple(node, i));
                 else if (node->children[i].type == CONDITION)
-                    deletables.push_back(std::make_tuple(std::cref(node), i));
+                    deletables.push_back(std::make_tuple(node, i));
             }
         }
 

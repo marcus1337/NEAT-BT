@@ -31,10 +31,16 @@ void MapElites::mapOrStoreElite(Tree& newTree) {
     int c = newTree.observedBehaviors[2];
     auto _key = std::make_tuple(a, b, c);
 
-    if (!isOccupied(a, b, c) || eliteTrees[_key].fitness < newTree.fitness)
+    if (!isOccupied(a, b, c) || isNewTreeBetter(_key, newTree))
         eliteTrees[_key] = newTree;
     else
         newTree = eliteTrees[_key];
+}
+
+bool MapElites::isNewTreeBetter(std::tuple<int, int, int> _key, Tree& newTree) {
+    return eliteTrees[_key].fitness < newTree.fitness
+        || (eliteTrees[_key].fitness == newTree.fitness && 
+            eliteTrees[_key].getNumberOfNodes() > newTree.getNumberOfNodes());
 }
 
 void MapElites::mapOrStoreElites(std::vector<Tree>& trees) {
