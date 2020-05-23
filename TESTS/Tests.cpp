@@ -191,3 +191,14 @@ BOOST_AUTO_TEST_CASE(randomTree_test)
         BOOST_REQUIRE(tree.getNumberOfNodes() == i && tree.getValidTree().getNumberOfNodes() == i);
     }
 }
+
+BOOST_AUTO_TEST_CASE(mapElites_test)
+{
+    Coordinator coordinator;
+    size_t n = 10;
+    //coordinator.init((int)n, 10, 10, 10, 10, 10);
+
+    //for (int i = 2; i < 5; i++) {
+        //coordinator.randomizePopulation(i, i);
+    //}
+}

@@ -2,14 +2,22 @@
 #include <vector>
 #include "Tree.h"
 
+#include <map>
+#include <algorithm>
+#include <vector>
+#include <tuple>
+
 #ifndef MAPELITES_H
 #define MAPELITES_H
 
 
 class MapElites {
-    unsigned char mapOccupied[100][100][100] = {};
-    Tree eliteTrees[100][100][100];
+
+    std::map<std::tuple<int,int,int>,Tree> eliteTrees;
+
 public:
+    MapElites();
+
     bool isOccupied(int a, int b, int c);
     bool isEliteBetter(int a, int b, int c, Tree& newTree);
     void storeTree(int a, int b, int c, Tree& newTree);
