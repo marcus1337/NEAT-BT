@@ -82,20 +82,55 @@ std::vector<Node*> Mutate::getInteriors(Tree& tree) {
     return res;
 }
 
+bool Mutate::hasMultipleActions(Tree& tree) {
+    return tree.getNumberOfNodesOfType(ACTION) > 1;
+}
+
 void Mutate::deleteNodeMutate(Tree& tree) {
-    int numActions = tree.getNumberOfNodesOfType(ACTION);
-    int numConditions = tree.getNumberOfNodesOfType(CONDITION);
-    if (numActions == 1) {
-        if (numConditions == 0)
-            return;
-        int pickedNumber = Utils::randi(0, numConditions - 1);
-        tree.deleteCondition(pickedNumber);
+
+    std::vector<std::tuple<Node*, int>> deletables = getDeletableNodes(tree);
+    if (deletables.empty())
+        return;
+
+    int randomIndex = Utils::randi(0, deletables.size() - 1);
+    Node* parentNode = std::get<0>(deletables[randomIndex]);
+    int childIndex = std::get<1>(deletables[randomIndex]);
+
+
+    if (!parentNode->children[childIndex].isParent()) {
+        parentNode->children.erase(parentNode->children.begin() + childIndex);
     }
     else {
-        int pickedNumber = Utils::randi(0, numConditions + numActions - 1);
-        tree.deleteLeaf(pickedNumber);
+        auto movedChildren = parentNode->children[childIndex].children;
+        parentNode->children.erase(parentNode->children.begin() + childIndex);
+        auto it = parentNode->children.begin();
+        parentNode->children.insert(it + childIndex, movedChildren.begin(), movedChildren.end());
     }
+
     tree = tree.getValidTree();
+}
+
+std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
+    std::vector<std::tuple<Node*, int>> deletables;
+    bool canDeleteAction = hasMultipleActions(tree);
+    auto it = TreeIterator(tree.root);
+    while (it.hasNext()) {
+        InfoNode infoNode = it.nextInfo();
+        if (infoNode.parentNode == nullptr)
+            continue;
+        Node* node = infoNode.node;
+        if (node->isParent()) {
+            for (size_t i = 0; i < node->children.size(); i++) {
+                if (canDeleteAction && node->children[i].type == ACTION)
+                    deletables.push_back(std::make_tuple(infoNode.parentNode, i));
+                else if (node->children[i].type == CONDITION)
+                    deletables.push_back(std::make_tuple(infoNode.parentNode, i));
+            }
+        }
+        if (node->isParent() && node->children.size() == 1 && node->children[0].isParent())
+            deletables.push_back(std::make_tuple(infoNode.parentNode, 0));
+    }
+    return deletables;
 }
 
 void Mutate::mutateTree(Tree& tree) {

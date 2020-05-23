@@ -13,6 +13,8 @@ Tree::Tree() {
 Tree Tree::getValidTree() {
     Tree tree = *this;
     tree.removeAllEmptyChildren();
+    if (tree.getNumberOfNodes() == 1)
+        return Tree();
     return tree;
 }
 
