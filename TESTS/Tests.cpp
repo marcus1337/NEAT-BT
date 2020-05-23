@@ -204,3 +204,22 @@ BOOST_AUTO_TEST_CASE(mapElites_test)
         coordinator.mapElites();
     }
 }
+
+BOOST_AUTO_TEST_CASE(elitism_test)
+{
+    Coordinator coordinator;
+    size_t n = 10;
+    coordinator.init((int)n, 10, 10, 10, 10, 10);
+
+    for (int i = 2; i < 10; i++) {
+        coordinator.randomizePopulation(i, 10);
+        for (int i = 0; i < n; i++) {
+            coordinator.trees[i].fitness = i;
+            coordinator.trees[i].observedBehaviors = { i, i, 0 };
+        }
+        coordinator.mapElites();
+    }
+
+    for(size_t i = 0 ; i < 5; i++)
+        coordinator.evolver.mapElites.randomElitism(coordinator.trees);
+}
