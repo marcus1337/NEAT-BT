@@ -122,9 +122,9 @@ std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
         if (node->isParent()) {
             for (size_t i = 0; i < node->children.size(); i++) {
                 if (canDeleteAction && node->children[i].type == ACTION)
-                    deletables.push_back(std::make_tuple(infoNode.parentNode, i));
+                    deletables.push_back(std::make_tuple(node, i));
                 else if (node->children[i].type == CONDITION)
-                    deletables.push_back(std::make_tuple(infoNode.parentNode, i));
+                    deletables.push_back(std::make_tuple(node, i));
             }
         }
         if (node->isParent() && node->children.size() == 1 && node->children[0].isParent())
