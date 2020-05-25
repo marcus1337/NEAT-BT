@@ -177,3 +177,12 @@ void Mutate::limitTreeSize(Tree& tree) {
         deleteNodeMutate(tree);
     }
 }
+
+void Mutate::mutateTrees(std::vector<Tree>& trees) {
+    for (auto& tree : trees)
+        mutateTree(tree);
+}
+
+void Mutate::modifyMutationRate(std::vector<Tree>& trees) {
+    mutationRateControl.modifyMutationRate(mutateChance, trees);
+}

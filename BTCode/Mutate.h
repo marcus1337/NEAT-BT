@@ -5,6 +5,7 @@
 #include <vector>
 
 #include "TreeIterator.h"
+#include "MutationRateControl.h"
 
 #ifndef MUTATE_H
 #define MUTATE_H
@@ -26,16 +27,21 @@ class Mutate {
 
     void replaceLeafRandomly(Node* node);
     void replaceInteriorRandomly(Node* node);
+
+    MutationRateControl mutationRateControl;
 public:
     int maxTreeNodes = 30;
 
-    float mutateChance = 0.01f;
+    float mutateChance = 0.05f;
 
     void addNodeMutate(Tree& tree);
     void deleteNodeMutate(Tree& tree);
     void replaceMutate(Tree& tree);
 
     void mutateTree(Tree& tree);
+    void mutateTrees(std::vector<Tree>& trees);
+
+    void modifyMutationRate(std::vector<Tree>& trees);
 };
 
 #endif

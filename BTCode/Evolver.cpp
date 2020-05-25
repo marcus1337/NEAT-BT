@@ -8,8 +8,10 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
     culler.populationSize = (int) trees.size();
     breeder.populationSize = (int) trees.size();
     mapElites.storeElites(trees);
+    mutater.modifyMutationRate(trees);
 
     std::vector<Specie> species = speciator.getSpecies(trees);
+
     surprise.addSurpriseFitness(trees);
     speciator.sortSpecies(species);
 
@@ -19,7 +21,6 @@ std::vector<Tree> Evolver::makeNewGeneration(std::vector<Tree>& trees) {
 
     std::vector<Tree> newTrees = breeder.makeNewGeneration(singleTrees, pairedTrees);
 
-    for (auto& tree : newTrees)
-        mutater.mutateTree(tree);
+    mutater.mutateTrees(newTrees);
     return newTrees;
 }
