@@ -8,8 +8,8 @@
 class Speciator {
     void sortSpecie(Specie& spec);
     void fitnessSharing(std::vector<Tree>& trees);
-    void adjustFitnessShared(std::vector<Tree>& trees, int index);
-
+    void setSharingDivisors(std::vector<Tree>& trees);
+    std::vector<int> sharingDivisors;
 public:
     static constexpr float c1 = 1.6f;
     static constexpr float c2 = 0.7f;

@@ -29,17 +29,21 @@ void Speciator::sortSpecie(Specie& spec) {
 }
 
 void Speciator::fitnessSharing(std::vector<Tree>& trees) {
+    setSharingDivisors(trees);
     for (size_t i = 0; i < trees.size(); i++)
-        adjustFitnessShared(trees, (int) i);
+        trees[i].fitness /= sharingDivisors[i];
 }
 
-void Speciator::adjustFitnessShared(std::vector<Tree>& trees, int index) {
-    int divisor = 1;
+void Speciator::setSharingDivisors(std::vector<Tree>& trees) {
+    sharingDivisors = std::vector<int>(trees.size(), 1);
     for (size_t i = 0; i < trees.size(); i++) {
-        if (i != index && sameSpecie(trees[i], trees[index]))
-            divisor++;
+        for (size_t j = i; j < trees.size(); j++) {
+            if (i != j && sameSpecie(trees[i], trees[j])){
+                sharingDivisors[i]++;
+                sharingDivisors[j]++;
+            }
+        }
     }
-    trees[index].fitness /= divisor;
 }
 
 void Speciator::speciate(std::vector<Tree>& trees, std::vector<Specie>& species) {
