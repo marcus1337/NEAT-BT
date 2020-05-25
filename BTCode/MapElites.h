@@ -26,6 +26,8 @@ public:
     void mapOrStoreElites(std::vector<Tree>& trees);
     bool isNewTreeBetter(std::tuple<int, int, int> key, Tree& newTree);
 
+    std::vector<Tree> getElitesVector();
+
     void storeElite(Tree& tree);
     void storeElites(std::vector<Tree>& trees);
     std::tuple<int, int, int> getKey(Tree& tree);

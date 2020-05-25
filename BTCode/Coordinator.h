@@ -5,13 +5,14 @@
 #include "Tree.h"
 #include <vector>
 #include "Evolver.h"
+#include "IOHandler.h"
 
 namespace BTE {
     class Coordinator {
+        IOHandler iohandler;
     public:
 
         std::vector<Tree> trees;
-        char treeStringHolder[10000] = {};
         int generation;
         Evolver evolver;
 
@@ -20,7 +21,10 @@ namespace BTE {
 
         void saveGeneration(std::string filename);
         void loadGeneration(std::string filename, int _generation);
-        char* getTreeString(int index);
+        std::string getTreeString(int index);
+        std::string getEliteTreeString(int index);
+
+
         void evolve();
         void setFitness(int index, int fitness);
         void setBehavior(int index, std::vector<int> behaviors);

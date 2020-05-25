@@ -63,12 +63,17 @@ void MapElites::storeElites(std::vector<Tree>& trees) {
         storeElite(trees[i]);
 }
 
+std::vector<Tree> MapElites::getElitesVector() {
+    std::vector<Tree> allElites;
+    std::transform(eliteTrees.begin(), eliteTrees.end(), std::back_inserter(allElites),
+        [](auto &kv) { return kv.second; });
+    return allElites;
+}
+
 void MapElites::randomElitism(std::vector<Tree>& trees) {
     if (eliteTrees.empty())
         return;
-    std::vector<Tree> allElites;
-    std::transform(eliteTrees.begin(),eliteTrees.end(),std::back_inserter(allElites),
-        [](auto &kv) { return kv.second; });
+    std::vector<Tree> allElites = getElitesVector();
     for (size_t i = 0; i < trees.size(); i++) {
         int randomEliteIndex = Utils::randi(0, allElites.size() - 1);
         trees[i] = allElites[randomEliteIndex];

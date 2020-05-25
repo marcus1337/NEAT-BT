@@ -1,5 +1,4 @@
 #include "Coordinator.h"
-#include "IOHandler.h"
 #include <algorithm>
 
 using namespace BTE;
@@ -14,22 +13,21 @@ void Coordinator::init(int numTrees, int maxOtherInteriorID, int maxUnorderedInt
 }
 
 void Coordinator::saveGeneration(std::string filename) {
-    IOHandler iohandler;
     iohandler.saveGeneration(trees, generation, filename);
 }
 
 void Coordinator::loadGeneration(std::string filename, int _generation) {
-    IOHandler iohandler;
     trees = iohandler.loadGeneration(_generation, filename);
     generation = _generation;
 }
 
-char* Coordinator::getTreeString(int index) {
-    IOHandler iohandler;
-    std::string treeStr = iohandler.getTreeString(trees[index]);
-    std::size_t treeCharArraySize = sizeof(treeStringHolder);
-    strncpy(treeStringHolder, treeStr.c_str(), treeCharArraySize);
-    return &treeStringHolder[0];
+std::string Coordinator::getTreeString(int index) {
+    return iohandler.getTreeString(trees[index]);
+}
+
+std::string Coordinator::getEliteTreeString(int index) {
+    auto allElites = evolver.mapElites.getElitesVector();
+    return iohandler.getTreeString(allElites[index]);
 }
 
 void Coordinator::evolve() {
@@ -69,12 +67,10 @@ void Coordinator::mapElites() {
 }
 
 void Coordinator::saveElites(std::string foldername) {
-    IOHandler iohandler;
     iohandler.saveElites(evolver.mapElites.eliteTrees, foldername);
 }
 
 void Coordinator::loadElites(std::string foldername) {
-    IOHandler iohandler;
     evolver.mapElites.eliteTrees = iohandler.loadElites(foldername);
 }
 
