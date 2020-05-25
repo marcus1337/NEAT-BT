@@ -68,12 +68,16 @@ void Coordinator::mapElites() {
     evolver.mapElites.mapOrStoreElites(trees);
 }
 
-void Coordinator::saveElites(std::string filename) {
+void Coordinator::saveElites(std::string foldername) {
     IOHandler iohandler;
-    iohandler.saveElites(evolver.mapElites.eliteTrees);
+    iohandler.saveElites(evolver.mapElites.eliteTrees, foldername);
 }
 
-void Coordinator::loadElites(std::string filename) {
+void Coordinator::loadElites(std::string foldername) {
     IOHandler iohandler;
-    evolver.mapElites.eliteTrees = iohandler.loadElites(filename);
+    evolver.mapElites.eliteTrees = iohandler.loadElites(foldername);
+}
+
+void Coordinator::setMaxTreeNodes(int numNodes) {
+    evolver.mutater.maxTreeNodes = numNodes;
 }

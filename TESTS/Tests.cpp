@@ -110,7 +110,7 @@ BOOST_AUTO_TEST_CASE(mutateReplace_test)
         auto nodes2 = tmpCopy.getNodesCopy();
         BOOST_REQUIRE(nodes1.size() == nodes2.size());
         rep(j, 0, (int) nodes1.size()) {
-            BOOST_REQUIRE(nodes1[j].type == nodes2[j].type);
+            BOOST_REQUIRE(nodes1[j].isParent() == nodes2[j].isParent());
         }
     }
 }

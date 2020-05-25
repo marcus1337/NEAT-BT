@@ -8,7 +8,7 @@ std::vector<Tree> Breeder::makeNewGeneration(std::vector<Tree*> singleTrees, std
     int pairCounter = 0;
     int singleCounter = 0;
 
-    while (numMadeTrees < populationSize / 5) {
+    while (numMadeTrees < populationSize / 2) {
         breedCrossover(trees, pairedTrees[pairCounter].first, pairedTrees[pairCounter].second);
         numMadeTrees+=2;
         pairCounter++;

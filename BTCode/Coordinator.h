@@ -31,8 +31,9 @@ namespace BTE {
         void randomizePopulationFromElites();
 
         void mapElites();
-        void saveElites(std::string filename);
-        void loadElites(std::string filename);
+        void saveElites(std::string foldername = "TREES_ELITE");
+        void loadElites(std::string foldername = "TREES_ELITE");
+        void setMaxTreeNodes(int numNodes);
         
 
     };

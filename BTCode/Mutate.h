@@ -13,6 +13,7 @@ class Mutate {
     bool shouldMutate(float chance);
     void replaceRandomly(Node* node);
     Node makeRandomNode();
+    Node makeRandomReplaceInterior(Node* oldNode);
 
     Node* getRandomInterior(Tree& tree);
     Node* getEmptyParentChild(Node* node);
@@ -20,7 +21,13 @@ class Mutate {
 
     std::vector<std::tuple<Node*, int>> getDeletableNodes(Tree& tree);
     bool hasMultipleActions(Tree& tree);
+
+    void limitTreeSize(Tree& tree);
+
+    void replaceLeafRandomly(Node* node);
+    void replaceInteriorRandomly(Node* node);
 public:
+    int maxTreeNodes = 30;
 
     float mutateChance = 0.01f;
 

@@ -1,22 +1,47 @@
 #include "Mutate.h"
 #include "Utils.h"
 #include "TreeIterator.h"
+#include <algorithm>
 
 bool Mutate::shouldMutate(float chance) {
     return Utils::randf(0.f, 1.f) < chance;
 }
 
 void Mutate::replaceRandomly(Node* node) {
-    if (node->type == OTHER_INTERIOR)
-        node->ID = Node::makeRandomOtherInterior().ID;
-    if (node->type == UNORDERED_INTERIOR)
-        node->ID = Node::makeRandomUnorderedInterior().ID;
-    if (node->type == DECORATOR)
-        node->ID = Node::makeRandomDecorator().ID;
-    if (node->type == ACTION)
-        node->ID = Node::makeRandomAction().ID;
-    if (node->type == CONDITION)
-        node->ID = Node::makeRandomCondition().ID;
+    if (node->isParent())
+        replaceInteriorRandomly(node);
+    else
+        replaceLeafRandomly(node);
+}
+
+void Mutate::replaceInteriorRandomly(Node* node) {
+    Node randNode = makeRandomReplaceInterior(node);
+    int typeBeforeReplace = node->type;
+    node->type = randNode.type;
+    node->ID = randNode.ID;
+    if (node->type == UNORDERED_INTERIOR && typeBeforeReplace != UNORDERED_INTERIOR)
+        std::shuffle(std::begin(node->children), std::end(node->children), Utils::mRng);
+}
+
+Node Mutate::makeRandomReplaceInterior(Node* oldNode) {
+    float randNum = Utils::randf(0.f, 1.f);
+    if (oldNode->children.size() == 1) {
+        if (randNum > 0.8f)
+            return Node::makeRandomDecorator();
+        else if (randNum > 0.4f)
+            return Node::makeRandomOtherInterior();
+        return Node::makeRandomUnorderedInterior();
+    }
+    if (randNum > 0.5f)
+        return Node::makeRandomOtherInterior();
+    return Node::makeRandomUnorderedInterior();
+}
+
+void Mutate::replaceLeafRandomly(Node* node) {
+    if (shouldMutate(0.5f))
+        *node = Node::makeRandomAction();
+    else
+        *node = Node::makeRandomCondition();
 }
 
 void Mutate::replaceMutate(Tree& tree) {
@@ -36,13 +61,13 @@ void Mutate::replaceMutate(Tree& tree) {
 
 Node Mutate::makeRandomNode() {
     float randFloat = Utils::randf(0.f, 1.f);
-    if (randFloat > 0.98f)
+    if (randFloat > 0.95f)
         return Node::makeRandomDecorator();
-    if (randFloat > 0.85f)
+    if (randFloat > 0.75f)
         return Node::makeRandomCondition();
-    if (randFloat > 0.65f)
-        return Node::makeRandomOtherInterior();
     if (randFloat > 0.60f)
+        return Node::makeRandomOtherInterior();
+    if (randFloat > 0.50f)
         return Node::makeRandomUnorderedInterior();
     return Node::makeRandomAction();
 }
@@ -85,8 +110,6 @@ std::vector<Node*> Mutate::getInteriors(Tree& tree) {
 bool Mutate::hasMultipleActions(Tree& tree) {
     return tree.getNumberOfNodesOfType(ACTION) > 1;
 }
-
-#include <iostream>
 
 void Mutate::deleteNodeMutate(Tree& tree) {
 
@@ -137,7 +160,7 @@ std::vector<std::tuple<Node*, int>> Mutate::getDeletableNodes(Tree& tree) {
 }
 
 void Mutate::mutateTree(Tree& tree) {
-    if (shouldMutate(mutateChance / 2.f))
+    if (shouldMutate(mutateChance))
         deleteNodeMutate(tree);
 
     if (shouldMutate(mutateChance))
@@ -145,4 +168,12 @@ void Mutate::mutateTree(Tree& tree) {
 
     if (shouldMutate(mutateChance))
         addNodeMutate(tree);
+
+    limitTreeSize(tree);
+}
+
+void Mutate::limitTreeSize(Tree& tree) {
+    while (tree.getNumberOfNodes() > maxTreeNodes) {
+        deleteNodeMutate(tree);
+    }
 }
