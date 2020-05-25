@@ -28,8 +28,10 @@ namespace BTE {
         void setSurpriseEffect(float effect);
 
         void randomizePopulation(int minNodes, int maxNodes);
+        void randomizePopulationFromElites();
 
         void mapElites();
+        
 
     };
 }

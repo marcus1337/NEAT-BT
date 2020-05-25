@@ -60,6 +60,10 @@ void Coordinator::randomizePopulation(int minNodes, int maxNodes) {
     }
 }
 
+void Coordinator::randomizePopulationFromElites() {
+    evolver.mapElites.randomElitism(trees);
+}
+
 void Coordinator::mapElites() {
     evolver.mapElites.mapOrStoreElites(trees);
 }

@@ -64,6 +64,8 @@ void MapElites::storeElites(std::vector<Tree>& trees) {
 }
 
 void MapElites::randomElitism(std::vector<Tree>& trees) {
+    if (eliteTrees.empty())
+        return;
     std::vector<Tree> allElites;
     std::transform(eliteTrees.begin(),eliteTrees.end(),std::back_inserter(allElites),
         [](auto &kv) { return kv.second; });
