@@ -3,6 +3,8 @@
 #include <string>
 #include <fstream>
 #include <stack>
+#include <map>
+#include <tuple>
 
 #ifndef IOHANDLER_H
 #define IOHANDLER_H
@@ -40,6 +42,9 @@ public:
     Tree loadTree(int treeIndex, int generation, std::string folderName = "TREES");
     void saveTree(Tree& tree, int treeIndex, int generation, std::string folderName = "TREES");
     void saveGeneration(std::vector<Tree>& trees, int generation, std::string folderName = "TREES");
+
+    std::map<std::tuple<int,int,int>,Tree> loadElites(std::string folderName = "TREES_ELITE");
+    void saveElites(std::map<std::tuple<int, int, int>, Tree>& elites, std::string folderName = "TREES_ELITE");
 
 };
 

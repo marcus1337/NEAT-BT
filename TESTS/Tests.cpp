@@ -223,3 +223,31 @@ BOOST_AUTO_TEST_CASE(elitism_test)
     for(size_t i = 0 ; i < 5; i++)
         coordinator.evolver.mapElites.randomElitism(coordinator.trees);
 }
+
+BOOST_AUTO_TEST_CASE(saveLoadElites_test)
+{
+    TestUtils::setMaxNodeIDs(5000);
+    IOHandler iohandler;
+    std::string folderName = "TEST_ELITES";
+    std::vector<Tree> trees;
+    rep(i, 0, 50)
+        trees.push_back(TestUtils::getRandomizedTree(50));
+    MapElites mapElites;
+
+    for (auto& tree : trees) {
+        int a = Utils::randi(0, 99);
+        int b = Utils::randi(0, 99);
+        int c = Utils::randi(0, 99);
+        tree.observedBehaviors = { a,b,c };
+    }
+    mapElites.storeElites(trees);
+
+    iohandler.saveElites(mapElites.eliteTrees);
+    auto loadedElites = iohandler.loadElites();
+
+    BOOST_REQUIRE(mapElites.eliteTrees.size() == loadedElites.size());
+    for (auto& tree : loadedElites) {
+        BOOST_REQUIRE(tree.second.equals(mapElites.eliteTrees[tree.first]));
+    }
+
+}

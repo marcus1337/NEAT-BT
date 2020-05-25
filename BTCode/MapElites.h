@@ -12,10 +12,8 @@
 
 
 class MapElites {
-
-    std::map<std::tuple<int,int,int>,Tree> eliteTrees;
-
 public:
+    std::map<std::tuple<int, int, int>, Tree> eliteTrees;
     MapElites();
 
     bool isOccupied(std::tuple<int, int, int> key);

@@ -67,3 +67,13 @@ void Coordinator::randomizePopulationFromElites() {
 void Coordinator::mapElites() {
     evolver.mapElites.mapOrStoreElites(trees);
 }
+
+void Coordinator::saveElites(std::string filename) {
+    IOHandler iohandler;
+    iohandler.saveElites(evolver.mapElites.eliteTrees);
+}
+
+void Coordinator::loadElites(std::string filename) {
+    IOHandler iohandler;
+    evolver.mapElites.eliteTrees = iohandler.loadElites(filename);
+}
