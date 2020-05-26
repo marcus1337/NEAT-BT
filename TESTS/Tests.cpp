@@ -265,8 +265,8 @@ BOOST_AUTO_TEST_CASE(treeStringMapper_test)
     Node::maxUnorderedInteriorID = 2;
     
     tree = tree.makeRandomTree(10);
-    std::string treeStr = mapper.getMappedTreeString(tree);
-
-    cout << "TEST: " << treeStr  << endl;
+    BOOST_REQUIRE(mapper.getMappedTreeString(tree) == mapper.getMappedTreeString(tree));
+    tree = tree.makeRandomTree(5);
+    BOOST_REQUIRE(mapper.getMappedTreeString(tree) == mapper.getMappedTreeString(tree));
 
 }
