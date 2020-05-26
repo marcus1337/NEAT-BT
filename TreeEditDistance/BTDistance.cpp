@@ -17,13 +17,13 @@ typedef label::LabelDictionary<label::StringLabel> LabelDictionary;
 
 int BTDistance::calculateLimitedTreeEditDistance(std::string treeStr1, std::string treeStr2, int maxVal) {
 
-    static LabelDictionary ld;
-    static CostModel ucm(ld);
-    static ted::TouzetBaselineTreeIndex<CostModel, node::TreeIndexAll> touzet_baseline_algorithm(ucm);
+    LabelDictionary ld;
+    CostModel ucm(ld);
+    ted::TouzetBaselineTreeIndex<CostModel, node::TreeIndexAll> touzet_baseline_algorithm(ucm);
 
     node::TreeIndexAll ti1;
     node::TreeIndexAll ti2;
-    static parser::BracketNotationParser bnp;
+    parser::BracketNotationParser bnp;
     
     node::Node<Label> t1 = bnp.parse_single(treeStr1);
     node::Node<Label> t2 = bnp.parse_single(treeStr2);
