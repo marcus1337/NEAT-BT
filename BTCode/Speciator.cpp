@@ -48,11 +48,17 @@ void Speciator::setSharingDivisors(std::vector<Tree>& trees) {
     }
 }
 
+//#include <iostream>
+
 void Speciator::speciate(std::vector<Tree>& trees, std::vector<Specie>& species) {
     numSpecies = 0;
     for (size_t i = 0; i < trees.size(); i++)
         addToSpecies(trees[i], species);
+
+    //std::cout << "before sharing " << speciateDelta <<  "\n";
     fitnessSharing(trees);
+    //std::cout << "after sharing\n";
+
     sortSpecies(species);
     adjustDynamicSpecieDelta();
 }
@@ -103,6 +109,7 @@ bool Speciator::sameSpecie(Tree& n1, Tree& n2) {
     if (treeStr1.size() > 30 || treeStr2.size() > 30)
         return true; //hardcoded limitation to prevent freezing
 
-    int editDistance = btDistance.calculateTreeEditDistance(treeStr1, treeStr2);
-    return 0 < speciateDelta;
+    int editDistance = btDistance.calculateLimitedTreeEditDistance(treeStr1, treeStr2, speciateDelta);
+    //int editDistance = btDistance.calculateTreeEditDistance(treeStr1, treeStr2);
+    return editDistance < speciateDelta;
 }
