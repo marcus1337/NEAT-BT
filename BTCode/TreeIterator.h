@@ -27,24 +27,10 @@ class TreeIterator {
 
 public:
 
-    TreeIterator(Node& _root) {
-        unvisited.push(InfoNode(&_root)); 
-    }
-
-    Node* next() {
-        Node* node = popNodeQueue();
-        addChildrenToQueue(node);
-        return node;
-    }
-    InfoNode nextInfo() {
-        InfoNode node = unvisited.front();
-        unvisited.pop();
-        addChildrenToQueue(node.node);
-        return node;
-    }
-
-    bool hasNext() { return !unvisited.empty(); };
-
+    TreeIterator(Node& _root);
+    Node* next();
+    InfoNode nextInfo();
+    bool hasNext();
 };
 
 

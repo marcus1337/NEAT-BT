@@ -12,3 +12,21 @@ Node* TreeIterator::popNodeQueue() {
     unvisited.pop();
     return node;
 }
+
+TreeIterator::TreeIterator(Node& _root) {
+    unvisited.push(InfoNode(&_root));
+}
+
+Node* TreeIterator::next() {
+    Node* node = popNodeQueue();
+    addChildrenToQueue(node);
+    return node;
+}
+InfoNode TreeIterator::nextInfo() {
+    InfoNode node = unvisited.front();
+    unvisited.pop();
+    addChildrenToQueue(node.node);
+    return node;
+}
+
+bool TreeIterator::hasNext() { return !unvisited.empty(); };
