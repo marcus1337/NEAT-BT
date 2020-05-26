@@ -20,11 +20,13 @@ class TreeStringMapper {
     std::vector<bool> visitedNodes;
     int orderNum;
 
-    std::string startNewString(Tree& tree);
+    void startNewString(Tree& tree);
     void addVisitedNode(std::string& treeStr);
     void addLeafNode(std::string& treeStr, Node* node);
     void addInteriorNode(std::string& treeStr, Node* node, int orderID);
     void addUnvisitedNode(std::string& treeStr, Node* node, int orderID);
+
+    bool hasChildInterior(Node* node);
 public:
 
     std::string getMappedTreeString(Tree& tree);
