@@ -27,8 +27,11 @@ class Mutate {
 
     void replaceLeafRandomly(Node* node);
     void replaceInteriorRandomly(Node* node);
+    void replaceRootRandomly(Node* node);
 
     MutationRateControl mutationRateControl;
+
+
 public:
     int maxTreeNodes = 30;
 

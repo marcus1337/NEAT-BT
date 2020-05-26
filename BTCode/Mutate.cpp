@@ -7,6 +7,20 @@ bool Mutate::shouldMutate(float chance) {
     return Utils::randf(0.f, 1.f) < chance;
 }
 
+void Mutate::replaceRootRandomly(Node* node) {
+    float randNum = Utils::randf(0.f, 1.f);
+    Node randNode;
+    if (randNum > 0.5f)
+        randNode = Node::makeRandomOtherInterior();
+    else
+        randNode = Node::makeRandomUnorderedInterior();
+    int typeBeforeReplace = node->type;
+    node->type = randNode.type;
+    node->ID = randNode.ID;
+    if (node->type == UNORDERED_INTERIOR && typeBeforeReplace != UNORDERED_INTERIOR)
+        std::shuffle(std::begin(node->children), std::end(node->children), Utils::mRng);
+}
+
 void Mutate::replaceRandomly(Node* node) {
     if (node->isParent())
         replaceInteriorRandomly(node);
@@ -47,6 +61,11 @@ void Mutate::replaceLeafRandomly(Node* node) {
 void Mutate::replaceMutate(Tree& tree) {
     int numNodes = tree.getNumberOfNodes() - 1;
     int randNodeIndex = Utils::randi(0, numNodes);
+
+    if (randNodeIndex == 0) {
+        replaceRootRandomly(&tree.root);
+        return;
+    }
 
     auto it = TreeIterator(tree.root);
     while (it.hasNext()) {
