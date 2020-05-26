@@ -283,11 +283,6 @@ BOOST_AUTO_TEST_CASE(evolveWithBTDistance_test)
     coordinator.init(100, 4, 0, 0, 10, 10);
 
     for (size_t tests = 0; tests < 100; tests++) {
-
-        for (int i = 0; i < coordinator.trees.size(); i++) {
-
-        }
-
         coordinator.evolve();
         cout << "evo done: " << tests << "\n";
     }

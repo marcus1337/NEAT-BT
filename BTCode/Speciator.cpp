@@ -5,8 +5,6 @@
 #include <set>
 #include <limits>
 
-#include "../TreeEditDistance/BTDistance.h"
-
 void Speciator::sortSpecies(std::vector<Specie>& species) {
 
     for (Specie& spec : species) {
@@ -48,16 +46,12 @@ void Speciator::setSharingDivisors(std::vector<Tree>& trees) {
     }
 }
 
-//#include <iostream>
-
 void Speciator::speciate(std::vector<Tree>& trees, std::vector<Specie>& species) {
     numSpecies = 0;
     for (size_t i = 0; i < trees.size(); i++)
         addToSpecies(trees[i], species);
 
-    //std::cout << "before sharing " << speciateDelta <<  "\n";
     fitnessSharing(trees);
-    //std::cout << "after sharing\n";
 
     sortSpecies(species);
     adjustDynamicSpecieDelta();
@@ -96,20 +90,27 @@ void Speciator::adjustDynamicSpecieDelta() {
 
 
 std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
+    setTreeStrings(trees);
     std::vector<Specie> species;
     speciate(trees, species);
     return species;
 }
 
 bool Speciator::sameSpecie(Tree& n1, Tree& n2) {
-    BTDistance btDistance;
-    std::string treeStr1 = treeStringMapper.getMappedTreeString(n1);
-    std::string treeStr2 = treeStringMapper.getMappedTreeString(n2);
     
-    if (treeStr1.size() > 30 || treeStr2.size() > 30)
+    if (n1.treeStr.size() > 30 || n2.treeStr.size() > 30)
         return true; //hardcoded limitation to prevent freezing
 
-    int editDistance = btDistance.calculateLimitedTreeEditDistance(treeStr1, treeStr2, speciateDelta);
-    //int editDistance = btDistance.calculateTreeEditDistance(treeStr1, treeStr2);
+    int editDistance;
+    if(speciateDelta < 10)
+        editDistance = btDistance.calculateLimitedTreeEditDistance(n1.treeStr, n2.treeStr, speciateDelta);
+    else
+        editDistance = btDistance.calculateTreeEditDistance(n1.treeStr, n2.treeStr);
     return editDistance < speciateDelta;
+}
+
+void Speciator::setTreeStrings(std::vector<Tree>& trees) {
+    for (auto& tree : trees) {
+        tree.treeStr = treeStringMapper.getMappedTreeString(tree);
+    }
 }

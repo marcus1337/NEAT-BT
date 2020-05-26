@@ -2,7 +2,7 @@
 #include "BTDistance.h"
 
 
-//#include "APTED/apted_tree_index.h"
+#include "APTED/apted_tree_index.h"
 #include "APTED/bracket_notation_parser.h"
 #include "APTED/touzet_baseline_tree_index.h"
 #include "APTED/unit_cost_model.h"
@@ -36,10 +36,7 @@ int BTDistance::calculateLimitedTreeEditDistance(std::string treeStr1, std::stri
     return (int)computed_results;
 }
 
-/*int BTDistance::calculateTreeEditDistance(std::string treeStr1, std::string treeStr2) {
-    using Label = label::StringLabel;
-    using CostModel = cost_model::UnitCostModelLD<Label>;
-    using LabelDictionary = label::LabelDictionary<Label>;
+int BTDistance::calculateTreeEditDistance(std::string treeStr1, std::string treeStr2) {
     LabelDictionary ld;
     CostModel ucm(ld);
     ted::TEDAlgorithm<CostModel, node::TreeIndexAll>* ted_algorithm;
@@ -56,4 +53,4 @@ int BTDistance::calculateLimitedTreeEditDistance(std::string treeStr1, std::stri
     node::index_tree(ti2, t2, ld, ucm);
     double computed_results = ted_algorithm->ted(ti1, ti2);
     return (int)computed_results;
-}*/
+}

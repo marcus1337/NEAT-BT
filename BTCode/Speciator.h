@@ -3,6 +3,7 @@
 #include "Specie.h"
 
 #include "TreeStringMapper.h"
+#include "../TreeEditDistance/BTDistance.h"
 
 #ifndef SPECIATOR_H
 #define SPECIATOR_H
@@ -13,6 +14,9 @@ class Speciator {
     void setSharingDivisors(std::vector<Tree>& trees);
     std::vector<int> sharingDivisors;
     TreeStringMapper treeStringMapper;
+    BTDistance btDistance;
+
+    void setTreeStrings(std::vector<Tree>& trees);
 
 public:
 

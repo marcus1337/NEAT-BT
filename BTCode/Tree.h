@@ -42,6 +42,8 @@ public:
 
     void deleteLeaf(int position);
     void deleteCondition(int position);
+
+    std::string treeStr;
 };
 
 #endif
