@@ -2,6 +2,8 @@
 #include <vector>
 #include "Specie.h"
 
+#include "TreeStringMapper.h"
+
 #ifndef SPECIATOR_H
 #define SPECIATOR_H
 
@@ -10,18 +12,15 @@ class Speciator {
     void fitnessSharing(std::vector<Tree>& trees);
     void setSharingDivisors(std::vector<Tree>& trees);
     std::vector<int> sharingDivisors;
+    TreeStringMapper treeStringMapper;
+
 public:
-    static constexpr float c1 = 1.6f;
-    static constexpr float c2 = 0.7f;
 
     int targetNumSpecies = 3;
-    float speciateDelta = 3.0f;
+    int speciateDelta = 3;
     void adjustDynamicSpecieDelta();
     int numSpecies = 1;
     std::vector<Specie> getSpecies(std::vector<Tree>& trees);
-
-    float nodeTypeDiff(Tree& n1, Tree& n2);
-    float treeSizeDiff(Tree& n1, Tree& n2);
 
     bool sameSpecie(Tree& n1, Tree& n2);
 

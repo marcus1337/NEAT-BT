@@ -5,6 +5,8 @@
 #include <set>
 #include <limits>
 
+#include "../TreeEditDistance/BTDistance.h"
+
 void Speciator::sortSpecies(std::vector<Specie>& species) {
 
     for (Specie& spec : species) {
@@ -80,35 +82,12 @@ void Speciator::addNewSpecie(Tree& tree, std::vector<Specie>& species) {
 
 void Speciator::adjustDynamicSpecieDelta() {
     if (numSpecies < targetNumSpecies)
-        speciateDelta -= speciateDelta / 20;
+        speciateDelta--;
     if (numSpecies > targetNumSpecies)
-        speciateDelta += speciateDelta / 20;
-    speciateDelta = (float)((int)(speciateDelta * 10000)) / 10000;
-    speciateDelta = std::clamp(speciateDelta, 0.00001f, 1000.0f);
+        speciateDelta++;
+    speciateDelta = std::clamp(speciateDelta, 1, 10000);
 }
 
-float Speciator::nodeTypeDiff(Tree& n1, Tree& n2) {
-    std::vector<Node> nodes1 = n1.getNodesCopy();
-    std::vector<Node> nodes2 = n2.getNodesCopy();
-    int maxSize = (int) std::max(nodes1.size(), nodes2.size());
-    int countSame = 0;
-    for (const auto& n : nodes1) {
-        std::vector<Node>::iterator it = std::find(nodes2.begin(), nodes2.end(), n);
-        size_t index = std::distance(nodes2.begin(), it);
-        if (index != nodes2.size()) {
-            countSame++;
-            nodes2.erase(nodes2.begin() + index);
-        }
-    }
-    return (float) countSame / maxSize;
-}
-float Speciator::treeSizeDiff(Tree& n1, Tree& n2) {
-    std::vector<Node> nodes1 = n1.getNodesCopy();
-    std::vector<Node> nodes2 = n2.getNodesCopy();
-    int maxSize = (int) std::max(nodes1.size(), nodes2.size());
-    int minSize = (int) std::min(nodes1.size(), nodes2.size());
-    return (float)(maxSize - minSize)/maxSize;
-}
 
 std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
     std::vector<Specie> species;
@@ -117,7 +96,13 @@ std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
 }
 
 bool Speciator::sameSpecie(Tree& n1, Tree& n2) {
-    float dd = c1 * nodeTypeDiff(n1, n2);
-    float dw = c2 * treeSizeDiff(n1, n2);
-    return (dd + dw) < speciateDelta;
+    BTDistance btDistance;
+    std::string treeStr1 = treeStringMapper.getMappedTreeString(n1);
+    std::string treeStr2 = treeStringMapper.getMappedTreeString(n2);
+    
+    if (treeStr1.size() > 30 || treeStr2.size() > 30)
+        return true; //hardcoded limitation to prevent freezing
+
+    int editDistance = btDistance.calculateTreeEditDistance(treeStr1, treeStr2);
+    return 0 < speciateDelta;
 }
