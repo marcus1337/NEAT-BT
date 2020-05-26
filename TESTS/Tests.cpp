@@ -27,7 +27,7 @@ namespace utf = boost::unit_test;
 #define all(x) begin(x), end(x)
 #define sz(x) (int)(x).size()
 
-/*
+
 BOOST_AUTO_TEST_CASE(saveLoadSingle_test)
 {
     TestUtils::setMaxNodeIDs(5000);
@@ -252,19 +252,19 @@ BOOST_AUTO_TEST_CASE(saveLoadElites_test)
         BOOST_REQUIRE(tree.second.equals(mapElites.eliteTrees[tree.first]));
     }
 
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(treeStringMapper_test)
 {
     TreeStringMapper mapper;
     Tree tree;
-    Node::maxOtherInteriorID = 50;
-    Node::maxDecoratorID = 50;
-    Node::maxActionID = 50;
-    Node::maxConditionID = 50;
-    Node::maxUnorderedInteriorID = 50;
+    Node::maxOtherInteriorID = 2;
+    Node::maxDecoratorID = 2;
+    Node::maxActionID = 2;
+    Node::maxConditionID = 2;
+    Node::maxUnorderedInteriorID = 2;
     
-    tree = tree.makeRandomTree(5);
+    tree = tree.makeRandomTree(10);
     std::string treeStr = mapper.getMappedTreeString(tree);
 
     cout << "TEST: " << treeStr  << endl;
