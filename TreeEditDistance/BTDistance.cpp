@@ -1,27 +1,30 @@
 
 #include "BTDistance.h"
 
-#include "APTED/apted_tree_index.h"
+
+//#include "APTED/apted_tree_index.h"
+#include "APTED/bracket_notation_parser.h"
+#include "APTED/touzet_baseline_tree_index.h"
 #include "APTED/unit_cost_model.h"
 #include "APTED/node.h"
 #include "APTED/tree_indexer.h"
-#include "APTED/bracket_notation_parser.h"
-#include "APTED/touzet_baseline_tree_index.h"
 
 #include <limits>
 
+typedef label::StringLabel Label;
+typedef cost_model::UnitCostModelLD<label::StringLabel> CostModel;
+typedef label::LabelDictionary<label::StringLabel> LabelDictionary;
+
 int BTDistance::calculateLimitedTreeEditDistance(std::string treeStr1, std::string treeStr2, int maxVal) {
-    using Label = label::StringLabel;
-    using CostModel = cost_model::UnitCostModelLD<Label>;
-    using LabelDictionary = label::LabelDictionary<Label>;
-    LabelDictionary ld;
-    CostModel ucm(ld);
-    ted::TouzetBaselineTreeIndex<CostModel, node::TreeIndexAll> touzet_baseline_algorithm(ucm);
+
+    static LabelDictionary ld;
+    static CostModel ucm(ld);
+    static ted::TouzetBaselineTreeIndex<CostModel, node::TreeIndexAll> touzet_baseline_algorithm(ucm);
 
     node::TreeIndexAll ti1;
     node::TreeIndexAll ti2;
-    parser::BracketNotationParser bnp;
-
+    static parser::BracketNotationParser bnp;
+    
     node::Node<Label> t1 = bnp.parse_single(treeStr1);
     node::Node<Label> t2 = bnp.parse_single(treeStr2);
     node::index_tree(ti1, t1, ld, ucm);
@@ -33,7 +36,7 @@ int BTDistance::calculateLimitedTreeEditDistance(std::string treeStr1, std::stri
     return (int)computed_results;
 }
 
-int BTDistance::calculateTreeEditDistance(std::string treeStr1, std::string treeStr2) {
+/*int BTDistance::calculateTreeEditDistance(std::string treeStr1, std::string treeStr2) {
     using Label = label::StringLabel;
     using CostModel = cost_model::UnitCostModelLD<Label>;
     using LabelDictionary = label::LabelDictionary<Label>;
@@ -53,4 +56,4 @@ int BTDistance::calculateTreeEditDistance(std::string treeStr1, std::string tree
     node::index_tree(ti2, t2, ld, ucm);
     double computed_results = ted_algorithm->ted(ti1, ti2);
     return (int)computed_results;
-}
+}*/
