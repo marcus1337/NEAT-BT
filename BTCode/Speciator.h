@@ -18,6 +18,8 @@ class Speciator {
 
     void setTreeStrings(std::vector<Tree>& trees);
 
+    void increaseDivisorsIfSame(std::vector<Tree>& trees, int i, int j);
+
 public:
 
     int targetNumSpecies = 3;

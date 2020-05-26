@@ -36,13 +36,15 @@ void Speciator::fitnessSharing(std::vector<Tree>& trees) {
 
 void Speciator::setSharingDivisors(std::vector<Tree>& trees) {
     sharingDivisors = std::vector<int>(trees.size(), 1);
-    for (size_t i = 0; i < trees.size(); i++) {
-        for (size_t j = i; j < trees.size(); j++) {
-            if (i != j && sameSpecie(trees[i], trees[j])){
-                sharingDivisors[i]++;
-                sharingDivisors[j]++;
-            }
-        }
+    for (size_t i = 0; i < trees.size(); i++)
+        for (size_t j = i; j < trees.size(); j++)
+            increaseDivisorsIfSame(trees, i, j);
+}
+
+void Speciator::increaseDivisorsIfSame(std::vector<Tree>& trees, int i, int j) {
+    if (i != j && sameSpecie(trees[i], trees[j])) {
+        sharingDivisors[i]++;
+        sharingDivisors[j]++;
     }
 }
 
@@ -64,7 +66,7 @@ void Speciator::addToSpecies(Tree& tree, std::vector<Specie>& species) {
 }
 bool Speciator::addToExistingSpecie(Tree& tree, std::vector<Specie>& species) {
     for (int i = 0; i < numSpecies; i++) {
-        int numNeatsInSpecie = (int) species[i].trees.size();
+        int numNeatsInSpecie = (int)species[i].trees.size();
         Tree& tmpNeat = *species[i].trees[Utils::randi(0, numNeatsInSpecie - 1)];
         if (sameSpecie(tree, tmpNeat)) {
             species[i].trees.push_back(&tree);
@@ -97,12 +99,12 @@ std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
 }
 
 bool Speciator::sameSpecie(Tree& n1, Tree& n2) {
-    
+
     if (n1.treeStr.size() > 30 || n2.treeStr.size() > 30)
         return true; //hardcoded limitation to prevent freezing
 
     int editDistance;
-    if(speciateDelta < 10)
+    if (speciateDelta < 10)
         editDistance = btDistance.calculateLimitedTreeEditDistance(n1.treeStr, n2.treeStr, speciateDelta);
     else
         editDistance = btDistance.calculateTreeEditDistance(n1.treeStr, n2.treeStr);
