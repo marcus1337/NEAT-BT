@@ -39,7 +39,7 @@ namespace BTE {
         void loadElites(std::string foldername = "TREES_ELITE");
         void setMaxTreeNodes(int numNodes);
         
-
+        void storeElites();
     };
 }
 

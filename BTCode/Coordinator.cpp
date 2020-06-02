@@ -78,3 +78,7 @@ void Coordinator::loadElites(std::string foldername) {
 void Coordinator::setMaxTreeNodes(int numNodes) {
     evolver.mutater.maxTreeNodes = numNodes;
 }
+
+void Coordinator::storeElites() {
+    evolver.mapElites.storeElites(trees);
+}
