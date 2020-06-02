@@ -9,6 +9,7 @@ void Coordinator::init(int numTrees, int maxOtherInteriorID, int maxUnorderedInt
     Node::maxActionID = maxActionID;
     Node::maxConditionID = maxConditionID;
     Node::maxUnorderedInteriorID = maxUnorderedInteriorID;
+    generation = 1;
     trees.resize(numTrees);
 }
 

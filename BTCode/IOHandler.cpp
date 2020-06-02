@@ -13,10 +13,11 @@ std::string IOHandler::getPath(std::string fileName) {
 
 void IOHandler::makeFolder(std::string folderName) {
     std::string filePath = getPath(folderName);
-    if (!fs::exists(filePath)) {
+
+    if (!fs::exists(filePath))
         fs::create_directories(filePath);
+    if (!fs::exists(filePath))
         fs::create_directory(filePath);
-    }
 }
 
 std::string IOHandler::getFolderName(int generation, std::string folderName) {
@@ -166,7 +167,7 @@ void IOHandler::saveGeneration(std::vector<Tree>& trees, int generation, std::st
     generationInfo.saveData(infoStream, trees);
 
     for (size_t i = 0; i < trees.size(); i++)
-        saveTree(trees[i], (int) (i + 1), generation, folderName);
+        saveTree(trees[i], (int)(i + 1), generation, folderName);
 }
 
 std::ifstream IOHandler::getGenerationInfoInStream(std::string folderName, int generation) {
@@ -198,7 +199,7 @@ std::map<std::tuple<int, int, int>, Tree> IOHandler::loadElites(std::string fold
     stream >> numTrees;
 
     for (size_t i = 0; i < numTrees; i++) {
-        auto stream = std::ifstream(getFilenameWithPath(folderName,(int) i));
+        auto stream = std::ifstream(getFilenameWithPath(folderName, (int)i));
         Tree tree = loadTree(stream);
         result[std::make_tuple(tree.observedBehaviors[0], tree.observedBehaviors[1],
             tree.observedBehaviors[2])] = tree;
@@ -210,7 +211,7 @@ void IOHandler::saveElites(std::map<std::tuple<int, int, int>, Tree>& elites, st
     makeFolder(folderName);
     auto stream = std::ofstream(getPath(std::string(folderName + "//" + "elites_info" + ".txt")));
     stream << elites.size();
-    
+
     int treeIndex = 0;
     for (auto& tree : elites)
     {
