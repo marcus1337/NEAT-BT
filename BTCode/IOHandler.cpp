@@ -13,8 +13,10 @@ std::string IOHandler::getPath(std::string fileName) {
 
 void IOHandler::makeFolder(std::string folderName) {
     std::string filePath = getPath(folderName);
-    fs::create_directories(filePath);
-    fs::create_directory(filePath);
+    if (!fs::exists(filePath)) {
+        fs::create_directories(filePath);
+        fs::create_directory(filePath);
+    }
 }
 
 std::string IOHandler::getFolderName(int generation, std::string folderName) {
