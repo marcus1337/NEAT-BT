@@ -6,17 +6,28 @@
 
 
 bool TreeStringMapper::charMapContains(std::pair<int, int> _key) {
-    std::map<std::pair<int, int>, char>::iterator iter = charMap.find(_key);
+    std::map<std::pair<int, int>, std::string>::iterator iter = charMap.find(_key);
     if (iter != charMap.end())
         return true;
     return false;
 }
 
-char TreeStringMapper::getChar(int a, int b) {
+std::string TreeStringMapper::getLabel() {
+    int index = freeCharPosition % possibleChars.size();
+    int multiplier = (freeCharPosition / possibleChars.size());
+    std::string theChar = std::string(1, possibleChars[index]);
+    std::string result = theChar;
+    for (size_t i = 0; i < multiplier; i++) {
+        result += theChar;
+    }
+    return result;
+}
+
+std::string TreeStringMapper::getChar(int a, int b) {
     auto _key = std::make_pair(a, b);
     if (charMapContains(_key))
         return charMap[_key];
-    char newChar = possibleChars[freeCharPosition];
+    std::string newChar = getLabel();
     charMap[_key] = newChar;
     freeCharPosition++;
     return newChar;

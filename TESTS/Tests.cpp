@@ -276,7 +276,7 @@ BOOST_AUTO_TEST_CASE(treeStringMapper_test)
 }
 */
 
-
+/*
 BOOST_AUTO_TEST_CASE(evolveWithBTDistance_test)
 {
     Coordinator coordinator;
@@ -285,6 +285,20 @@ BOOST_AUTO_TEST_CASE(evolveWithBTDistance_test)
     for (size_t tests = 0; tests < 100; tests++) {
         coordinator.evolve();
         cout << "evo done: " << tests << "\n";
+    }
+
+}*/
+
+BOOST_AUTO_TEST_CASE(sameSpecie_test)
+{
+    Coordinator coordinator;
+    coordinator.init(2, 4, 0, 0, 5, 170);
+
+    for (size_t tests = 0; tests < 100; tests++) {
+        coordinator.randomizePopulation(55, 55);
+        coordinator.evolver.speciator.setTreeStrings(coordinator.trees);
+        bool tmp = coordinator.evolver.speciator.sameSpecie(coordinator.trees[0], coordinator.trees[1]);
+        cout << "done: " << tmp << "\n";
     }
 
 }

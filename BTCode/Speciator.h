@@ -16,11 +16,10 @@ class Speciator {
     TreeStringMapper treeStringMapper;
     BTDistance btDistance;
 
-    void setTreeStrings(std::vector<Tree>& trees);
-
     void increaseDivisorsIfSame(std::vector<Tree>& trees, int i, int j);
 
 public:
+    void setTreeStrings(std::vector<Tree>& trees);
 
     int targetNumSpecies = 3;
     int speciateDelta = 3;

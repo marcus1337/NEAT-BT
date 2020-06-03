@@ -10,11 +10,14 @@
 #include <string>
 
 class TreeStringMapper {
-    std::map<std::pair<int, int>, char> charMap;
+    std::map<std::pair<int, int>, std::string> charMap;
     bool charMapContains(std::pair<int, int> _key);
     std::string possibleChars = "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ123456789";
+
+    std::string getLabel();
+
     int freeCharPosition = 0;
-    char getChar(int a, int b);
+    std::string getChar(int a, int b);
 
     std::stack<std::pair<Node*, int>> stack;
     std::vector<bool> visitedNodes;
