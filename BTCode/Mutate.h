@@ -31,8 +31,18 @@ class Mutate {
 
     MutationRateControl mutationRateControl;
 
+    std::vector<Node> possibleInteriorNodes;
+    std::vector<Node> possibleLeafNodes;
+
+    void addPossibleRandomNodes(std::vector<Node>& possibleNodes, NodeType nodeType, int maxID);
+
+    Node makeRandomInteriorNode();
+    Node makeRandomLeafNode();
 
 public:
+
+    Mutate();
+
     int maxTreeNodes = 30;
 
     float mutateChance = 0.05f;

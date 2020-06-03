@@ -78,17 +78,38 @@ void Mutate::replaceMutate(Tree& tree) {
     }
 }
 
+void Mutate::addPossibleRandomNodes(std::vector<Node>& possibleNodes, NodeType nodeType, int maxID) {
+    for (size_t i = 0; i <= maxID; i++) {
+        Node tmpNode;
+        tmpNode.type = nodeType;
+        tmpNode.ID = i;
+        possibleNodes.push_back(tmpNode);
+    }
+}
+
+Mutate::Mutate() {
+    addPossibleRandomNodes(possibleInteriorNodes, NodeType::OTHER_INTERIOR, Node::maxOtherInteriorID);
+    addPossibleRandomNodes(possibleInteriorNodes, NodeType::UNORDERED_INTERIOR, Node::maxUnorderedInteriorID);
+    addPossibleRandomNodes(possibleInteriorNodes, NodeType::DECORATOR, Node::maxDecoratorID);
+    addPossibleRandomNodes(possibleLeafNodes, NodeType::ACTION, Node::maxActionID);
+    addPossibleRandomNodes(possibleLeafNodes, NodeType::CONDITION, Node::maxConditionID);
+}
+
+Node Mutate::makeRandomInteriorNode() {
+    int randIndex = Utils::randi(0, possibleInteriorNodes.size()-1);
+    return possibleInteriorNodes[randIndex];
+}
+
+Node Mutate::makeRandomLeafNode() {
+    int randIndex = Utils::randi(0, possibleLeafNodes.size() - 1);
+    return possibleLeafNodes[randIndex];
+}
+
 Node Mutate::makeRandomNode() {
     float randFloat = Utils::randf(0.f, 1.f);
-    if (randFloat > 0.95f)
-        return Node::makeRandomDecorator();
-    if (randFloat > 0.75f)
-        return Node::makeRandomCondition();
-    if (randFloat > 0.60f)
-        return Node::makeRandomOtherInterior();
-    if (randFloat > 0.50f)
-        return Node::makeRandomUnorderedInterior();
-    return Node::makeRandomAction();
+    if (randFloat > 0.80f)
+        return makeRandomInteriorNode();
+    return makeRandomLeafNode();
 }
 
 void Mutate::addNodeMutate(Tree& tree) {
