@@ -42,6 +42,9 @@ Tree MapElites::getTree(int a, int b, int c) {
 }
 
 void MapElites::mapOrStoreElite(Tree& tree) {
+    if (handleExistingElite(tree))
+        return;
+
     auto _key = getKey(tree);
     if (!isOccupied(_key) || isNewTreeBetter(_key, tree))
         eliteTrees[_key] = tree;
