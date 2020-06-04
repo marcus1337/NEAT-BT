@@ -7,11 +7,20 @@
 #include <vector>
 #include <tuple>
 
+#include <string>
+#include <unordered_map>
+
 #ifndef MAPELITES_H
 #define MAPELITES_H
 
 
 class MapElites {
+
+    std::unordered_map<std::string, std::tuple<int,int,int>> oldEliteKeys;
+
+    bool checkOldKeyExists(std::string _key);
+    bool handleExistingElite(Tree& tree);
+
 public:
     std::map<std::tuple<int, int, int>, Tree> eliteTrees;
     MapElites();

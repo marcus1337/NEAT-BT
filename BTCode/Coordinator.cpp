@@ -64,6 +64,7 @@ void Coordinator::randomizePopulationFromElites() {
 }
 
 void Coordinator::mapElites() {
+    evolver.speciator.setTreeStrings(trees);
     evolver.mapElites.mapOrStoreElites(trees);
 }
 
@@ -80,5 +81,6 @@ void Coordinator::setMaxTreeNodes(int numNodes) {
 }
 
 void Coordinator::storeElites() {
+    evolver.speciator.setTreeStrings(trees);
     evolver.mapElites.storeElites(trees);
 }

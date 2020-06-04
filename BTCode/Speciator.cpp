@@ -92,7 +92,6 @@ void Speciator::adjustDynamicSpecieDelta() {
 
 
 std::vector<Specie> Speciator::getSpecies(std::vector<Tree>& trees) {
-    setTreeStrings(trees);
     std::vector<Specie> species;
     speciate(trees, species);
     return species;

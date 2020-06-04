@@ -8,6 +8,13 @@ MapElites::MapElites() {
 
 }
 
+bool MapElites::checkOldKeyExists(std::string _key)
+{
+    if (oldEliteKeys.find(_key) == oldEliteKeys.end())
+        return false;
+    return true;
+}
+
 bool MapElites::isOccupied(std::tuple<int, int, int> key) {
     std::map<std::tuple<int, int, int>, Tree>::iterator it = eliteTrees.find(key);
     if (it != eliteTrees.end())
@@ -53,10 +60,27 @@ void MapElites::mapOrStoreElites(std::vector<Tree>& trees) {
         mapOrStoreElite(trees[i]);
 }
 
+bool MapElites::handleExistingElite(Tree& tree) {
+    if (checkOldKeyExists(tree.treeStr)) {
+        auto oldKey = oldEliteKeys[tree.treeStr];
+        Tree& currentTree = eliteTrees[oldKey];
+        if (currentTree.treeStr == tree.treeStr)
+            currentTree.fitness = std::min(currentTree.fitness, tree.fitness);
+        return true;
+    }
+    return false;
+}
+
 void MapElites::storeElite(Tree& tree) {
+
+    if (handleExistingElite(tree))
+        return;
+
     auto _key = getKey(tree);
-    if (!isOccupied(_key) || isNewTreeBetter(_key, tree))
+    if (!isOccupied(_key) || isNewTreeBetter(_key, tree)) {
         eliteTrees[_key] = tree;
+        oldEliteKeys[tree.treeStr] = _key;
+    }
 }
 void MapElites::storeElites(std::vector<Tree>& trees) {
     for (size_t i = 0; i < trees.size(); i++)

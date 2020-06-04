@@ -27,7 +27,7 @@ namespace utf = boost::unit_test;
 #define all(x) begin(x), end(x)
 #define sz(x) (int)(x).size()
 
-/*
+
 BOOST_AUTO_TEST_CASE(saveLoadSingle_test)
 {
     TestUtils::setMaxNodeIDs(5000);
@@ -274,20 +274,19 @@ BOOST_AUTO_TEST_CASE(treeStringMapper_test)
     BOOST_REQUIRE(mapper.getMappedTreeString(tree) == mapper.getMappedTreeString(tree));
 
 }
-*/
 
-/*
+
 BOOST_AUTO_TEST_CASE(evolveWithBTDistance_test)
 {
     Coordinator coordinator;
     coordinator.init(100, 4, 0, 0, 10, 10);
 
-    for (size_t tests = 0; tests < 100; tests++) {
+    /*for (size_t tests = 0; tests < 100; tests++) {
         coordinator.evolve();
         cout << "evo done: " << tests << "\n";
-    }
+    }*/
 
-}*/
+}
 
 BOOST_AUTO_TEST_CASE(sameSpecie_test)
 {
