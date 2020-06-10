@@ -3,6 +3,9 @@
 
 using namespace BTE;
 
+
+
+
 void Coordinator::init(int numTrees, int maxOtherInteriorID, int maxUnorderedInteriorID, int maxDecoratorID, int maxActionID, int maxConditionID) {
     Node::maxOtherInteriorID = maxOtherInteriorID;
     Node::maxDecoratorID = maxDecoratorID;
