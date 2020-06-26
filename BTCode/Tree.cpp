@@ -32,6 +32,8 @@ Tree makeLimitedTree() {
         node.children.push_back(actionNode);
         tree.root.children.push_back(node);
     }
+
+    std::shuffle(std::begin(tree.root.children), std::end(tree.root.children), Utils::mRng);
     
     return tree;
 }
