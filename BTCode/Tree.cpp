@@ -18,6 +18,24 @@ Tree Tree::getValidTree() {
     return tree;
 }
 
+Tree makeLimitedTree() {
+    Tree tree;
+    tree.root.children.clear();
+    
+    for (int i = 0; i < Node::maxActionID; i++) {
+        Node node;
+        node.type = OTHER_INTERIOR;
+        node.ID = 0; //Assume 0 is always Selector
+        Node actionNode;
+        actionNode.type = ACTION;
+        actionNode.ID = i;
+        node.children.push_back(actionNode);
+        tree.root.children.push_back(node);
+    }
+    
+    return tree;
+}
+
 Tree Tree::makeRandomTree(int nodes) {
     Tree result;
     Mutate mutater;

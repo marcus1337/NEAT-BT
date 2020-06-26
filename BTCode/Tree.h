@@ -19,6 +19,7 @@ public:
     Tree();
     static Tree makeRandomTree(int nodes);
     Tree getValidTree();
+    Tree makeLimitedTree();
 
     int getNumberParentNodes();
     int getNumberOfNodesOfType(NodeType nodeType);
